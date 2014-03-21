@@ -6,7 +6,7 @@ development:
   database: batto_dev
   pool: 5
   username: smurdock
-  password: agNUt33
+  password: is4bella
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -17,7 +17,7 @@ test: &test
   database: batto_test
   pool: 5
   username: smurdock
-  password: agNUt33
+  password: is4bella
   
 production:
   adapter: postgresql
@@ -25,4 +25,4 @@ production:
   database: batto_prod
   pool: 5
   username: smurdock
-  password: agNUt33
+  password: is4bella
