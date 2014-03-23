@@ -1,4 +1,4 @@
-   Ensure pg gem is defined in your Gemfile
+  # Ensure pg gem is defined in your Gemfile
 
 development:
   adapter: postgresql
