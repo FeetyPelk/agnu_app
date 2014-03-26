@@ -1,20 +1,205 @@
 <h1>Batomatic</h1>
 <p>Find me in app/views/plabs/home.html.erb</p>
 
-<table class="footable">
-     <th data-hide="phone">  Atbat</th>
+<%= form_tag pissags_path  :method => :get  do %>
+    <div class="container">
+      <div class="accordion" id="accordion2">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+              Batting
+            </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+              <div class="row">
+                <p>
+                <div class="span2"><%= search_field_tag  :batter, value = params[:batter]%><%= label_tag "Batter"%></div>
+                <div class="span2"><%= search_field_tag  :bteam, value = params[:bteam]%><%= label_tag "BTeam"%></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+                <div class="span2"><%= search_field_tag  :runner1b %><%= label_tag "Runner 1B" %></div>
+                <div class="span2"><%= search_field_tag  :runner2b %><%= label_tag "Runner 2B" %></div>
+                <div class="span2"><%= search_field_tag  :runner3b %><%= label_tag "Runner 3B" %></div>
+                </p>
+              </div>
 
-  </tr>
-  </thead>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+              Fielding
+            </a>
+          </div>
+          <div id="collapseTwo" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div class="row">
+                <p>
+                <div class="span2"><%= search_field_tag  :fteam, value = params[:fteam]%><%= label_tag "Fteam"%></div>
+                <div class="span2"><%= search_field_tag  :pitcher, value = params[:pitcher]%><%= label_tag "Pitcher"%></div>
+                <div class="span2"><%= search_field_tag  :catcher, value = params[:catcher]%><%= label_tag "Catcher"%></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+                <div class="span2"><%= search_field_tag  :first_base, value = params[:first_base]%><%= label_tag "First Base"%></div>
+                <div class="span2"><%= search_field_tag  :second_base, value = params[:second_base]%><%= label_tag "Second Base" %></div>
+                <div class="span2"><%= search_field_tag  :shortstop, value = params[:shortstop]%><%= label_tag "Shortstop" %></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+                <div class="span2"><%= search_field_tag  :third_base, value = params[:third_base] %><%= label_tag "Third Base" %></div>
+                <div class="span2"><%= search_field_tag  :left_field, value = params[:left_field] %><%= label_tag "Left Field" %></div>
+                <div class="span2"><%= search_field_tag  :center_field, value = params[:center_field] %><%= label_tag "Center Field" %></div>
+                <div class="span2"><%= search_field_tag  :right_field, value = params[:right_field] %><%= label_tag "Right Field" %></div>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+              Dates
+            </a>
+          </div>
+          <div id="collapseThree" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div class="row">
+                <p>
+                <div class="span3"><%= search_field_tag  :start_date %><%= label_tag "Start Date"%></div>
+                <div class="span3"><%= search_field_tag  :end_date %><%= label_tag "End Date"%></div>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+              Grouping
+            </a>
+          </div>
+          <div id="collapseFour" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div class="row">
+                <p>
+                <div class="span3"><%= search_field_tag(:group_batter, value = params[:group_batter]) %><%= label_tag(:twitter_share, "Group by Batter?") %></div>
+                <div class="span3"><%= search_field_tag(:group_bteam, value = params[:group_bteam]) %><%= label_tag(:twitter_share, "Group by BTeam?") %></div>
+                <div class="span3"><%= search_field_tag(:group_fteam,value = params[:group_fteam]) %><%= label_tag(:twitter_share, "Group by FTeam?") %></div>
+                <div class="span3"><%= search_field_tag(:group_pitcher, value = params[:group_pitcher]) %><%= label_tag(:twitter_share, "Group by Pitcher?") %></div>
+                <div class="span3"><%= search_field_tag(:group_catcher, value = params[:group_catcher]) %><%= label_tag(:twitter_share, "Group by Catcher?") %></div>
+                <div class="span3"><%= search_field_tag(:group_first_base, value = params[:group_first_base]) %><%= label_tag(:twitter_share, "Group by First Base?") %></div>
+                <div class="span3"><%= search_field_tag(:group_second_base, value = params[:group_second_base]) %><%= label_tag(:twitter_share, "Group by Second Base?") %></div>
+                <div class="span3"><%= search_field_tag(:group_shortstop, value = params[:group_shortstop]) %><%= label_tag(:twitter_share, "Group by Shortstop?") %></div>
+                <div class="span3"><%= search_field_tag(:group_third_base, value = params[:group_third_base]) %><%= label_tag(:twitter_share, "Group by Third Base?") %></div>
+                <div class="span3"><%= search_field_tag(:group_left_field, value = params[:group_left_field]) %><%= label_tag(:twitter_share, "Group by Left Field?") %></div>
+                <div class="span3"><%= search_field_tag(:group_center_field, value = params[:group_center_field]) %><%= label_tag(:twitter_share, "Group by Center Field?") %></div>
+                <div class="span3"><%= search_field_tag(:group_right_field, value = params[:group_right_field]) %><%= label_tag(:twitter_share, "Group by Right Field?") %></div>
+                <div class="span3"><%= search_field_tag(:group_runner1b, value = params[:group_runner1b]) %><%= label_tag(:twitter_share, "Group by Runner On First?") %></div>
+                <div class="span3"><%= search_field_tag(:group_runner2b, value = params[:group_runner2b]) %><%= label_tag(:twitter_share, "Group by Runner On Second") %></div>
+                <div class="span3"><%= search_field_tag(:group_runner3b, value = params[:group_runner3b]) %><%= label_tag(:twitter_share, "Group by Riunner On Third?") %></div>
+                <div class="span3"><%= search_field_tag(:group_home_away, value = params[:group_home_away]) %><%= label_tag(:twitter_share, "Group by Home/Away?") %></div>
+                <div class="span3"><%= search_field_tag(:group_month, value = params[:group_month]) %><%= label_tag(:twitter_share, "Group by Month?") %></div>
+                <div class="span3"><%= search_field_tag(:group_year, value = params[:group_year]) %><%= label_tag(:twitter_share, "Group by Year?") %></div>
+                <div class="span3"><%= check_box_tag(:group_booper) %><%= label_tag(:twitter_share, "Group by Boop?") %></div>
 
-  <div id="tabby">
-    <tbody>
-    <% @Plabs.each do |plab| %>
+
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        <%= submit_tag "Submitto", class: "btn btn-large btn-primary"%>
+
+      </p>
+
+
+
+      <table class="footable">
+        <thead>
+        <!--
+        <th><%= link_to "TField", :sort => "tdf.id3_old"  if $fteam_colm%></th>
+        <th><%= link_to 'TField' do %> <i class: "btn btn-large btn-primary"</i> if $fteam_colm% <% end %> </th>
+     -->
 
         <tr>
-           <td><%= plab.at_bat%></td>
-         </tr>
-    <% end unless @Plabs.nil?%>
-    </tbody>
-  </div>
-</table>
+          <th><%= link_to "Year", :sort => "dd.calendar_year"  if $date_year_colm%></th>
+          <th><%= link_to "Month", :sort => "dd.calendar_yearmonth"  if $date_month_colm%></th>
+          <th data-class="expand">Batter </th>
+          <th><%= link_to "H/A", :sort => "at_home"  if $home_colm%></th>
+          <th><%= link_to "TBat", :sort => "tdb.id3_old"  if $bteam_colm%></th>
+          <th><%= link_to "TField", :sort => "tdf.id3_old" if $fteam_colm%></th>
+          <th> Avg</th>
+          <th data-hide="phone"> OBP</th>
+          <th data-hide="phone"> SLG</th>
+          <th data-hide="phone"> OPS</th>
+          <th data-hide="phone"> ERA</th>
+          <th data-hide="phone">  Atbat</th>
+          <th data-hide="phone"> Hit</th>
+          <th data-hide="phone,tablet"> Walk</th>
+          <th data-hide="phone,tablet"> RBI</th>
+          <th data-hide="phone,tablet"> ippies</th>
+          <th data-hide="phone,tablet"> earned_runs</th>
+          <th><%=  link_to "Pitcher", :sort => "fd.pitcher"  if $pitcher_colm%></th>
+          <th><%= link_to  "Catcher", :sort => "fd.catcher"  if $catcher_colm%></th>
+          <th><%= link_to  "First Base", :sort => "fd.first_base"  if $firstb_colm%></th>
+          <th><%=  link_to "Second Base", :sort => "fd.second_base"  if $secondb_colm%></th>
+          <th><%=  link_to "Shortstop", :sort => "fd.shortstop"  if $ss_colm%></th>
+          <th><%=  link_to "Third Base", :sort => "fd.third_base"  if $thirdb_colm%></th>
+          <th><%=  link_to "Left Field", :sort => "fd.left_field"  if $lf_colm%></th>
+          <th><%= link_to  "Center Field", :sort => "fd.center_field"  if $cf_colm%></th>
+          <th><%=  link_to "Right Field", :sort => "fd.right_field"  if $rf_colm%></th>
+
+        </tr>
+        </thead>
+
+        <div id="tabby">
+          <tbody>
+          <% @Plabs.each do |plab| %>
+
+              <tr>
+                <td><%= plab.yearo if $date_year_colm%></td>
+                <td><%= plab.montho if $date_month_colm%></td>
+                <td><%= plab.batter if $batter_colm%></td>
+                <td><%= plab.at_home if $home_colm%></td>
+                <td><%= plab.bteam if $bteam_colm%></td>
+                <td><%= plab.fteam if $fteam_colm%></td>
+                <td><%= plab.avg%></td>
+                <td><%= plab.obp%></td>
+                <td><%= plab.slg%></td>
+                <td><%= plab.ops%></td>
+                <td><%= plab.era%></td>
+                <td><%= plab.at_bat%></td>
+                <td><%= plab.hit%></td>
+                <td><%= plab.walk%></td>
+                <td><%= plab.rbi%></td>
+                <td><%= plab.ippies%></td>
+                <td><%= plab.earned_runs%></td>
+                <td><%= plab.pitcher if $pitcher_colm%></td>
+                <td><%= plab.catcher if $catcher_colm%></td>
+                <td><%= plab.first_base if $firstb_colm%></td>
+                <td><%= plab.second_base if $secondb_colm%></td>
+                <td><%= plab.shortstop if $ss_colm%></td>
+                <td><%= plab.third_base if $thirdb_colm%></td>
+                <td><%= plab.left_field if $lf_colm%></td>
+                <td><%= plab.center_field if $cf_colm%></td>
+                <td><%= plab.right_field if $rf_colm%></td>
+                <td><%= plab.runner1b if $runner1b_colm%></td>
+                <td><%= plab.runner2b if $runner2b_colm%></td>
+                <td><%= plab.runner3b if $runner3b_colm%></td>
+              </tr>
+          <% end unless @Plabs.nil?%>
+          </tbody>
+        </div>
+      </table>
+    </div> <!--container -->
+<% end %>

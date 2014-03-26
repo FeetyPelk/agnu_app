@@ -5,6 +5,8 @@ AgnuApp::Application.routes.draw do
 
   get "static_pages/help"
 
+  match '/pissags',  to: 'plabs#home'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

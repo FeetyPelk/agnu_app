@@ -1,5 +1,6 @@
 class PlabsController < ApplicationController
+  include QueryHelper
   def home
-    @Plabs = Plab.find_by_sql("select at_bat from play_facts limit 5")
+    @Plabs = Plab.find_by_sql(buildquery params)
   end
 end
