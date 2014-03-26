@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.14'
 gem 'pg', '0.12.2'
+gem "footable-rails", "~> 0.0.1"
 
 
 group :development, :test do

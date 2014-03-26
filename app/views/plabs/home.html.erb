@@ -1,0 +1,20 @@
+<h1>Batomatic</h1>
+<p>Find me in app/views/plabs/home.html.erb</p>
+
+<table class="footable">
+     <th data-hide="phone">  Atbat</th>
+
+  </tr>
+  </thead>
+
+  <div id="tabby">
+    <tbody>
+    <% @Plabs.each do |plab| %>
+
+        <tr>
+           <td><%= plab.at_bat%></td>
+         </tr>
+    <% end unless @Plabs.nil?%>
+    </tbody>
+  </div>
+</table>
