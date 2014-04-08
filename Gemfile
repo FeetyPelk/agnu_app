@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.14'
 gem 'pg', '0.12.2'
+gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'jquery-rails', '2.0.2'
 gem "footable-rails", "~> 0.0.1"
 
