@@ -79,6 +79,33 @@
             </div>
           </div>
         </div>
+
+        <!--   This is a comment   -->
+
+
+
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+              Grouping
+            </a>
+          </div>
+          <div id="collapseFour" class="accordion-body collapse">
+            <div class="accordion-inner">
+
+              <ul>
+                <li> <%= check_box_tag(:group_pitcher)%> <%= label_tag(:twitter_share, "Group by Pitcher?") %> </li>
+                <li> <%= check_box_tag(:group_batter) %><%= label_tag(:twitter_share, "Group by Batter?") %> </li>
+                <li> <%= check_box_tag(:group_bteam) %><%= label_tag(:twitter_share, "Group by BTeam?") %> </li>
+              </ul>            </div>
+          < /div>
+        </div>
+
+
+
+    <!--
+
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
@@ -115,7 +142,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>      -->
 
       <p>
         <%= submit_tag "Submitto", class: "btn btn-large btn-primary"%>
