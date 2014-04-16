@@ -9,6 +9,7 @@ $baseFontFamily: "Droid Sans", sans-serif;
 
 /* universal */
 
+
 html {
   overflow-y: scroll;
 }
@@ -87,3 +88,19 @@ footer ul li {
   float: left;
   margin-left: 10px;
 }
+
+.groupies_by ul {
+  list_style_type: none;
+  padding: 0;
+  margin: 0 auto;
+  width: 17em;
+}
+
+.groupies-by ul li {
+  float: left;
+  display: block;
+  padding: .5em;
+  margin: .25em;
+
+}
+

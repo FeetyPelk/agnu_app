@@ -93,15 +93,31 @@
           </div>
           <div id="collapseFour" class="accordion-body collapse">
             <div class="accordion-inner">
+              <p> Group by: </p>
+              <div class="groupies-by">
 
               <ul>
-                <li> <%= check_box_tag(:group_pitcher)%> <%= label_tag(:twitter_share, "Group by Pitcher?") %> </li>
-                <li> <%= check_box_tag(:group_batter) %><%= label_tag(:twitter_share, "Group by Batter?") %> </li>
-                <li> <%= check_box_tag(:group_bteam) %><%= label_tag(:twitter_share, "Group by BTeam?") %> </li>
-              </ul>            </div>
-          < /div>
+                <li> <%= check_box_tag(:group_pitcher,"1",params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
+                <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
+                <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "BTeam?") %> </li>
+                <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "FTeam?") %> </li>
+                <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]) %><%= label_tag(:twitter_share, "Catcher?") %> </li>
+                <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]) %><%= label_tag(:twitter_share, "First Base?") %> </li>
+                <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]) %><%= label_tag(:twitter_share, "Second Base?") %> </li>
+                <li> <%= check_box_tag(:group_shortstop,"1",params[:group_shortstop]) %><%= label_tag(:twitter_share, "Shortstop?") %> </li>
+                <li> <%= check_box_tag(:group_third_base,"1",params[:group_third_base]) %><%= label_tag(:twitter_share, "Third Base?") %> </li>
+                <li> <%= check_box_tag(:group_left_field,"1",params[:group_left_field]) %><%= label_tag(:twitter_share, "Left Field?") %> </li>
+                <li> <%= check_box_tag(:group_center_field,"1",params[:group_center_field]) %><%= label_tag(:twitter_share, "Center Field?") %> </li>
+                <li> <%= check_box_tag(:group_right_field,"1",params[:group_right_field]) %><%= label_tag(:twitter_share, "Right Field?") %> </li>
+                <li> <%= check_box_tag(:group_home_away,"1",params[:group_home_away]) %><%= label_tag(:twitter_share, "Home/Away?") %> </li>
+                <li> <%= check_box_tag(:group_month,"1",params[:group_month]) %><%= label_tag(:twitter_share, "Month?") %> </li>
+                <li> <%= check_box_tag(:group_year,"1",params[:group_year]) %><%= label_tag(:twitter_share, "Year?") %> </li>
+                <li> <%= check_box_tag(:group_booper,"1",params[:group_booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>
+               </ul>
+              </div>
+            </div>
+          </div>
         </div>
-
 
 
     <!--
