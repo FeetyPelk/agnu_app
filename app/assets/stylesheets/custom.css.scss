@@ -6,7 +6,6 @@ $baseFontFamily: "Droid Sans", sans-serif;
 @import "bootstrap-responsive";
 
 
-
 /* universal */
 
 
@@ -40,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   text-align: center;
 }
 
@@ -51,6 +50,13 @@ h2 {
   text-align: center;
   font-weight: normal;
   color: #999;
+}
+
+#minihead {
+  font-size: 1.3em;
+  text-align: center;
+  font-weight: lighter;
+  margin-bottom: 30px;
 }
 
 p {
@@ -103,4 +109,13 @@ footer ul li {
   margin: .25em;
 
 }
+
+.boop {
+  float: left;
+  display: block;
+  width: 13.5em;
+  padding: .25em;
+  margin: 0em 1em 1em;
+}
+
 
