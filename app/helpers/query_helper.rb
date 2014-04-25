@@ -206,7 +206,7 @@ module QueryHelper
     @order_by = ""
 
     if p_hash[:group_year] == '1'
-      @order_by = "#{@order_by} yearo,"
+      @order_by = "#{@order_by} yearo asc,"
     end
 
     if p_hash[:group_month] == '1'
@@ -638,7 +638,7 @@ module QueryHelper
 
     cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as ippies,
                                                              CASE sum(fl.outs) when 0 then null
-    else round(sum(fl.earned_runs) * 9 / (sum(fl.outs)/3),2)
+    else round(sum(fl.earned_runs) * 9 / (cast(sum(fl.outs) as numeric)/3),2)
     end era,
     case sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
       when 0 then null

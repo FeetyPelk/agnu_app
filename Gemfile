@@ -9,7 +9,7 @@ gem 'activerecord-redshift-adapter', '~> 0.9.12'
 
 
 group :development, :test do
-  gem 'pg', '0.12.2'
+  #gem 'pg', '0.12.2'
   gem 'rspec-rails', '2.11.0'
 end
 
