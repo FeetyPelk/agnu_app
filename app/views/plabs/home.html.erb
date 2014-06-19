@@ -2,6 +2,8 @@
 <p id="minihead"> Yet Another Omatic<p>
 
 <%= form_tag pissags_path  :method => :get  do %>
+
+
     <div class="container">
       <div class="accordion" id="accordion2">
         <div class="accordion-group">
@@ -18,7 +20,7 @@
                 <div class="boop"><%= label_tag "Batter" %><%= search_field_tag  :batter, value = params[:batter]%></div>
                 <div class="boop"><%= label_tag "Runner on First" %><%= search_field_tag  :runner1b, value = params[:runner1b]%></div>
                 <div class="boop"><%= label_tag "Runner on Second" %><%= search_field_tag  :runner2b, value = params[:runner2b]%></div>
-                <div class="boop"><%= label_tag "Runner on Third" %><%= search_field_tag  :runner2b, value = params[:runner3b]%></div>
+                <div class="boop"><%= label_tag "Runner on Third" %><%= search_field_tag  :runner3b, value = params[:runner3b]%></div>
                 </p>
               </div>
 

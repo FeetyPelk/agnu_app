@@ -2,14 +2,18 @@ module QueryHelper
 
   def subselect_earned(p_hash)
 
-    @subselect_earned ="       (select count(field) from earned_facts sn
-             join fielder_dims fd2 on fd2.id= sn.field "
-    if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
-      @subselect_earned = "#{@subselect_earned} where sn.ppn_id = pf.id) earned_runs "
-    else
-      if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
-        @subselect_earned = "#{@subselect_earned} and fd2.pitcher = fd.pitcher "
-      end
+     @subselect_earned =  "       (select count(eff.id)
+                 from earned_facts_fat eff
+                 join fielder_dims fd2 on
+                (fd2.id = eff.ern_3
+                 or fd2.id = eff.ern_2
+                 or fd2.id = eff.ern_1
+                 or fd2.id = eff.ern_b) "
+
+
+    if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
+      @subselect_earned = "#{@subselect_earned} and fd2.pitcher = fd.pitcher "
+    end
       if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
         @subselect_earned = "#{@subselect_earned} and fd2.catcher = fd.catcher "
       end
@@ -34,15 +38,15 @@ module QueryHelper
       if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
         @subselect_earned = "#{@subselect_earned} and fd2.right_field = fd.right_field "
       end
-      @subselect_earned = "#{@subselect_earned} where sn.game_key = pf.game_key) earned_runs "
-    end
+    @subselect_earned = "#{@subselect_earned} where eff.ppn_id = pf.id) earned_runs "
+
   end
 
 
   def join_add_player_dims(p_hash)
 
     if ((p_hash[:group_batter] == '1') ||!p_hash[:batter].to_s.blank?)
-      @inner_join = "#{@inner_join} join player_dims pd on pf.player_key = pd.id"
+      @inner_join = "#{@inner_join} join player_dims pd on pf.player_key = pd.id "
       if !p_hash[:batter].to_s.blank?
         @inner_join = "#{@inner_join} and pd.player_name = '#{p_hash[:batter]}'"
       end
@@ -105,15 +109,22 @@ module QueryHelper
   end
 
   def subselect_earned_facts(p_hash)
-    @earned_facts_sub = ""
-    if (!p_hash[:batter].to_s.blank?)
-      @earned_facts_sub = "(select count(field) from earned_facts sn
-                         where sn.ppn_id = pf.id) earned_runs"
-    else
-      @earned_facts_sub = "(select count(field) from earned_facts sn
-                         where sn.game_key = pf.game_key) earned_runs"
+    @earned_facts_sub = "(select count(field) from earned_facts sn
+	                        join fielder_dim fd2 on fd2.field_key= sn.field "
+
+     #limit by fielder goes here!
+
+    @earned_facts_sub = "#{@earned_facts_sub} where sn.game_key = pf.game_key "
+
+    if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
+      @earned_facts_sub = "#{@earned_facts_sub} and sn.batter_key = pf.player_key "
     end
+
+
+    @earned_facts_sub = "#{@earned_facts_sub}) earned_runs"
   end
+
+
 
   def join_add_fielder_team_dims(p_hash)
 
@@ -485,115 +496,115 @@ module QueryHelper
 
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
       $batter_colm = true
-      @inner_group = "#{@inner_group} pf.id,"
-    else
-      @inner_group = "#{@inner_group} pf.game_key,"
+      #@inner_group = "#{@inner_group} pf.id,"
+    #else
+      #@inner_group = "#{@inner_group} pf.game_key,"
     end
 
     if p_hash[:group_year] == '1'
       $date_year_colm = true
-      @inner_group = "#{@inner_group} dd.calendar_year,"
+      #@inner_group = "#{@inner_group} dd.calendar_year,"
       @outer_group = "#{@outer_group} fl.yearo,"
     end
 
     if p_hash[:group_month] == '1'
       $date_month_colm = true
-      @inner_group = "#{@inner_group} dd.calendar_yearmonth,"
+      #@inner_group = "#{@inner_group} dd.calendar_yearmonth,"
       @outer_group = "#{@outer_group} fl.montho,"
     end
 
 
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       $pitcher_colm = true
-      @inner_group = "#{@inner_group} fd.pitcher,"
+      #@inner_group = "#{@inner_group} fd.pitcher,"
       @outer_group = "#{@outer_group} pitcher,"
     end
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
       $catcher_colm = true
-      @inner_group = "#{@inner_group} fd.catcher,"
+      #@inner_group = "#{@inner_group} fd.catcher,"
       @outer_group = "#{@outer_group} fl.catcher,"
     end
 
     if p_hash[:group_batter] == '1' ||  !p_hash[:batter].to_s.blank?
       $batter_colm = true
-      @inner_group = "#{@inner_group} pd.player_name,"
+      #@inner_group = "#{@inner_group} pd.player_name,"
       @outer_group = "#{@outer_group} fl.batter,"
     end
 
     if p_hash[:group_first_base] == '1' || !p_hash[:first_base].to_s.blank?
       $firstb_colm = true
-      @inner_group = "#{@inner_group} fd.first_base,"
+      #@inner_group = "#{@inner_group} fd.first_base,"
       @outer_group = "#{@outer_group} fl.first_base,"
     end
     if p_hash[:group_second_base] == '1' || !p_hash[:second_base].to_s.blank?
       $secondb_colm = true
-      @inner_group = "#{@inner_group} fd.second_base,"
+      #@inner_group = "#{@inner_group} fd.second_base,"
       @outer_group = "#{@outer_group} fl.second_base,"
     end
     if p_hash[:group_shortstop] == '1' || !p_hash[:shortstop].to_s.blank?
       $ss_colm = true
-      @inner_group = "#{@inner_group} fd.shortstop,"
+      #@inner_group = "#{@inner_group} fd.shortstop,"
       @outer_group = "#{@outer_group} shortstop,"
     end
     if p_hash[:group_third_base] == '1' || !p_hash[:third_base].to_s.blank?
       $thirdb_colm = true
-      @inner_group = "#{@inner_group} fd.third_base,"
+      #@inner_group = "#{@inner_group} fd.third_base,"
       @outer_group = "#{@outer_group} third_base,"
     end
     if p_hash[:group_left_field] == '1' || !p_hash[:left_field].to_s.blank?
       $lf_colm = true
-      @inner_group = "#{@inner_group} fd.left_field,"
+      #@inner_group = "#{@inner_group} fd.left_field,"
       @outer_group = "#{@outer_group} fl.left_field,"
     end
     if p_hash[:group_center_field] == '1' || !p_hash[:center_field].to_s.blank?
       $cf_colm = true
-      @inner_group = "#{@inner_group} fd.center_field,"
+      #@inner_group = "#{@inner_group} fd.center_field,"
       @outer_group = "#{@outer_group} fl.center_field,"
     end
     if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
       $rf_colm = true
-      @inner_group = "#{@inner_group} fd.right_field,"
+      #@inner_group = "#{@inner_group} fd.right_field,"
       @outer_group = "#{@outer_group} fl.right_field,"
     end
     if p_hash[:group_fteam] == '1' || !p_hash[:fteam].to_s.blank?
       $fteam_colm = true
-      @inner_group = "#{@inner_group} tdf.id3_old,"
+      #@inner_group = "#{@inner_group} tdf.id3_old,"
       @outer_group = "#{@outer_group} fl.fteam,"
     end
     if p_hash[:group_bteam] == '1' || !p_hash[:bteam].to_s.blank?
       $bteam_colm = true
-      @inner_group = "#{@inner_group} tdb.id3_old,"
+      #@inner_group = "#{@inner_group} tdb.id3_old,"
       @outer_group = "#{@outer_group} fl.bteam,"
     end
     if p_hash[:group_runner1b] == '1' || !p_hash[:runner1b].to_s.blank?
       $runner1b_colm = true
-      @inner_group = "#{@inner_group} br1.player_name,"
+      #@inner_group = "#{@inner_group} br1.player_name,"
       @outer_group = "#{@outer_group} fl.runner1b,"
     end
 
     if p_hash[:group_runner2b] == '1' || !p_hash[:runner2b].to_s.blank?
       $runner2b_colm = true
-      @inner_group = "#{@inner_group} br2.player_name,"
+      #@inner_group = "#{@inner_group} br2.player_name,"
       @outer_group = "#{@outer_group} fl.runner2b,"
     end
 
     if p_hash[:group_runner3b] == '1' || !p_hash[:runner3b].to_s.blank?
       $runner3b_colm = true
-      @inner_group = "#{@inner_group} br3.player_name,"
+      #@inner_group = "#{@inner_group} br3.player_name,"
       @outer_group = "#{@outer_group} fl.runner3b,"
     end
 
     if p_hash[:group_home_away] == '1'
       $home_colm = true
-      @inner_group = "#{@inner_group} at_home,"
+      #@inner_group = "#{@inner_group} at_home,"
       @outer_group = "#{@outer_group} fl.at_home,"
     end
 
-    if !@inner_group.blank?
-      @inner_group = "group by#{@inner_group}"
-      @inner_group.sub!(/,$/, '')
-    end
+    #if !@inner_group.blank?
+      #@inner_group = "group by#{@inner_group}"
+      #@inner_group.sub!(/,$/, '')
+    #end
 
     if !@outer_group.blank?
       @outer_group = "group by#{@outer_group}"
@@ -666,14 +677,14 @@ module QueryHelper
 
     from ( select "
 
-    @select_by = ",sum(at_bat) at_bat,
-           sum(hit) hit,
-           sum(hbp) hbp,
-           sum(bag) bag,
-           sum(sacfly) sacfly,
-           sum(walk) walk,
-           sum(made_outs) outs,
-           sum(rbi)rbi,"
+    @select_by = ",at_bat,
+           hit,
+           hbp,
+           bag,
+           sacfly,
+           walk,
+           made_outs outs,
+           rbi,"
     #       (select count(field) from earned_facts sn
     #         join fielder_dims fd2 on fd2.id= sn.field
     #         and fd2.pitcher = fd.pitcher
