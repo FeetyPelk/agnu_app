@@ -168,7 +168,11 @@
      -->
 
         <tr>
-          <th><%= link_to "Year", :sort => "dd.calendar_year"  if $date_year_colm%></span></th>
+          <!--comments like this -->
+          <!--<th><%= link_to "Year", :sort => "dd.calendar_year"  if $date_year_colm%></span></th>   -->
+          <!-- params[:orderby_year = '1']   -->
+          <!--hash.merge!(:b => 'b')   -->
+          <th><%= link_to "Year", params.merge(:sort_year =>'1') if $date_year_colm%></th>
           <th><%= link_to "Month", :sort => "dd.calendar_yearmonth"  if $date_month_colm%></th>
           <th data-class="expand">Batter </th>
           <th><%= link_to "H/A", :sort => "at_home"  if $home_colm%></th>
@@ -180,7 +184,7 @@
           <th data-hide="phone"> OPS</th>
           <th data-hide="phone"> ERA</th>
           <th data-hide="phone">  Atbat</th>
-          <th data-hide="phone"> Hit</th>
+          <th data-hide="phone"> <%= link_to "Hit", params.merge(:sort_hit=>'1')%></th>
           <th data-hide="phone,tablet"> Walk</th>
           <th data-hide="phone,tablet"> RBI</th>
           <th data-hide="phone,tablet"> ippies</th>

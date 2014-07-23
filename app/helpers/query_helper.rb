@@ -1,6 +1,16 @@
 module QueryHelper
 
   def subselect_earned(p_hash)
+    if battery?(p_hash)
+      subselect_earned_battery(p_hash)
+    elsif fieldery?(p_hash)
+      subselect_earned_fieldery(p_hash)
+    else
+      subselect_earned_teamery(p_hash)
+    end
+  end
+
+  def subselect_earned_battery(p_hash)
 
      @subselect_earned =  "       (select count(eff.id)
                  from earned_facts_fat eff
@@ -39,6 +49,24 @@ module QueryHelper
         @subselect_earned = "#{@subselect_earned} and fd2.right_field = fd.right_field "
       end
     @subselect_earned = "#{@subselect_earned} where eff.ppn_id = pf.id) earned_runs "
+    puts @subselect_earned
+
+  end
+
+  def subselect_earned_fieldery(p_hash)
+    @subselect_earned =  "CASE when efs.ppn_id IS NULL THEN 0 ELSE 1 END earned_runs"
+  end
+
+  def subselect_earned_teamery(p_hash)
+    @subselect_earned =  "pf.earned_runs earned_runs "
+  end
+
+
+
+  def join_add_earned_facts_slim (p_hash)
+    if fieldery? p_hash and !battery? p_hash
+    @inner_join = "#{@inner_join} left outer join earned_facts_slim efs on efs.ppn_id = pf.id "
+    end
 
   end
 
@@ -216,9 +244,14 @@ module QueryHelper
 
     @order_by = ""
 
-    if p_hash[:group_year] == '1'
+    if p_hash[:group_year] == '1'    and p_hash[:sort_year].nil?
       @order_by = "#{@order_by} yearo asc,"
     end
+
+    if $reorder == 'order_year'
+      @order_by = "#{@order_by} yearo desc,"
+    end
+
 
     if p_hash[:group_month] == '1'
       @order_by = "#{@order_by} montho,"
@@ -243,6 +276,22 @@ module QueryHelper
 
     if p_hash[:order_pitcher] == '1'
       @order_by = "#{@order_by} fd.pitcher,"
+    end
+
+    if p_hash[:sort_year] == '1'
+      if   (1 + rand(2) == 1)
+        @order_by = "#{@order_by} yearo,"
+      else
+        @order_by = "#{@order_by} yearo desc,"
+      end
+    end
+
+    if p_hash[:sort_hit] == '1'
+      if   (1 + rand(2) == 1)
+        @order_by = "#{@order_by} hit,"
+      else
+        @order_by = "#{@order_by} hit desc,"
+      end
     end
 
     if !@order_by.blank?
@@ -483,9 +532,43 @@ module QueryHelper
     join_add_batter_team_dims p_hash
     join_add_fielder_dims p_hash
     join_add_player_dims p_hash
+    join_add_earned_facts_slim p_hash
     join_baserunners p_hash
     join_add_date_dims p_hash
 
+
+  end
+  def fieldery?(p_hash)
+    !p_hash[:pitcher].to_s.blank? ||
+    !p_hash[:catcher].to_s.blank? ||
+    !p_hash[:first_base].to_s.blank? ||
+    !p_hash[:second_base].to_s.blank? ||
+    !p_hash[:third_base].to_s.blank? ||
+    !p_hash[:shortstop].to_s.blank? ||
+    !p_hash[:left_field].to_s.blank? ||
+    !p_hash[:center_field].to_s.blank? ||
+    !p_hash[:right_field].to_s.blank? ||
+    (p_hash[:group_pitcher] == '1') ||
+    (p_hash[:group_catcher] == '1') ||
+    (p_hash[:group_first_base] == '1') ||
+    (p_hash[:group_second_base] == '1') ||
+    (p_hash[:group_third_base] == '1') ||
+    (p_hash[:group_shortstop] == '1') ||
+    (p_hash[:group_left_field] == '1') ||
+    (p_hash[:group_center_field] == '1') ||
+    (p_hash[:group_right_field] == '1')
+
+  end
+
+  def battery?(p_hash)
+    !p_hash[:batter].to_s.blank? ||
+    !p_hash[:runner1b].to_s.blank? ||
+    !p_hash[:runner2b].to_s.blank? ||
+    !p_hash[:runner3b].to_s.blank? ||
+     (p_hash[:group_batter] == '1') ||
+     (p_hash[:group_runner1b] == '1') ||
+     (p_hash[:group_runner2b] == '1') ||
+     (p_hash[:group_runner3b] == '1')
 
   end
 
