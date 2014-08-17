@@ -105,12 +105,33 @@
                 <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]) %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
                 <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]) %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
                 <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]) %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
-                <li> <%= check_box_tag(:group_booper,"1",params[:group_booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>
+                <li> <%= check_box_tag(:group_booper,"1",params[:booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>
                </ul>
               </div>
             </div>
           </div>
         </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+          Columnize
+        </a>
+      </div>
+      <div id="collapseFive" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p> Columnize </p>
+          <div class="groupies-by">
+
+            <ul>
+              <li> <%= check_box_tag(:c_at_bat,"1",params[:c_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
+              <li> <%= check_box_tag(:c_hit,"1",params[:c_hit]) %><%= label_tag(:twitter_share, "Hits?") %> </li>
+              <li> <%= check_box_tag(:c_walk,"1",params[:c_walk]) %><%= label_tag(:twitter_share, "Walks?") %> </li>
+             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <!--
@@ -168,39 +189,28 @@
      -->
 
         <tr>
-          <!--comments like this -->
-          <!--<th><%= link_to "Year", :sort => "dd.calendar_year"  if $date_year_colm%></span></th>   -->
-          <!-- params[:orderby_year = '1']   -->
-          <!--hash.merge!(:b => 'b')   -->
-          <th><%= link_to "Year", params.merge(:sort_year =>'1') if $date_year_colm%></th>
-          <th><%= link_to "Month", :sort => "dd.calendar_yearmonth"  if $date_month_colm%></th>
-          <th data-class="expand">Batter </th>
-          <th><%= link_to "H/A", :sort => "at_home"  if $home_colm%></th>
-          <th><%= link_to "TBat", :sort => "tdb.id3_old"  if $bteam_colm%></th>
-          <th><%= link_to "TField", :sort => "tdf.id3_old" if $fteam_colm%></th>
-          <th> Avg</th>
-          <th data-hide="phone"> OBP</th>
-          <th data-hide="phone"> SLG</th>
-          <th data-hide="phone"> OPS</th>
-          <th data-hide="phone"> ERA</th>
-          <th data-hide="phone">  Atbat</th>
-          <th data-hide="phone"> <%= link_to "Hit", params.merge(:sort_hit=>'1')%></th>
-          <th data-hide="phone,tablet"> Walk</th>
-          <th data-hide="phone,tablet"> RBI</th>
-          <th data-hide="phone,tablet"> ippies</th>
-          <th data-hide="phone,tablet"> earned_runs</th>
-          <th><%=  link_to "Pitcher", :sort => "fd.pitcher"  if $pitcher_colm%></th>
-          <th><%= link_to  "Catcher", :sort => "fd.catcher"  if $catcher_colm%></th>
-          <th><%= link_to  "First Base", :sort => "fd.first_base"  if $firstb_colm%></th>
-          <th><%=  link_to "Second Base", :sort => "fd.second_base"  if $secondb_colm%></th>
-          <th><%=  link_to "Shortstoppy", :sort => "fd.shortstop"  if $ss_colm%></th>
-          <th><%=  link_to "Third Base", :sort => "fd.third_base"  if $thirdb_colm%></th>
-          <th><%=  link_to "Left Field", :sort => "fd.left_field"  if $lf_colm%></th>
-          <th><%= link_to  "Center Field", :sort => "fd.center_field"  if $cf_colm%></th>
-          <th><%=  link_to "Right Field", :sort => "fd.right_field"  if $rf_colm%></th>
-          <th><%=  link_to "Runner 1b", :sort => "fd.runner_1b"  if $runner1b_colm%></th>
-          <th><%=  link_to "Runner 2b", :sort => "fd.runner_2b"  if $runner2b_colm%></th>
-          <th><%=  link_to "Runner 3b", :sort => "fd.runner_3b"  if $runner3b_colm%></th>
+           <th data-class="expand"><%= link_to "#{$flannel[:c1]}", params.merge(:sort_by=>"#{$flannel[:c1]}")%></th>
+          <th><%= link_to "#{$flannel[:c2]}", params.merge(:sort_by=>"#{$flannel[:c2]}") if $flannel.has_key?(:c2)%></th>
+          <th><%= link_to "#{$flannel[:c3]}", params.merge(:sort_by=>"#{$flannel[:c3]}") if $flannel.has_key?(:c3)%></th>
+          <th><%= link_to "#{$flannel[:c4]}", params.merge(:sort_by=>"#{$flannel[:c4]}") if $flannel.has_key?(:c4)%></th>
+          <th><%= link_to "#{$flannel[:c5]}", params.merge(:sort_by=>"#{$flannel[:c5]}") if $flannel.has_key?(:c5)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c6]}", params.merge(:sort_by=>"#{$flannel[:c6]}") if $flannel.has_key?(:c6)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c7]}", params.merge(:sort_by=>"#{$flannel[:c7]}") if $flannel.has_key?(:c7)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c8]}", params.merge(:sort_by=>"#{$flannel[:c8]}") if $flannel.has_key?(:c8)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c9]}", params.merge(:sort_by=>"#{$flannel[:c9]}") if $flannel.has_key?(:c9)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c10]}", params.merge(:sort_by=>"#{$flannel[:c10]}") if $flannel.has_key?(:c10)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c11]}", params.merge(:sort_by=>"#{$flannel[:c11]}") if $flannel.has_key?(:c11)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c12]}", params.merge(:sort_by=>"#{$flannel[:c12]}") if $flannel.has_key?(:c12)%></th>
+          <th data-hide="phone"><%= link_to "#{$flannel[:c13]}", params.merge(:sort_by=>"#{$flannel[:c13]}") if $flannel.has_key?(:c13)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c14]}", params.merge(:sort_by=>"#{$flannel[:c14]}") if $flannel.has_key?(:c14)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c15]}", params.merge(:sort_by=>"#{$flannel[:c15]}") if $flannel.has_key?(:c15)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c16]}", params.merge(:sort_by=>"#{$flannel[:c16]}") if $flannel.has_key?(:c16)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c17]}", params.merge(:sort_by=>"#{$flannel[:c17]}") if $flannel.has_key?(:c17)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c18]}", params.merge(:sort_by=>"#{$flannel[:c18]}") if $flannel.has_key?(:c18)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
+
 
         </tr>
         </thead>
@@ -208,37 +218,27 @@
         <div id="tabby">
           <tbody>
           <% @Plabs.each do |plab| %>
-
               <tr>
-                <td><%= plab.yearo if $date_year_colm%></td>
-                <td><%= plab.montho if $date_month_colm%></td>
-                <td><%= plab.batter if $batter_colm%></td>
-                <td><%= plab.at_home if $home_colm%></td>
-                <td><%= plab.bteam if $bteam_colm%></td>
-                <td><%= plab.fteam if $fteam_colm%></td>
-                <td><%= plab.avg%></td>
-                <td><%= plab.obp%></td>
-                <td><%= plab.slg%></td>
-                <td><%= plab.ops%></td>
-                <td><%= plab.era%></td>
-                <td><%= plab.at_bat%></td>
-                <td><%= plab.hit%></td>
-                <td><%= plab.walk%></td>
-                <td><%= plab.rbi%></td>
-                <td><%= plab.ippies%></td>
-                <td><%= plab.earned_runs%></td>
-                <td><%= plab.pitcher if $pitcher_colm%></td>
-                <td><%= plab.catcher if $catcher_colm%></td>
-                <td><%= plab.first_base if $firstb_colm%></td>
-                <td><%= plab.second_base if $secondb_colm%></td>
-                <td><%= plab.shortstop if $ss_colm%></td>
-                <td><%= plab.third_base if $thirdb_colm%></td>
-                <td><%= plab.left_field if $lf_colm%></td>
-                <td><%= plab.center_field if $cf_colm%></td>
-                <td><%= plab.right_field if $rf_colm%></td>
-                <td><%= plab.runner1b if $runner1b_colm%></td>
-                <td><%= plab.runner2b if $runner2b_colm%></td>
-                <td><%= plab.runner3b if $runner3b_colm%></td>
+                <td><%= plab.c1%></td>
+                <td><%= plab.c2%></td>
+                <td><%= plab.c3%></td>
+                <td><%= plab.c4 if $flannel.has_key?(:c4)%></td>
+                <td><%= plab.c5 if $flannel.has_key?(:c5)%></td>
+                <td><%= plab.c6 if $flannel.has_key?(:c6)%></td>
+                <td><%= plab.c7 if $flannel.has_key?(:c7)%></td>
+                <td><%= plab.c8 if $flannel.has_key?(:c8)%></td>
+                <td><%= plab.c9 if $flannel.has_key?(:c9)%></td>
+                <td><%= plab.c10 if $flannel.has_key?(:c10)%></td>
+                <td><%= plab.c11 if $flannel.has_key?(:c11)%></td>
+                <td><%= plab.c12 if $flannel.has_key?(:c12)%></td>
+                <td><%= plab.c13 if $flannel.has_key?(:c13)%></td>
+                <td><%= plab.c14 if $flannel.has_key?(:c14)%></td>
+                <td><%= plab.c15 if $flannel.has_key?(:c15)%></td>
+                <td><%= plab.c16 if $flannel.has_key?(:c16)%></td>
+                <td><%= plab.c17 if $flannel.has_key?(:c17)%></td>
+                <td><%= plab.c18 if $flannel.has_key?(:c18)%></td>
+                <td><%= plab.c19 if $flannel.has_key?(:c19)%></td>
+                <td><%= plab.c20 if $flannel.has_key?(:c20)%></td>
               </tr>
           <% end unless @Plabs.nil?%>
           </tbody>

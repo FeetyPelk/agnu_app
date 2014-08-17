@@ -244,16 +244,12 @@ module QueryHelper
 
     @order_by = ""
 
-    if p_hash[:group_year] == '1'    and p_hash[:sort_year].nil?
+    if p_hash[:group_year] == '1'    and p_hash[:sort_by].nil?
       @order_by = "#{@order_by} yearo asc,"
     end
 
-    if $reorder == 'order_year'
-      @order_by = "#{@order_by} yearo desc,"
-    end
 
-
-    if p_hash[:group_month] == '1'
+    if p_hash[:group_month] == '1' and p_hash[:sort_by].nil?
       @order_by = "#{@order_by} montho,"
     end
 
@@ -278,20 +274,16 @@ module QueryHelper
       @order_by = "#{@order_by} fd.pitcher,"
     end
 
-    if p_hash[:sort_year] == '1'
-      if   (1 + rand(2) == 1)
-        @order_by = "#{@order_by} yearo,"
-      else
-        @order_by = "#{@order_by} yearo desc,"
-      end
-    end
+    #snoob
 
-    if p_hash[:sort_hit] == '1'
-      if   (1 + rand(2) == 1)
-        @order_by = "#{@order_by} hit,"
-      else
-        @order_by = "#{@order_by} hit desc,"
-      end
+    if !p_hash[:sort_by].nil?
+          if   p_hash[:booper].nil?
+            @order_by = "#{@order_by} #{$flannel.key(p_hash[:sort_by])} desc,"
+            p_hash[:booper] = '1'
+          else
+            @order_by = "#{@order_by} #{$flannel.key(p_hash[:sort_by])},"
+            p_hash[:booper] = nil
+          end
     end
 
     if !@order_by.blank?
@@ -300,58 +292,59 @@ module QueryHelper
     end
 
 
+
   end
 
   def outer_select(p_hash)
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
-      @outer_select += "batter"
+      @outer_select += "batter as #{$flannel.key("batter").to_s}"
     end
 
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "pitcher"
+      @outer_select += "pitcher as #{$flannel.key("pitcher").to_s}"
     end
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "catcher"
+      @outer_select += "catcher as #{$flannel.key("catcher").to_s}"
     end
 
     if p_hash[:group_first_base] == '1' || !p_hash[:first_base].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "first_base"
+      @outer_select += "first_base as #{$flannel.key("first_base").to_s}"
     end
 
     if p_hash[:group_second_base] == '1' || !p_hash[:second_base].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "second_base"
+      @outer_select += "second_base as #{$flannel.key("second_base").to_s}"
     end
 
 
     if p_hash[:group_shortstop] == '1' || !p_hash[:shortstop].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "shortstop"
+      @outer_select += "shortstop as #{$flannel.key("shortstop").to_s}"
     end
 
 
     if p_hash[:group_third_base] == '1' || !p_hash[:third_base].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "third_base"
+      @outer_select += "third_base as #{$flannel.key("third_base").to_s}"
     end
 
     if p_hash[:group_left_field] == '1' || !p_hash[:left_field].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "left_field"
+      @outer_select += "left_field as #{$flannel.key("left_field").to_s}"
     end
 
     if p_hash[:group_center_field] == '1' || !p_hash[:center_field].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "center_field"
+      @outer_select += "center_field as #{$flannel.key("center_field").to_s}"
     end
 
     if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "right_field"
+      @outer_select += "right_field as #{$flannel.key("right_field").to_s}"
     end
 
 
@@ -378,49 +371,49 @@ module QueryHelper
     if (p_hash[:group_year] == '1')
       $year_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "yearo"
+      @outer_select += "yearo as #{$flannel.key("yearo").to_s}"
     end
 
     if (p_hash[:group_month] == '1')
       $year_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "montho"
+      @outer_select += "montho  as #{$flannel.key("montho").to_s}"
     end
 
     if p_hash[:group_fteam] == '1' || !p_hash[:fteam].to_s.blank?
       $fteam_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "fteam"
+      @outer_select += "fteam as #{$flannel.key("fteam").to_s}"
     end
 
     if p_hash[:group_bteam] == '1' || !p_hash[:bteam].to_s.blank?
       $bteam_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "bteam"
+      @outer_select += "bteam as #{$flannel.key("bteam").to_s}"
     end
 
     if p_hash[:group_runner1b] == '1' || !p_hash[:runner1b].to_s.blank?
       $runner1b_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "runner1b"
+      @outer_select += "runner1b as #{$flannel.key("runner1b").to_s}"
     end
 
     if p_hash[:group_runner2b] == '1' || !p_hash[:runner2b].to_s.blank?
       $runner2b_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "runner2b"
+      @outer_select += "runner2b as #{$flannel.key("runner2b").to_s}"
     end
 
     if p_hash[:group_runner3b] == '1' || !p_hash[:runner3b].to_s.blank?
       $runner3b_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "runner3b"
+      @outer_select += "runner3b as #{$flannel.key("runner3b").to_s}"
     end
 
     if p_hash[:group_home_away] == '1'
       $home_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += " case when at_home = '1' then 'H' else 'A' end at_home"
+      @outer_select += " case when at_home = '1' then 'H' else 'A' end #{$flannel.key("at_home").to_s}"
       #@outer_select += "at_home"
     end
 
@@ -702,49 +695,56 @@ module QueryHelper
     @er_where_id_or_game = ""
     @select_by_1 = "select "
     #outer_select
-    @selectx = ", sum(fl.at_bat) at_bat, sum(fl.hit) hit,
-       sum(fl.walk) walk, sum(fl.hbp) hbp, sum(fl.sacfly) sacfly,
-       sum(fl.outs) outz, sum(fl.rbi) rbi,
-       sum(fl.earned_runs) earned_runs,
-       round(CASE WHEN sum(fl.at_bat) = 0 then 0 else cast(sum(fl.hit) as numeric)/ sum(fl.at_bat) END,3) as avg,
-       cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as ippies,
+    @selectx = ", sum(fl.at_bat) #{$flannel.key("at_bat").to_s},
+        sum(fl.hit) #{$flannel.key("hit").to_s}, sum(fl.walk) #{$flannel.key("walk").to_s},
+       sum(fl.hbp) #{$flannel.key("hbp").to_s}, sum(fl.sacfly) #{$flannel.key("sacfly").to_s},
+       sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
+       sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
+       round(CASE WHEN sum(fl.at_bat) = 0 then 0 else cast(sum(fl.hit) as numeric)/ sum(fl.at_bat) END,3) as #{$flannel.key("avg").to_s},
+       cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s},
        round(cast(sum(fl.hit + fl.walk + fl.hbp) as numeric) /
 		     case sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
 		       when 0 then null
 		       else cast(sum(fl.at_bat + fl.walk +fl.sacfly + fl.hbp) as numeric)
-		     end,5) obp,
+		     end,5) #{$flannel.key("obp").to_s},
 		     round(cast(sum(fl.bag) as numeric) /
 		     case sum(fl.at_bat)
 		       when 0 then null
-		       else cast(sum(fl.at_bat) as numeric) end,5) slg
+		       else cast(sum(fl.at_bat) as numeric) end,5) #{$flannel.key("slg").to_s}
    from ( select "    #inner_select
 
-    @select_by_2 = ", sum(fl.at_bat) at_bat, sum(fl.hit) hit,
-    sum(fl.walk) walk, sum(fl.hbp) hbp, sum(fl.sacfly) sacfly,
-    sum(fl.outs) outz, sum(fl.rbi) rbi,
+    @select_by_2 = ", sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
+    sum(fl.walk) #{$flannel.key('walk').to_s}, sum(fl.hbp) #{$flannel.key('hbp').to_s}, sum(fl.sacfly) #{$flannel.key('sacfly').to_s},
+    sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
         CASE sum(fl.at_bat)
     when 0 then null
   else
     round(cast(sum(fl.hit) as numeric)/ sum(fl.at_bat),3)
-    END as avg,
+    END as #{$flannel.key("avg").to_s},
 
-           sum(fl.earned_runs) earned_runs,
+           sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
 
-    cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as ippies,
+    cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s},
                                                              CASE sum(fl.outs) when 0 then null
     else round(sum(fl.earned_runs) * 9 / (cast(sum(fl.outs) as numeric)/3),2)
-    end era,
+    end #{$flannel.key("era").to_s},
+
+	  case sum(fl.outs)
+	      when 0 then null
+              else round(cast(sum(fl.walk) + sum(hit) as numeric) / (cast (sum(fl.outs)as numeric) /3),3)
+    end  #{$flannel.key("whip").to_s},
+
     case sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
       when 0 then null
       else
         round(cast(sum(fl.hit + fl.walk + fl.hbp) as numeric) /
             cast(sum(fl.at_bat + fl.walk +fl.sacfly + fl.hbp) as numeric),3)
-    end obp,
+    end #{$flannel.key("obp").to_s},
     case sum(fl.at_bat)
       when 0 then null
       else round(cast(sum(fl.bag) as numeric) /
           cast(sum(fl.at_bat) as numeric),3)
-    end  slg,
+    end  #{$flannel.key("slg").to_s},
 
     case  sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
       when 0 then null
@@ -756,7 +756,7 @@ module QueryHelper
                    cast(sum(fl.bag) as numeric) /
                    cast(sum(fl.at_bat) as numeric),3)
            end
-    end ops
+    end #{$flannel.key("ops").to_s}
 
     from ( select "
 
@@ -872,7 +872,7 @@ module QueryHelper
     @summer =              " null as avg,
                               pf.at_bat as at_bat, pf.hit as hit,
                               pf.walk as walk, pf.rbi as rbi, pf.at_home as at_home
-                              null as ippies, null as OBP, null as slg, null as OPS, null as ERA,
+                              null as ippies, null as OBP, null as slg, null as OPS, null as ERA, null as WHIP,
                               from play_facts pf "
 
   end
@@ -900,9 +900,135 @@ module QueryHelper
 
 
   end
+  def build_hash  (p_hash)
+=begin
+    chash = {:c1 => "at_bat",
+             :c2 => "hit",
+             :c3 => "walk",
+             :c4 => "yearo",
+             :c5 => "batter",
+             :c6 => "avg",
+             :c7 => "obp",
+             :c8 => "slg",
+             :c9 => "ops",
+             :c10 => "era",
+             :c11 => "rbi",
+             :c12 => "ippies",
+             :c13 => "earned_runs"}
+=end
+    colcount = 0
+    chash = Hash.new
+
+    if p_hash[:group_year] == '1'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'yearo'
+    end
+    if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'batter'
+    end
+    if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'pitcher'
+    end
+    if p_hash[:group_fteam] == '1' || !p_hash[:fteam].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'fteam'
+    end
+    if p_hash[:group_bteam] == '1' || !p_hash[:bteam].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'bteam'
+    end
+
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'hit'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'obp'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'slg'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'ops'
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'era'
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'whip'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
+
+    if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'catcher'
+    end
+
+    if p_hash[:group_first_base] == '1' || !p_hash[:first_base].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'first_base'
+    end
+
+    if p_hash[:group_second_base] == '1' || !p_hash[:second_base].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'second_base'
+    end
+
+    if p_hash[:group_third_base] == '1' || !p_hash[:third_base].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'third_base'
+    end
+
+    if p_hash[:group_shortstop] == '1' || !p_hash[:shortstop].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'shortstop'
+    end
+
+    if p_hash[:group_left_field] == '1' || !p_hash[:left_field].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'left_field'
+    end
+
+    if p_hash[:group_center_field] == '1' || !p_hash[:center_field].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'center_field'
+    end
+
+    if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'right_field'
+    end
+
+    if p_hash[:group_runner1b] == '1' || !p_hash[:runner_1b].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'runner1b'
+    end
+
+    if p_hash[:group_runner2b] == '1' || !p_hash[:runner_2b].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'runner2b'
+    end
+
+    if p_hash[:group_runner3b] == '1' || !p_hash[:runner_3b].to_s.blank?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'runner3b'
+    end
+
+
+
+    if !(p_hash.has_key?("c_at_bat")) && !(p_hash.has_key?("c_hit")) && !(p_hash.has_key?("c_walk"))
+        $flannel = chash.clone
+
+    else
+      h2 = Hash.new
+      colcount = 0
+      if (p_hash.has_key?("c_at_bat"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
+      end
+      if (p_hash.has_key?("c_hit"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'hit'
+      end
+      if (p_hash.has_key?("c_walk") )
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'walk'
+      end
+
+      h2.each_value{|value| if chash.has_value?(value) then chash.each { |k, v| if v == value then chash.delete k end } end}
+
+
+      h3 = Hash.new
+      colcount = 0
+      h2.each_value{|v| h3[("c" + (colcount+=1).to_s).to_sym] = v}
+      chash.each_value{|v| h3[("c" + (colcount+=1).to_s).to_sym] = v}
+
+      $flannel = h3.clone
+
+    end
+
+  end
 
 
   def buildquery (p_hash)
+    build_hash  p_hash
     set_to_false
     default_query = true
     @outer_select = ""
@@ -965,7 +1091,10 @@ module QueryHelper
 
 
     if default_query
-      return  "select 'moopers' as batter, 1 as avg, 0 as earned_runs, at_bat, hit, walk, rbi, 0 as ippies, 0 as OBP, 0 as slg, 0 as OPS, 0 as ERA from play_facts limit 10"
+      return  "select 0 as c1, 0 as c2, 0 as c3, 0 as c4, 0 as c5,
+               0 as c6, 0 as c7, 0 as c8, 0 as c9, 0 as c10,
+               0 as c11, 0 as c12, 0 as c13, 0 as c14, 0 as c15,
+               0 as c16, 0 as c17, 0 as c18, 0 as c19, 0 as c20 from play_facts limit 10"
     end
 
     the__test_query =  "#{@select_by_1}
