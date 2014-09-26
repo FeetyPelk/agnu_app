@@ -1,6 +1,24 @@
 module QueryHelper
 
-  def subselect_earned(p_hash)
+  def flush_left(p_hash)
+    ((p_hash.has_key?("c_at_bat")) ||
+        (p_hash.has_key?("c_hit")) ||
+        (p_hash.has_key?("c_walk")) ||
+        (p_hash.has_key?("c_avg")) ||
+        (p_hash.has_key?("c_obp")) ||
+        (p_hash.has_key?("c_slg")) ||
+        (p_hash.has_key?("c_ops")) ||
+        (p_hash.has_key?("c_era")) ||
+        (p_hash.has_key?("c_whip")) ||
+        (p_hash.has_key?("c_rbi")) ||
+        (p_hash.has_key?("c_sacfly")) ||
+        (p_hash.has_key?("c_hbp")) ||
+        (p_hash.has_key?("c_ippies")) ||
+        (p_hash.has_key?("c_earned_runs")) )
+  end
+
+
+        def subselect_earned(p_hash)
     if battery?(p_hash)
       subselect_earned_battery(p_hash)
     elsif fieldery?(p_hash)
@@ -298,11 +316,13 @@ module QueryHelper
   def outer_select(p_hash)
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
       @outer_select += "batter as #{$flannel.key("batter").to_s}"
+      @outer_select += ", batter_key as #{$flannel.key("batter_key").to_s}"
     end
 
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       if !@outer_select.blank?; @outer_select+= ", "; end
       @outer_select += "pitcher as #{$flannel.key("pitcher").to_s}"
+      @outer_select += ", pitcher_key as #{$flannel.key("pitcher_key").to_s}"
     end
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
@@ -422,14 +442,14 @@ module QueryHelper
 
   def inner_select(p_hash)
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
-      @inner_select += "pf.id, pd.player_name as batter"
+      @inner_select += "pf.id, pf.player_key as batter_key, pd.player_name as batter"
     else
       @inner_select+= "pf.game_key"
     end
 
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       if !@inner_select.blank?; @inner_select+= ", "; end
-      @inner_select += "fd.pitcher"
+      @inner_select += "fd.pitcher, fd.pitcher_key"
     end
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
@@ -593,7 +613,7 @@ module QueryHelper
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       $pitcher_colm = true
       #@inner_group = "#{@inner_group} fd.pitcher,"
-      @outer_group = "#{@outer_group} pitcher,"
+      @outer_group = "#{@outer_group} pitcher, pitcher_key,"
     end
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
@@ -605,7 +625,7 @@ module QueryHelper
     if p_hash[:group_batter] == '1' ||  !p_hash[:batter].to_s.blank?
       $batter_colm = true
       #@inner_group = "#{@inner_group} pd.player_name,"
-      @outer_group = "#{@outer_group} fl.batter,"
+      @outer_group = "#{@outer_group} fl.batter, fl.batter_key,"
     end
 
     if p_hash[:group_first_base] == '1' || !p_hash[:first_base].to_s.blank?
@@ -917,6 +937,7 @@ module QueryHelper
              :c13 => "earned_runs"}
 =end
     colcount = 0
+    hidden = 100
     chash = Hash.new
 
     if p_hash[:group_year] == '1'
@@ -924,9 +945,11 @@ module QueryHelper
     end
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'batter'
+      chash[("c" + (hidden+=1).to_s).to_sym] =  'batter_key'
     end
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'pitcher'
+      chash[("c" + (hidden+=1).to_s).to_sym] =  'pitcher_key'
     end
     if p_hash[:group_fteam] == '1' || !p_hash[:fteam].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'fteam'
@@ -996,29 +1019,82 @@ module QueryHelper
 
 
 
-    if !(p_hash.has_key?("c_at_bat")) && !(p_hash.has_key?("c_hit")) && !(p_hash.has_key?("c_walk"))
+    if !flush_left(p_hash)
         $flannel = chash.clone
 
     else
       h2 = Hash.new
       colcount = 0
+      hidden = 100
       if (p_hash.has_key?("c_at_bat"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       end
+
       if (p_hash.has_key?("c_hit"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'hit'
       end
+
       if (p_hash.has_key?("c_walk") )
         h2[("c" + (colcount+=1).to_s).to_sym] =  'walk'
       end
+
+      if (p_hash.has_key?("c_obp"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'obp'
+      end
+
+      if (p_hash.has_key?("c_avg"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'avg'
+      end
+
+      if (p_hash.has_key?("c_slg"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'slg'
+      end
+
+      if (p_hash.has_key?("c_ops"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'ops'
+      end
+
+      if (p_hash.has_key?("c_era"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'era'
+      end
+
+      if (p_hash.has_key?("c_whip"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'whip'
+      end
+
+      if (p_hash.has_key?("c_rbi"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
+      end
+
+      if (p_hash.has_key?("c_sacfly"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
+      end
+
+      if (p_hash.has_key?("c_hbp"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
+      end
+
+      if (p_hash.has_key?("c_ippies"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
+      end
+
+      if (p_hash.has_key?("c_earned_runs"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
+      end
+
+
 
       h2.each_value{|value| if chash.has_value?(value) then chash.each { |k, v| if v == value then chash.delete k end } end}
 
 
       h3 = Hash.new
       colcount = 0
+      hidden = 100
       h2.each_value{|v| h3[("c" + (colcount+=1).to_s).to_sym] = v}
-      chash.each_value{|v| h3[("c" + (colcount+=1).to_s).to_sym] = v}
+      #chash.each_value{|v| h3[("c" + (colcount+=1).to_s).to_sym] = v}   this is the old one
+      chash.each_value {|v| v.to_s.end_with?("key") ? h3[("c" + (hidden+=1).to_s).to_sym] = v  : h3[("c" + (colcount+=1).to_s).to_sym] = v}
+      #(year_start..year_end).each {|x| no_repeats?(x) ? puts(x) : puts("nil") }  this is an example of syntax only
+      #(i > 10 ? "greater than" : "less than or equal to")
 
       $flannel = h3.clone
 
