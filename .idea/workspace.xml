@@ -9,15 +9,15 @@
     <file path="/Dummy.txt" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1397039600127" ignored="false" />
     <file path="/_header.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1397042209997" ignored="false" />
     <file path="/_footer.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1397042250316" ignored="false" />
-    <file path="/home.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1408443485132" ignored="false" />
+    <file path="/home.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1412243450557" ignored="false" />
     <file path="/custom.css.scss" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398002831775" ignored="false" />
-    <file path="/query_helper.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1408445488454" ignored="false" />
+    <file path="/query_helper.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1412244032934" ignored="false" />
     <file path="/fragment.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398079776100" ignored="false" />
     <file path="/footable.js" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398079902611" ignored="false" />
     <file path="/Gemfile" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398256997390" ignored="false" />
     <file path="/database.yml" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398429494253" ignored="false" />
     <file path="/application.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1398250909323" ignored="false" />
-    <file path="/plab.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1408011227487" ignored="false" />
+    <file path="/plab.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1412243693387" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,10 +42,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="home.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="home.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/plabs/home.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="44" selection-start="8860" selection-end="8860" vertical-scroll-proportion="0.0">
+            <state line="127" column="46" selection-start="7699" selection-end="7707" vertical-scroll-proportion="-4.9085364">
               <folding />
             </state>
           </provider>
@@ -54,7 +54,7 @@
       <file leaf-file-name="plab.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/plab.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="55" selection-start="588" selection-end="588" vertical-scroll-proportion="0.0">
+            <state line="1" column="36" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -69,10 +69,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query_helper.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="query_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1105" column="85" selection-start="37113" selection-end="37113" vertical-scroll-proportion="0.022970904">
+            <state line="776" column="37" selection-start="26577" selection-end="26583" vertical-scroll-proportion="-3.7741935">
               <folding />
             </state>
           </provider>
@@ -103,8 +103,8 @@
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/log/development.log" />
         <option value="$PROJECT_DIR$/config/database.yml" />
-        <option value="$PROJECT_DIR$/app/models/plab.rb" />
         <option value="$PROJECT_DIR$/app/views/plabs/home.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/plab.rb" />
         <option value="$PROJECT_DIR$/app/helpers/query_helper.rb" />
       </list>
     </option>
@@ -148,8 +148,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="RailsProjectView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -364,20 +362,22 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="RailsProjectView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.general" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.rvm/gems/ruby-1.9.2-p320@rails3tutorial/gems/activerecord-3.2.14/lib/active_record/connection_adapters/abstract" />
+    <property name="options.lastSelected" value="preferences.general" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.rvm/gems/ruby-1.9.2-p320@rails3tutorial/gems/activerecord-3.2.14/lib/active_record/connection_adapters/abstract" />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Rails.Development: agnu_apps">
     <configuration default="false" name="All features in: agnu_app" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
@@ -683,13 +683,6 @@
       <IRB_RUN_CONFIG NAME="IS_RAILS_CONSOLE" VALUE="false" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
-      <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSRemoteDebuggerConfigurationSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="" />
@@ -723,6 +716,13 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
+      <JSRemoteDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSRemoteDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -790,13 +790,13 @@
       <method />
     </configuration>
     <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="Cucumber.All features in: agnu_app" />
-      <item index="1" class="java.lang.String" itemvalue="IRB console.Rails console: agnu_app" />
-      <item index="2" class="java.lang.String" itemvalue="RSpec.All specs in: agnu_app" />
-      <item index="3" class="java.lang.String" itemvalue="Rake.assets:clean" />
-      <item index="4" class="java.lang.String" itemvalue="Rake.db:create" />
-      <item index="5" class="java.lang.String" itemvalue="Rails.Development: agnu_apps" />
-      <item index="6" class="java.lang.String" itemvalue="Rails.Redshift:agnu_apps" />
+      <item index="0" class="java.lang.String" itemvalue="Rails.Development: agnu_apps" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Redshift:agnu_apps" />
+      <item index="2" class="java.lang.String" itemvalue="Cucumber.All features in: agnu_app" />
+      <item index="3" class="java.lang.String" itemvalue="IRB console.Rails console: agnu_app" />
+      <item index="4" class="java.lang.String" itemvalue="RSpec.All specs in: agnu_app" />
+      <item index="5" class="java.lang.String" itemvalue="Rake.assets:clean" />
+      <item index="6" class="java.lang.String" itemvalue="Rake.db:create" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -836,13 +836,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="308" y="153" width="1612" height="823" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13478261" sideWeight="0.6589928" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14099379" sideWeight="0.6115108" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23664597" sideWeight="0.6589928" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23664597" sideWeight="0.6115108" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3410072" sideWeight="0.7397516" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35107914" sideWeight="0.26024845" order="8" side_tool="true" content_ui="tabs" />
@@ -975,20 +975,6 @@
         <state line="33" column="0" selection-start="801" selection-end="801" vertical-scroll-proportion="0.3517588" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/plabs_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="109" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/plab.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="55" selection-start="588" selection-end="588" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p320/gems/activesupport-3.2.14/lib/active_support/notifications/instrumenter.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="0" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" />
@@ -999,16 +985,30 @@
         <state line="30" column="0" selection-start="1023" selection-end="1023" vertical-scroll-proportion="1.048951" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/plabs/home.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="44" selection-start="8860" selection-end="8860" vertical-scroll-proportion="0.0">
+        <state line="776" column="37" selection-start="26577" selection-end="26583" vertical-scroll-proportion="-3.7741935">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/plabs_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1105" column="85" selection-start="37113" selection-end="37113" vertical-scroll-proportion="0.022970904">
+        <state line="6" column="109" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/plab.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="36" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/plabs/home.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="127" column="46" selection-start="7699" selection-end="7707" vertical-scroll-proportion="-4.9085364">
           <folding />
         </state>
       </provider>

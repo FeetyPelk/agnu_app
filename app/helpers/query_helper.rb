@@ -1,7 +1,8 @@
 module QueryHelper
 
   def flush_left(p_hash)
-    ((p_hash.has_key?("c_at_bat")) ||
+    ((p_hash.has_key?("c_pa")) ||
+        (p_hash.has_key?("c_at_bat")) ||
         (p_hash.has_key?("c_hit")) ||
         (p_hash.has_key?("c_walk")) ||
         (p_hash.has_key?("c_avg")) ||
@@ -715,8 +716,9 @@ module QueryHelper
     @er_where_id_or_game = ""
     @select_by_1 = "select "
     #outer_select
-    @selectx = ", sum(fl.at_bat) #{$flannel.key("at_bat").to_s},
-        sum(fl.hit) #{$flannel.key("hit").to_s}, sum(fl.walk) #{$flannel.key("walk").to_s},
+    @selectx = ", sum(fl.pa) #{$flannel.key("pa").to_s},
+       sum(fl.at_bat) #{$flannel.key("at_bat").to_s},
+       sum(fl.hit) #{$flannel.key("hit").to_s}, sum(fl.walk) #{$flannel.key("walk").to_s},
        sum(fl.hbp) #{$flannel.key("hbp").to_s}, sum(fl.sacfly) #{$flannel.key("sacfly").to_s},
        sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
        sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
@@ -733,7 +735,7 @@ module QueryHelper
 		       else cast(sum(fl.at_bat) as numeric) end,5) #{$flannel.key("slg").to_s}
    from ( select "    #inner_select
 
-    @select_by_2 = ", sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
+    @select_by_2 = ", sum(fl.pa) #{$flannel.key('pa').to_s}, sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
     sum(fl.walk) #{$flannel.key('walk').to_s}, sum(fl.hbp) #{$flannel.key('hbp').to_s}, sum(fl.sacfly) #{$flannel.key('sacfly').to_s},
     sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
         CASE sum(fl.at_bat)
@@ -780,7 +782,8 @@ module QueryHelper
 
     from ( select "
 
-    @select_by = ",at_bat,
+    @select_by = ", pa,
+           at_bat,
            hit,
            hbp,
            bag,
@@ -877,6 +880,7 @@ module QueryHelper
     @summer ||
         @summer =              ", round(CASE WHEN sum(pf.at_bat) = 0 then 0 else cast(sum(pf.hit) as numeric)/ sum(pf.at_bat) END,3) as avg,
                               sum(pf.made_outs)/3 ||'.'||sum(pf.made_outs)%3 as ippies,
+                              sum(pf.pa) as pa,
                               sum(pf.at_bat) as at_bat, sum(pf.hit) as hit,
                               sum(pf.walk) as walk, sum(pf.rbi) as rbi,
                               round(case when (sum(at_bat) + sum(walk) + sum(sacfly) + sum(hbp) > 0) then
@@ -890,7 +894,7 @@ module QueryHelper
 
   def nosumfields
     @summer =              " null as avg,
-                              pf.at_bat as at_bat, pf.hit as hit,
+                              pf.pa as pa, pf.at_bat as at_bat, pf.hit as hit,
                               pf.walk as walk, pf.rbi as rbi, pf.at_home as at_home
                               null as ippies, null as OBP, null as slg, null as OPS, null as ERA, null as WHIP,
                               from play_facts pf "
@@ -958,6 +962,7 @@ module QueryHelper
       chash[("c" + (colcount+=1).to_s).to_sym] =  'bteam'
     end
 
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'pa'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'hit'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
@@ -1026,6 +1031,10 @@ module QueryHelper
       h2 = Hash.new
       colcount = 0
       hidden = 100
+      if (p_hash.has_key?("c_pa"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'pa'
+      end
+
       if (p_hash.has_key?("c_at_bat"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       end

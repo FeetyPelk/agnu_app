@@ -124,6 +124,7 @@
           <div class="groupies-by">
 
             <ul>
+              <li> <%= check_box_tag(:c_pa,"1",params[:c_pq]) %><%= label_tag(:twitter_share, "PA?") %> </li>
               <li> <%= check_box_tag(:c_at_bat,"1",params[:c_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
               <li> <%= check_box_tag(:c_hit,"1",params[:c_hit]) %><%= label_tag(:twitter_share, "Hits?") %> </li>
               <li> <%= check_box_tag(:c_walk,"1",params[:c_walk]) %><%= label_tag(:twitter_share, "Walks?") %> </li>
