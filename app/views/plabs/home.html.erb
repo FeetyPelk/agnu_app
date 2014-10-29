@@ -223,6 +223,11 @@
           <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
           <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
           <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c22]}", params.merge(:sort_by=>"#{$flannel[:c22]}") if $flannel.has_key?(:c22)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c23]}", params.merge(:sort_by=>"#{$flannel[:c23]}") if $flannel.has_key?(:c23)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c24]}", params.merge(:sort_by=>"#{$flannel[:c24]}") if $flannel.has_key?(:c24)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c25]}", params.merge(:sort_by=>"#{$flannel[:c25]}") if $flannel.has_key?(:c25)%></th>
+          <th data-hide="phone,tablet"><%= link_to "#{$flannel[:c26]}", params.merge(:sort_by=>"#{$flannel[:c26]}") if $flannel.has_key?(:c26)%></th>
 
 
         </tr>
@@ -252,6 +257,12 @@
                 <td><%= plab.c18 if $flannel.has_key?(:c18)%></td>
                 <td><%= plab.c19 if $flannel.has_key?(:c19)%></td>
                 <td><%= plab.c20 if $flannel.has_key?(:c20)%></td>
+                <td><%= plab.c21 if $flannel.has_key?(:c21)%></td>
+                <td><%= plab.c22 if $flannel.has_key?(:c22)%></td>
+                <td><%= plab.c23 if $flannel.has_key?(:c23)%></td>
+                <td><%= plab.c24 if $flannel.has_key?(:c24)%></td>
+                <td><%= plab.c25 if $flannel.has_key?(:c25)%></td>
+                <td><%= plab.c26 if $flannel.has_key?(:c26)%></td>
               </tr>
           <% end unless @Plabs.nil?%>
           </tbody>
@@ -259,3 +270,4 @@
       </table>
     </div> <!--container -->
 <% end %>
+

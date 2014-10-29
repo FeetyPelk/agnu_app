@@ -15,17 +15,28 @@ module QueryHelper
         (p_hash.has_key?("c_sacfly")) ||
         (p_hash.has_key?("c_hbp")) ||
         (p_hash.has_key?("c_ippies")) ||
-        (p_hash.has_key?("c_earned_runs")) )
+        (p_hash.has_key?("c_earned_runs")) ||
+        (p_hash.has_key?("c_catholic_runs")) )
   end
 
 
-        def subselect_earned(p_hash)
+  def subselect_earned(p_hash)
     if battery?(p_hash)
       subselect_earned_battery(p_hash)
     elsif fieldery?(p_hash)
       subselect_earned_fieldery(p_hash)
     else
       subselect_earned_teamery(p_hash)
+    end
+  end
+
+  def subselect_catholic(p_hash)
+    if battery?(p_hash)
+      subselect_catholic_battery(p_hash)
+    elsif fieldery?(p_hash)
+      subselect_catholic_fieldery(p_hash)
+    else
+      subselect_catholic_teamery(p_hash)
     end
   end
 
@@ -64,27 +75,86 @@ module QueryHelper
       if p_hash[:group_center_field] == '1' || !p_hash[:center_field].to_s.blank?
         @subselect_earned = "#{@subselect_earned} and fd2.center_field = fd.center_field "
       end
-      if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
-        @subselect_earned = "#{@subselect_earned} and fd2.right_field = fd.right_field "
-      end
-    @subselect_earned = "#{@subselect_earned} where eff.ppn_id = pf.id) earned_runs "
+     if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
+       @subselect_earned = "#{@subselect_earned} and fd2.right_field = fd.right_field "
+     end
+    @subselect_earned = "#{@subselect_earned} where eff.ppn_id = pf.id) earned_runs, "
     puts @subselect_earned
 
   end
 
+  def subselect_catholic_battery(p_hash)
+
+    @subselect_catholic =  "       (select count(rff.id)
+                 from run_facts_fat rff
+                 join fielder_dims fd2 on
+                (fd2.id = rff.run_3
+                 or fd2.id = rff.run_2
+                 or fd2.id = rff.run_1
+                 or fd2.id = rff.run_b) "
+
+
+    if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.pitcher = fd.pitcher "
+    end
+    if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.catcher = fd.catcher "
+    end
+    if p_hash[:group_first_base] == '1' || !p_hash[:first_base].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.first_base = fd.first_base "
+    end
+    if p_hash[:group_second_base] == '1' || !p_hash[:second_base].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.second_base = fd.second_base "
+    end
+    if p_hash[:group_third_base] == '1' || !p_hash[:third_base].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.third_base = fd.third_base "
+    end
+    if p_hash[:group_shortstop] == '1' || !p_hash[:shortstop].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.shortstop = fd.shortstop "
+    end
+    if p_hash[:group_left_field] == '1' || !p_hash[:left_field].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.left_field = fd.left_field "
+    end
+    if p_hash[:group_center_field] == '1' || !p_hash[:center_field].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.center_field = fd.center_field "
+    end
+    if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
+      @subselect_catholic = "#{@subselect_catholic} and fd2.right_field = fd.right_field "
+    end
+    @subselect_catholic = "#{@subselect_catholic} where rff.ppn_id = pf.id) catholic_runs "
+    puts @subselect_catholic
+
+  end
+
+
   def subselect_earned_fieldery(p_hash)
-    @subselect_earned =  "CASE when efs.ppn_id IS NULL THEN 0 ELSE 1 END earned_runs"
+    @subselect_earned =  "CASE when efs.ppn_id IS NULL THEN 0 ELSE 1 END earned_runs,"
+  end
+
+  def subselect_catholic_fieldery(p_hash)
+    @subselect_catholic =  "CASE when rfs.ppn_id IS NULL THEN 0 ELSE 1 END catholic_runs"
   end
 
   def subselect_earned_teamery(p_hash)
     @subselect_earned =  "pf.earned_runs earned_runs "
   end
 
+  def subselect_catholic_teamery(p_hash)
+    @subselect_catholic =  "pf.catholic_runs catholic_runs "
+  end
+
 
 
   def join_add_earned_facts_slim (p_hash)
     if fieldery? p_hash and !battery? p_hash
-    @inner_join = "#{@inner_join} left outer join earned_facts_slim efs on efs.ppn_id = pf.id "
+      @inner_join = "#{@inner_join} left outer join earned_facts_slim efs on efs.ppn_id = pf.id "
+    end
+
+  end
+
+  def join_add_catholic_facts_slim (p_hash)
+    if fieldery? p_hash and !battery? p_hash
+      @inner_join = "#{@inner_join} left outer join run_facts_slim rfs on rfs.ppn_id = pf.id "
     end
 
   end
@@ -159,7 +229,7 @@ module QueryHelper
     @earned_facts_sub = "(select count(field) from earned_facts sn
 	                        join fielder_dim fd2 on fd2.field_key= sn.field "
 
-     #limit by fielder goes here!
+    #limit by fielder goes here!
 
     @earned_facts_sub = "#{@earned_facts_sub} where sn.game_key = pf.game_key "
 
@@ -169,6 +239,23 @@ module QueryHelper
 
 
     @earned_facts_sub = "#{@earned_facts_sub}) earned_runs"
+  end
+
+
+  def subselect_catholic_facts(p_hash)
+    @catholic_facts_sub = "(select count(field) from run_facts sn
+	                        join fielder_dim fd2 on fd2.field_key= sn.field "
+
+    #limit by fielder goes here!
+
+    @catholic_facts_sub = "#{@catholic_facts_sub} where sn.game_key = pf.game_key "
+
+    if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
+      @catholic_facts_sub = "#{@catholic_facts_sub} and sn.batter_key = pf.player_key "
+    end
+
+
+    @catholic_facts_sub = "#{@catholic_facts_sub}) catholic_runs"
   end
 
 
@@ -363,10 +450,11 @@ module QueryHelper
       @outer_select += "center_field as #{$flannel.key("center_field").to_s}"
     end
 
-    if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
-      if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += "right_field as #{$flannel.key("right_field").to_s}"
-    end
+     #no!  tyou are using a case statemnet to converst 1 or 0 to H or A
+    #if p_hash[:group_home_away] == '1' || !p_hash[:home_away].to_s.blank?
+     # if !@outer_select.blank?; @outer_select+= ", "; end
+     # @outer_select += "home_away as #{$flannel.key("home_away").to_s}"
+    #end
 
 
 
@@ -434,7 +522,7 @@ module QueryHelper
     if p_hash[:group_home_away] == '1'
       $home_colm = true
       if !@outer_select.blank?; @outer_select+= ", "; end
-      @outer_select += " case when at_home = '1' then 'H' else 'A' end #{$flannel.key("at_home").to_s}"
+      @outer_select += " case when at_home = '1' then 'H' else 'A' end #{$flannel.key("home_away").to_s}"
       #@outer_select += "at_home"
     end
 
@@ -547,6 +635,7 @@ module QueryHelper
     join_add_fielder_dims p_hash
     join_add_player_dims p_hash
     join_add_earned_facts_slim p_hash
+    join_add_catholic_facts_slim p_hash
     join_baserunners p_hash
     join_add_date_dims p_hash
 
@@ -720,8 +809,9 @@ module QueryHelper
        sum(fl.at_bat) #{$flannel.key("at_bat").to_s},
        sum(fl.hit) #{$flannel.key("hit").to_s}, sum(fl.walk) #{$flannel.key("walk").to_s},
        sum(fl.hbp) #{$flannel.key("hbp").to_s}, sum(fl.sacfly) #{$flannel.key("sacfly").to_s},
-       sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
+       sum(fl.outs) #{$flannel.key("outs").to_s}, sum(fl.rbi) #{$flannel.key("rbi").to_s},
        sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
+       sum(fl.catholic_runs) #{$flannel.key("catholic_runs").to_s},
        round(CASE WHEN sum(fl.at_bat) = 0 then 0 else cast(sum(fl.hit) as numeric)/ sum(fl.at_bat) END,3) as #{$flannel.key("avg").to_s},
        cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s},
        round(cast(sum(fl.hit + fl.walk + fl.hbp) as numeric) /
@@ -737,7 +827,7 @@ module QueryHelper
 
     @select_by_2 = ", sum(fl.pa) #{$flannel.key('pa').to_s}, sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
     sum(fl.walk) #{$flannel.key('walk').to_s}, sum(fl.hbp) #{$flannel.key('hbp').to_s}, sum(fl.sacfly) #{$flannel.key('sacfly').to_s},
-    sum(fl.outs) outz, sum(fl.rbi) #{$flannel.key("rbi").to_s},
+    sum(fl.outs)  #{$flannel.key("outs").to_s}, sum(fl.rbi) #{$flannel.key("rbi").to_s},
         CASE sum(fl.at_bat)
     when 0 then null
   else
@@ -745,6 +835,7 @@ module QueryHelper
     END as #{$flannel.key("avg").to_s},
 
            sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
+           sum(fl.catholic_runs) #{$flannel.key("catholic_runs").to_s},
 
     cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s},
                                                              CASE sum(fl.outs) when 0 then null
@@ -965,8 +1056,9 @@ module QueryHelper
     chash[("c" + (colcount+=1).to_s).to_sym] =  'pa'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'hit'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'outs'
+       chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'obp'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'slg'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'ops'
@@ -976,7 +1068,8 @@ module QueryHelper
       chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs'
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'catcher'
@@ -1020,6 +1113,10 @@ module QueryHelper
 
     if p_hash[:group_runner3b] == '1' || !p_hash[:runner_3b].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'runner3b'
+    end
+
+    if p_hash[:group_home_away] == '1'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'home_away'
     end
 
 
@@ -1089,6 +1186,10 @@ module QueryHelper
 
       if (p_hash.has_key?("c_earned_runs"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
+      end
+
+      if (p_hash.has_key?("c_catholic_runs"))
+        h2[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs'
       end
 
 
@@ -1167,6 +1268,7 @@ module QueryHelper
       outer_select p_hash
       inner_select p_hash
       subselect_earned p_hash
+      subselect_catholic p_hash
       groupem p_hash
       orderem p_hash
       joinem p_hash
@@ -1189,6 +1291,7 @@ module QueryHelper
     #{@select_by}
 
     #{@subselect_earned}
+    #{@subselect_catholic}
     #{@select_by_pf}
 
     #{@inner_join}
@@ -1204,6 +1307,7 @@ module QueryHelper
     #{@select_by}
 
     #{@subselect_earned}
+    #{@subselect_catholic}
     #{@select_by_pf}
 
     #{@inner_join}

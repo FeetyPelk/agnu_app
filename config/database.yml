@@ -5,8 +5,8 @@ development:
   encoding: unicode
   database: batto_dev
   pool: 5
-  username: smurdock
-  password: is4bella
+  username: blethary
+  password: oldp0m4d
 
 common: &common
   adapter: postgresql
@@ -37,14 +37,14 @@ test: &test
   encoding: unicode
   database: batto_test
   pool: 5
-  username: smurdock
-  password: is4bella
+  username: blethary
+  password: oldp0m4d
   
 production:
   adapter: postgresql
   encoding: unicode
   database: batto_prod
   pool: 5
-  username: smurdock
-  password: is4bella
+  username: blethary
+  password: oldp0m4d
 
