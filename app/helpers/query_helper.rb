@@ -805,6 +805,7 @@ module QueryHelper
     @er_where_id_or_game = ""
     @select_by_1 = "select "
     #outer_select
+=begin
     @selectx = ", sum(fl.pa) #{$flannel.key("pa").to_s},
        sum(fl.at_bat) #{$flannel.key("at_bat").to_s},
        sum(fl.hit) #{$flannel.key("hit").to_s}, sum(fl.walk) #{$flannel.key("walk").to_s},
@@ -824,7 +825,7 @@ module QueryHelper
 		       when 0 then null
 		       else cast(sum(fl.at_bat) as numeric) end,5) #{$flannel.key("slg").to_s}
    from ( select "    #inner_select
-
+=end
     @select_by_2 = ", sum(fl.pa) #{$flannel.key('pa').to_s}, sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
     sum(fl.walk) #{$flannel.key('walk').to_s}, sum(fl.hbp) #{$flannel.key('hbp').to_s}, sum(fl.sacfly) #{$flannel.key('sacfly').to_s},
     sum(fl.outs)  #{$flannel.key("outs").to_s}, sum(fl.rbi) #{$flannel.key("rbi").to_s},
@@ -871,6 +872,7 @@ module QueryHelper
            end
     end #{$flannel.key("ops").to_s}
 
+
     from ( select "
 
     @select_by = ", pa,
@@ -906,33 +908,6 @@ module QueryHelper
     end
 
     if @er_where_id_or_game.blank?; @er_where_id_or_game  = "sn.game_key = pf.game_key"; end   #MAYBE -- I am getting a little confused
-
-=begin
-  if (p_hash[:group_pitcher] == '1')
-       if !@inner_whom.blank?; @inner_whom += ", "; end
-       @inner_whom += "fd.pitcher"
-       if @er_where_id_or_game.blank?; @er_where_id_or_game  = "sn.game_key = pf.game_key"; end
-       if @inner_group.blank?
-          @inner_group += "group by pf.game_key,"
-       else
-          @inner_group += ", "
-       end
-       @inner_group += "fd.pitcher"
-       if @outer_group.blank?
-         @outer_group += "group by "
-       else
-         @outer_group += ", "
-       end
-       @outer_group += "pitcher"
-       if @outer_order.blank?
-        @outer_order += "order by "
-       else
-        @outer_order += ", "
-       end
-       @outer_order += "pitcher"
-  end
-=end
-
 
 
     #@select_by = @select_by.gsub(/qh_outer_select_whom/,"#{@outer_select}")
@@ -987,7 +962,7 @@ module QueryHelper
     @summer =              " null as avg,
                               pf.pa as pa, pf.at_bat as at_bat, pf.hit as hit,
                               pf.walk as walk, pf.rbi as rbi, pf.at_home as at_home
-                              null as ippies, null as OBP, null as slg, null as OPS, null as ERA, null as WHIP,
+                              null as ippies, null as OBP, null as slg, null as OPS, null as earned_runsA, null as WHippies,
                               from play_facts pf "
 
   end
@@ -1034,6 +1009,7 @@ module QueryHelper
     colcount = 0
     hidden = 100
     chash = Hash.new
+    ahash = Hash.new
 
     if p_hash[:group_year] == '1'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'yearo'
@@ -1041,6 +1017,7 @@ module QueryHelper
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'batter'
       chash[("c" + (hidden+=1).to_s).to_sym] =  'batter_key'
+
     end
     if p_hash[:group_pitcher] == '1' || !p_hash[:pitcher].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'pitcher'
@@ -1053,20 +1030,20 @@ module QueryHelper
       chash[("c" + (colcount+=1).to_s).to_sym] =  'bteam'
     end
 
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'pa'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'hit'
      chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
-     chash[("c" + (colcount+=1).to_s).to_sym] =  'outs'
-       chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'obp'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'obp'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'slg'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'ops'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'outs'
      chash[("c" + (colcount+=1).to_s).to_sym] =  'era'
      chash[("c" + (colcount+=1).to_s).to_sym] =  'whip'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
     chash[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs'
@@ -1208,10 +1185,41 @@ module QueryHelper
 
       $flannel = h3.clone
 
+
+
     end
+    build_cheader;
 
   end
 
+
+  def build_cheader
+    $cheader = Hash.new
+    $flannel.each do |key, val|
+      if val == 'yearo' then
+        $cheader[key] = 'year'
+      elsif val == 'walk' then
+        $cheader[key] = 'bb'
+      elsif val == 'at_bat' then
+        $cheader[key] = 'ab'
+      elsif val == 'sacfly' then
+        $cheader[key] = 'sf'
+      elsif val == 'walk' then
+        $cheader[key] = 'bb'
+      elsif val == 'ippies' then
+        $cheader[key] = 'ip'
+      elsif val == 'earned_runs' then
+        $cheader[key] = 'er'
+      elsif val == 'catholic_runs' then
+        $cheader[key] = 'r'
+      else
+       $cheader[key] = val
+      end
+      puts val
+
+    end
+    puts 'woopwoop'
+  end
 
   def buildquery (p_hash)
     build_hash  p_hash
@@ -1240,7 +1248,7 @@ module QueryHelper
 
 
 
-    if (!p_hash[:batter].to_s.blank? || a ||
+    if (!p_hash[:batter].to_s.blank? || a||
         !p_hash[:pitcher].to_s.blank? ||
         !p_hash[:catcher].to_s.blank? ||
         !p_hash[:first_base].to_s.blank? ||
