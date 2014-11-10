@@ -12,8 +12,9 @@
               Batting
             </a>
           </div>
-          <div id="collapseOne" class="accordion-body collapse in">
-            <div class="accordion-inner">
+    <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
+          <div id="collapseOne" class="accordion-body collapse">
+          <div class="accordion-inner">
               <div class="row">
                 <p>
                 <div class="boop"><%= label_tag "Batting Team" %><%= search_field_tag  :bteam, value = params[:bteam]%></div>
@@ -124,7 +125,7 @@
           <div class="groupies-by">
 
             <ul>
-              <li> <%= check_box_tag(:c_pa,"1",params[:c_pq]) %><%= label_tag(:twitter_share, "PA?") %> </li>
+              <li> <%= check_box_tag(:c_pa,"1",params[:c_pa]) %><%= label_tag(:twitter_share, "PA?") %> </li>
               <li> <%= check_box_tag(:c_at_bat,"1",params[:c_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
               <li> <%= check_box_tag(:c_hit,"1",params[:c_hit]) %><%= label_tag(:twitter_share, "Hits?") %> </li>
               <li> <%= check_box_tag(:c_walk,"1",params[:c_walk]) %><%= label_tag(:twitter_share, "Walks?") %> </li>
@@ -140,7 +141,8 @@
               <li> <%= check_box_tag(:c_ippies,"1",params[:c_ippies]) %><%= label_tag(:twitter_share, "ip?") %> </li>
               <li> <%= check_box_tag(:c_earned_runs,"1",params[:c_earned_runs]) %><%= label_tag(:twitter_share, "er") %> </li>
               <li> <%= check_box_tag(:c_x,"1",params[:c_x]) %><%= label_tag(:twitter_share, "x?") %> </li>
-             </ul>
+              <li> <%= check_box_tag(:c_delim,"1",params[:c_delim]) %><%= label_tag(:twitter_share, "delimit?") %> </li>
+            </ul>
           </div>
         </div>
       </div>

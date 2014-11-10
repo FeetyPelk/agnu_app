@@ -26,7 +26,8 @@ module QueryHelper
     elsif fieldery?(p_hash)
       subselect_earned_fieldery(p_hash)
     else
-      subselect_earned_teamery(p_hash)
+      puts "DEAFAULTING TO FIELDERY EARNED 171"
+      subselect_earned_fieldery(p_hash)
     end
   end
 
@@ -36,7 +37,8 @@ module QueryHelper
     elsif fieldery?(p_hash)
       subselect_catholic_fieldery(p_hash)
     else
-      subselect_catholic_teamery(p_hash)
+      puts "DEFAULTING TO FIELDERY CATH 171"
+      subselect_catholic_fieldery(p_hash)
     end
   end
 
@@ -136,24 +138,24 @@ module QueryHelper
   end
 
   def subselect_earned_teamery(p_hash)
-    @subselect_earned =  "pf.earned_runs earned_runs "
+    @subselect_earned =  "CASE when efs.ppn_id IS NULL THEN 0 ELSE 1 END earned_runs,"
   end
 
   def subselect_catholic_teamery(p_hash)
-    @subselect_catholic =  "pf.catholic_runs catholic_runs "
+    @subselect_catholic =  "CASE when rfs.ppn_id IS NULL THEN 0 ELSE 1 END catholic_runs"
   end
 
 
 
   def join_add_earned_facts_slim (p_hash)
-    if fieldery? p_hash and !battery? p_hash
+    if !battery? p_hash    # we have made fieldery the default 11/07/14
       @inner_join = "#{@inner_join} left outer join earned_facts_slim efs on efs.ppn_id = pf.id "
     end
 
   end
 
   def join_add_catholic_facts_slim (p_hash)
-    if fieldery? p_hash and !battery? p_hash
+    if !battery? p_hash  # we have made fieldery the default 11/07/14
       @inner_join = "#{@inner_join} left outer join run_facts_slim rfs on rfs.ppn_id = pf.id "
     end
 
@@ -343,7 +345,13 @@ module QueryHelper
     end
   end
 
+  def delimitem(p_hash)
+    @delimit = " limit 200"
+    if p_hash[:c_delim] == '1'
+      @delimit = ""
+    end
 
+  end
 
   def orderem(p_hash)
 
@@ -450,7 +458,12 @@ module QueryHelper
       @outer_select += "center_field as #{$flannel.key("center_field").to_s}"
     end
 
-     #no!  tyou are using a case statemnet to converst 1 or 0 to H or A
+    if p_hash[:group_right_field] == '1' || !p_hash[:right_field].to_s.blank?
+      if !@outer_select.blank?; @outer_select+= ", "; end
+      @outer_select += "right_field as #{$flannel.key("right_field").to_s}"
+    end
+
+    #no!  tyou are using a case statemnet to converst 1 or 0 to H or A
     #if p_hash[:group_home_away] == '1' || !p_hash[:home_away].to_s.blank?
      # if !@outer_select.blank?; @outer_select+= ", "; end
      # @outer_select += "home_away as #{$flannel.key("home_away").to_s}"
@@ -642,6 +655,7 @@ module QueryHelper
 
   end
   def fieldery?(p_hash)
+    !p_hash[:fteam].to_s.blank? ||
     !p_hash[:pitcher].to_s.blank? ||
     !p_hash[:catcher].to_s.blank? ||
     !p_hash[:first_base].to_s.blank? ||
@@ -659,11 +673,13 @@ module QueryHelper
     (p_hash[:group_shortstop] == '1') ||
     (p_hash[:group_left_field] == '1') ||
     (p_hash[:group_center_field] == '1') ||
-    (p_hash[:group_right_field] == '1')
+    (p_hash[:group_right_field] == '1') ||
+    (p_hash[:group_fteam] == '1')
 
   end
 
   def battery?(p_hash)
+    !p_hash[:bteam].to_s.blank? ||
     !p_hash[:batter].to_s.blank? ||
     !p_hash[:runner1b].to_s.blank? ||
     !p_hash[:runner2b].to_s.blank? ||
@@ -671,7 +687,9 @@ module QueryHelper
      (p_hash[:group_batter] == '1') ||
      (p_hash[:group_runner1b] == '1') ||
      (p_hash[:group_runner2b] == '1') ||
-     (p_hash[:group_runner3b] == '1')
+     (p_hash[:group_runner3b] == '1') ||
+     ((p_hash[:group_bteam] =='1') && !fieldery?(p_hash))
+
 
   end
 
@@ -1014,6 +1032,9 @@ module QueryHelper
     if p_hash[:group_year] == '1'
       chash[("c" + (colcount+=1).to_s).to_sym] =  'yearo'
     end
+    if p_hash[:group_month] == '1'
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'montho'
+    end
     if p_hash[:group_batter] == '1' || !p_hash[:batter].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'batter'
       chash[("c" + (hidden+=1).to_s).to_sym] =  'batter_key'
@@ -1098,6 +1119,7 @@ module QueryHelper
 
 
 
+
     if !flush_left(p_hash)
         $flannel = chash.clone
 
@@ -1171,6 +1193,7 @@ module QueryHelper
 
 
 
+
       h2.each_value{|value| if chash.has_value?(value) then chash.each { |k, v| if v == value then chash.delete k end } end}
 
 
@@ -1197,7 +1220,9 @@ module QueryHelper
     $cheader = Hash.new
     $flannel.each do |key, val|
       if val == 'yearo' then
-        $cheader[key] = 'year'
+        $cheader[key] = 'yr'
+      elsif val == 'montho' then
+        $cheader[key] = 'mon'
       elsif val == 'walk' then
         $cheader[key] = 'bb'
       elsif val == 'at_bat' then
@@ -1236,6 +1261,7 @@ module QueryHelper
     @inner_group = ""
     @outer_group = ""
     @order_by = ""
+    @delimit = ""
     @messo = "startmesso"
 
     #if p_hash[:batter].to_s.blank?
@@ -1246,9 +1272,7 @@ module QueryHelper
 
     a = p_hash[:batter]
 
-
-
-    if (!p_hash[:batter].to_s.blank? || a||
+    if (!p_hash[:batter].to_s.blank? || !a.to_s.blank?||
         !p_hash[:pitcher].to_s.blank? ||
         !p_hash[:catcher].to_s.blank? ||
         !p_hash[:first_base].to_s.blank? ||
@@ -1270,8 +1294,14 @@ module QueryHelper
         p_hash[:group_left_field] == '1' ||
         p_hash[:group_center_field] == '1' ||
         p_hash[:group_right_field] == '1' ||
+        p_hash[:group_runner1b] == '1' ||
+        p_hash[:group_runner2b] == '1' ||
+        p_hash[:group_runner3b] == '1' ||
+        p_hash[:group_year] == '1' ||
+        p_hash[:group_month] == '1' ||
         p_hash[:group_bteam] == '1' ||
-        p_hash[:group_fteam] == '1')
+        p_hash[:group_fteam] == '1' ||
+        p_hash[:group_home_away] == '1')
       default_query = false
       outer_select p_hash
       inner_select p_hash
@@ -1279,6 +1309,7 @@ module QueryHelper
       subselect_catholic p_hash
       groupem p_hash
       orderem p_hash
+      delimitem p_hash
       joinem p_hash
       selectem p_hash
     end
@@ -1322,7 +1353,8 @@ module QueryHelper
     #{@inner_group}
     #{@select_by_4}
     #{@outer_group}
-    #{@order_by}"
+    #{@order_by}
+    #{@delimit} "
 
   end
 
