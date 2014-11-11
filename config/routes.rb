@@ -1,5 +1,7 @@
 AgnuApp::Application.routes.draw do
   get "plabs/home"
+  #root to: 'static_pages#home'
+  root to: 'plabs#home'
 
   match '/help',    to: 'static_pages#help'
   match '/about',   to: 'static_pages#about'
