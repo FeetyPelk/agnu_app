@@ -3,6 +3,11 @@ $baseFontFamily: "Droid Sans", sans-serif;
 
 
 @import "bootstrap";
+
+body {
+  padding-top: 60px;
+}
+
 @import "bootstrap-responsive";
 
 
@@ -13,9 +18,6 @@ html {
   overflow-y: scroll;
 }
 
-body {
-  padding-top: 60px;
-}
 
 section {
   overflow: auto;
@@ -37,6 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  clear: both;
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 5px;
@@ -44,6 +47,7 @@ h1 {
 }
 
 h2 {
+  clear: both;
   font-size: 1.7em;
   letter-spacing: -1px;
   margin-bottom: 30px;
@@ -118,4 +122,44 @@ footer ul li {
   margin: 0em 1em 1em;
 }
 
+/* header */
 
+#navybar
+
+#picts{
+  postition: relative;
+}
+
+#leftwing {
+  /*border-style: dotted;  */
+  float: left;
+  width: 5em;
+  display:block;
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
+#rightwing {
+  float: right;
+  width: 5em;
+  display:block;
+  margin-top: 2em;
+  margin-right: 2em;
+}
+
+#bigdaddy {
+  text-align:center;
+  width:70%;
+  display:block;
+  margin: auto;
+}
+
+
+#minihead {
+  clear: both;
+}
+
+
+.navbar-poopsie {
+  background-color: #444;
+}

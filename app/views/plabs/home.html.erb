@@ -1,5 +1,8 @@
-<h1>Batomatic</h1>
-<p id="minihead"> Yet Another Omatic<p>
+<!--<h1>Batomatic</h1>   -->
+
+<!--<img src='/assets/batopic.png' alt="Batomatic">    -->
+
+<p id="minihead"> Baseball statistics.  Sideways, sometimes.<p>
 
 <%= form_tag root_path  :method => :get  do %>
 
@@ -113,15 +116,15 @@
           </div>
         </div>
 
+
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
-          Columnize
+          Flush Left
         </a>
       </div>
       <div id="collapseFive" class="accordion-body collapse">
         <div class="accordion-inner">
-          <p> Columnize </p>
           <div class="groupies-by">
 
             <ul>
@@ -139,9 +142,45 @@
               <li> <%= check_box_tag(:c_sacfly,"1",params[:c_sacfly]) %><%= label_tag(:twitter_share, "sf?") %> </li>
               <li> <%= check_box_tag(:c_hbp,"1",params[:c_hbp]) %><%= label_tag(:twitter_share, "hbp?") %> </li>
               <li> <%= check_box_tag(:c_ippies,"1",params[:c_ippies]) %><%= label_tag(:twitter_share, "ip?") %> </li>
-              <li> <%= check_box_tag(:c_earned_runs,"1",params[:c_earned_runs]) %><%= label_tag(:twitter_share, "er") %> </li>
+              <li> <%= check_box_tag(:c_earned_runs,"1",params[:c_earned_runs]) %><%= label_tag(:twitter_share, "er?") %> </li>
+              <li> <%= check_box_tag(:c_catholic_runs,"1",params[:c_catholic_runs]) %><%= label_tag(:twitter_share, "r?") %> </li>
               <li> <%= check_box_tag(:c_x,"1",params[:c_x]) %><%= label_tag(:twitter_share, "x?") %> </li>
               <li> <%= check_box_tag(:c_delim,"1",params[:c_delim]) %><%= label_tag(:twitter_share, "delimit?") %> </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
+          Suppress Column
+        </a>
+      </div>
+      <div id="collapseSix" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <div class="groupies-by">
+
+            <ul>
+              <li> <%= check_box_tag(:s_pa,"1",params[:s_pa]) %><%= label_tag(:twitter_share, "PA?") %> </li>
+              <li> <%= check_box_tag(:s_at_bat,"1",params[:s_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
+              <li> <%= check_box_tag(:s_hit,"1",params[:s_hit]) %><%= label_tag(:twitter_share, "Hits?") %> </li>
+              <li> <%= check_box_tag(:s_walk,"1",params[:s_walk]) %><%= label_tag(:twitter_share, "Walks?") %> </li>
+              <li> <%= check_box_tag(:s_avg,"1",params[:s_avg]) %><%= label_tag(:twitter_share, "Avg?") %> </li>
+              <li> <%= check_box_tag(:s_obp,"1",params[:s_obp]) %><%= label_tag(:twitter_share, "OBP?") %> </li>
+              <li> <%= check_box_tag(:s_slg,"1",params[:s_slg]) %><%= label_tag(:twitter_share, "slg?") %> </li>
+              <li> <%= check_box_tag(:s_ops,"1",params[:s_ops]) %><%= label_tag(:twitter_share, "OPS?") %> </li>
+              <li> <%= check_box_tag(:s_era,"1",params[:s_era]) %><%= label_tag(:twitter_share, "era?") %> </li>
+              <li> <%= check_box_tag(:s_whip,"1",params[:s_whip]) %><%= label_tag(:twitter_share, "whip?") %> </li>
+              <li> <%= check_box_tag(:s_rbi,"1",params[:s_rbi]) %><%= label_tag(:twitter_share, "rbi?") %> </li>
+              <li> <%= check_box_tag(:s_sacfly,"1",params[:s_sacfly]) %><%= label_tag(:twitter_share, "sf?") %> </li>
+              <li> <%= check_box_tag(:s_hbp,"1",params[:s_hbp]) %><%= label_tag(:twitter_share, "hbp?") %> </li>
+              <li> <%= check_box_tag(:s_ippies,"1",params[:s_ippies]) %><%= label_tag(:twitter_share, "ip?") %> </li>
+              <li> <%= check_box_tag(:s_earned_runs,"1",params[:s_earned_runs]) %><%= label_tag(:twitter_share, "er?") %> </li>
+              <li> <%= check_box_tag(:s_catholic_runs,"1",params[:s_catholic_runs]) %><%= label_tag(:twitter_share, "r?") %> </li>
+              <li> <%= check_box_tag(:s_x,"1",params[:s_x]) %><%= label_tag(:twitter_share, "x?") %> </li>
+              <li> <%= check_box_tag(:s_delim,"1",params[:s_delim]) %><%= label_tag(:twitter_share, "delimit?") %> </li>
             </ul>
           </div>
         </div>
@@ -190,7 +229,7 @@
       </div>      -->
 
       <p>
-        <%= submit_tag "Submitto", class: "btn btn-large btn-primary"%>
+        <%= submit_tag "Submit", class: "btn btn-large btn-primary"%>
 
       </p>
 
@@ -256,6 +295,7 @@
                 <td><%= plab.c15 if $flannel.has_key?(:c15)%></td>
                 <td><%= plab.c16 if $flannel.has_key?(:c16)%></td>
                 <td><%= plab.c17 if $flannel.has_key?(:c17)%></td>
+                <!-- comments anybody? -->
                 <td><%= plab.c18 if $flannel.has_key?(:c18)%></td>
                 <td><%= plab.c19 if $flannel.has_key?(:c19)%></td>
                 <td><%= plab.c20 if $flannel.has_key?(:c20)%></td>
@@ -265,6 +305,7 @@
                 <td><%= plab.c24 if $flannel.has_key?(:c24)%></td>
                 <td><%= plab.c25 if $flannel.has_key?(:c25)%></td>
                 <td><%= plab.c26 if $flannel.has_key?(:c26)%></td>
+
               </tr>
           <% end unless @Plabs.nil?%>
           </tbody>

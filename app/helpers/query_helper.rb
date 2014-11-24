@@ -19,6 +19,30 @@ module QueryHelper
         (p_hash.has_key?("c_catholic_runs")) )
   end
 
+  def suppress(p_hash)
+    ((p_hash.has_key?("s_pa")) ||
+        (p_hash.has_key?("s_at_bat")) ||
+        (p_hash.has_key?("s_hit")) ||
+        (p_hash.has_key?("s_walk")) ||
+        (p_hash.has_key?("s_avg")) ||
+        (p_hash.has_key?("s_obp")) ||
+        (p_hash.has_key?("s_slg")) ||
+        (p_hash.has_key?("s_ops")) ||
+        (p_hash.has_key?("s_era")) ||
+        (p_hash.has_key?("s_whip")) ||
+        (p_hash.has_key?("s_rbi")) ||
+        (p_hash.has_key?("s_sacfly")) ||
+        (p_hash.has_key?("s_hbp")) ||
+        (p_hash.has_key?("s_ippies")) ||
+        (p_hash.has_key?("s_earned_runs")) ||
+        (p_hash.has_key?("s_catholic_runs")) )
+  end
+
+
+   def strip_trailing_comma(s)
+     p = /, *$/
+     q = s[0..(s.rindex(p) -1)]
+   end
 
   def subselect_earned(p_hash)
     if battery?(p_hash)
@@ -167,7 +191,7 @@ module QueryHelper
     if ((p_hash[:group_batter] == '1') ||!p_hash[:batter].to_s.blank?)
       @inner_join = "#{@inner_join} join player_dims pd on pf.player_key = pd.id "
       if !p_hash[:batter].to_s.blank?
-        @inner_join = "#{@inner_join} and pd.player_name = '#{p_hash[:batter]}'"
+        @inner_join = "#{@inner_join} and lower(pd.player_name) = '#{p_hash[:batter].downcase}'"
       end
     end
   end
@@ -200,7 +224,7 @@ module QueryHelper
     if ((p_hash[:group_runner1b] == '1') ||!p_hash[:runner1b].to_s.blank?)
       @inner_join = "#{@inner_join}join player_dims br1 on pf.run1 = br1.id"
       if !p_hash[:runner1b].to_s.blank?
-        @inner_join = "#{@inner_join} and br1.player_name = '#{p_hash[:runner1b]}'"
+        @inner_join = "#{@inner_join} and lower(br1.player_name) = '#{p_hash[:runner1b].downcase}'"
       end
     end
     #@runner1b_join = "join player_dims br1 on pf.run1 = br1.id and br1.player_name = 'Fred Turlock'"
@@ -212,7 +236,7 @@ module QueryHelper
     if ((p_hash[:group_runner2b] == '1') ||!p_hash[:runner2b].to_s.blank?)
       @inner_join = "#{@inner_join} join player_dims br2 on pf.run2 = br2.id \n"
       if !p_hash[:runner2b].to_s.blank?
-        @inner_join = "#{@inner_join} and br2.player_name = '#{p_hash[:runner2b]}'"
+        @inner_join = "#{@inner_join} and lower(br2.player_name) = '#{p_hash[:runner2b].downcase}'"
       end
     end
   end
@@ -222,7 +246,7 @@ module QueryHelper
     if ((p_hash[:group_runner3b] == '1') ||!p_hash[:runner3b].to_s.blank?)
       @inner_join = "#{@inner_join}join player_dims br3 on pf.run3 = br3.id"
       if !p_hash[:runner3b].to_s.blank?
-        @inner_join = "#{@inner_join} and br3.player_name = '#{p_hash[:runner3b]}'"
+        @inner_join = "#{@inner_join} and lower(br3.player_name) = '#{p_hash[:runner3b].downcase}'"
       end
     end
   end
@@ -315,31 +339,31 @@ module QueryHelper
       end
 
       if !p_hash[:first_base].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.first_base = '#{p_hash[:first_base]}'"
+        @inner_join = "#{@inner_join} and lower(fd.first_base) = '#{p_hash[:first_base].downcase}'"
       end
 
       if !p_hash[:second_base].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.second_base = '#{p_hash[:second_base]}'"
+        @inner_join = "#{@inner_join} and lower(fd.second_base) = '#{p_hash[:second_base].downcase}'"
       end
 
       if !p_hash[:shortstop].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.shortstop = '#{p_hash[:shortstop]}'"
+        @inner_join = "#{@inner_join} and lower(fd.shortstop) = '#{p_hash[:shortstop].downcase}'"
       end
 
       if !p_hash[:third_base].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.third_base = '#{p_hash[:third_base]}'"
+        @inner_join = "#{@inner_join} and lower(fd.third_base) = '#{p_hash[:third_base].downcase}'"
       end
 
       if !p_hash[:left_field].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.left_field = '#{p_hash[:left_field]}'"
+        @inner_join = "#{@inner_join} and lower(fd.left_field) = '#{p_hash[:left_field].downcase}'"
       end
 
       if !p_hash[:center_field].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.center_field = '#{p_hash[:center_field]}'"
+        @inner_join = "#{@inner_join} and lower(fd.center_field) = '#{p_hash[:center_field].downcase}'"
       end
 
       if !p_hash[:right_field].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.right_field = '#{p_hash[:right_field]}'"
+        @inner_join = "#{@inner_join} and lower(fd.right_field) = '#{p_hash[:right_field].downcase}'"
       end
 
     end
@@ -844,40 +868,52 @@ module QueryHelper
 		       else cast(sum(fl.at_bat) as numeric) end,5) #{$flannel.key("slg").to_s}
    from ( select "    #inner_select
 =end
-    @select_by_2 = ", sum(fl.pa) #{$flannel.key('pa').to_s}, sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, sum(fl.hit)  #{$flannel.key('hit').to_s},
-    sum(fl.walk) #{$flannel.key('walk').to_s}, sum(fl.hbp) #{$flannel.key('hbp').to_s}, sum(fl.sacfly) #{$flannel.key('sacfly').to_s},
-    sum(fl.outs)  #{$flannel.key("outs").to_s}, sum(fl.rbi) #{$flannel.key("rbi").to_s},
+    @select_by_2 = ", "
+    @select_by_2 = "#{@select_by_2} sum(fl.pa) #{$flannel.key('pa').to_s}, "  if !(p_hash.has_key?("s_pa"))
+    @select_by_2 = "#{@select_by_2} sum(fl.at_bat) #{$flannel.key('at_bat').to_s}, "  if !(p_hash.has_key?("s_at_bat"))
+    @select_by_2 = "#{@select_by_2} sum(fl.hit)  #{$flannel.key('hit').to_s}, "   if !(p_hash.has_key?("s_hit"))
+    @select_by_2 = "#{@select_by_2} sum(fl.walk) #{$flannel.key('walk').to_s}, " if !(p_hash.has_key?("s_walk"))
+    @select_by_2 = "#{@select_by_2} sum(fl.hbp) #{$flannel.key('hbp').to_s}, " if !(p_hash.has_key?("s_hbp"))
+    @select_by_2 = "#{@select_by_2} sum(fl.sacfly) #{$flannel.key('sacfly').to_s}, "  if !(p_hash.has_key?("s_sacfly"))
+    @select_by_2 = "#{@select_by_2} sum(fl.outs)  #{$flannel.key("outs").to_s}, " if !(p_hash.has_key?("s_outs"))
+    @select_by_2 = "#{@select_by_2} sum(fl.rbi) #{$flannel.key("rbi").to_s}, "   if !(p_hash.has_key?("s_rbi"))
+    @select_by_2 =  "#{@select_by_2}
         CASE sum(fl.at_bat)
-    when 0 then null
-  else
-    round(cast(sum(fl.hit) as numeric)/ sum(fl.at_bat),3)
-    END as #{$flannel.key("avg").to_s},
+          when 0 then null
+        else
+          round(cast(sum(fl.hit) as numeric)/ sum(fl.at_bat),3)
+        END as #{$flannel.key("avg").to_s}, " if !(p_hash.has_key?("s_avg"))
 
-           sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},
-           sum(fl.catholic_runs) #{$flannel.key("catholic_runs").to_s},
-
-    cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s},
-                                                             CASE sum(fl.outs) when 0 then null
+    @select_by_2 = "#{@select_by_2} sum(fl.earned_runs) #{$flannel.key("earned_runs").to_s},  "  if !(p_hash.has_key?("s_earned_runs"))
+    @select_by_2 = "#{@select_by_2}  sum(fl.catholic_runs) #{$flannel.key("catholic_runs").to_s},  "  if !(p_hash.has_key?("s_catholic_runs"))
+    @select_by_2 = "#{@select_by_2}
+    cast(cast(sum(fl.outs) as integer)/3 ||'.'||sum(fl.outs)%3 as numeric) as #{$flannel.key("ippies").to_s}, " if !(p_hash.has_key?("s_ippies"))
+    @select_by_2 = "#{@select_by_2}
+    CASE sum(fl.outs) when 0 then null
     else round(sum(fl.earned_runs) * 9 / (cast(sum(fl.outs) as numeric)/3),2)
-    end #{$flannel.key("era").to_s},
-
+    end #{$flannel.key("era").to_s}, "  if !(p_hash.has_key?("s_era"))
+    @select_by_2 = "#{@select_by_2}
 	  case sum(fl.outs)
 	      when 0 then null
               else round(cast(sum(fl.walk) + sum(hit) as numeric) / (cast (sum(fl.outs)as numeric) /3),3)
-    end  #{$flannel.key("whip").to_s},
+    end  #{$flannel.key("whip").to_s}, "   if !(p_hash.has_key?("s_whip"))
 
+    @select_by_2 = "#{@select_by_2}
     case sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
       when 0 then null
       else
         round(cast(sum(fl.hit + fl.walk + fl.hbp) as numeric) /
             cast(sum(fl.at_bat + fl.walk +fl.sacfly + fl.hbp) as numeric),3)
-    end #{$flannel.key("obp").to_s},
+    end #{$flannel.key("obp").to_s}, " if !(p_hash.has_key?("s_obp"))
+
+    @select_by_2 = "#{@select_by_2}
     case sum(fl.at_bat)
       when 0 then null
       else round(cast(sum(fl.bag) as numeric) /
           cast(sum(fl.at_bat) as numeric),3)
-    end  #{$flannel.key("slg").to_s},
+    end  #{$flannel.key("slg").to_s},  "  if !(p_hash.has_key?("s_slg"))
 
+    @select_by_2 = "#{@select_by_2}
     case  sum(fl.at_bat + fl.walk + fl.sacfly + fl.hbp)
       when 0 then null
       else case sum(fl.at_bat)
@@ -888,9 +924,11 @@ module QueryHelper
                    cast(sum(fl.bag) as numeric) /
                    cast(sum(fl.at_bat) as numeric),3)
            end
-    end #{$flannel.key("ops").to_s}
+    end #{$flannel.key("ops").to_s},  "   if !(p_hash.has_key?("s_ops"))
 
+    @select_by_2 = strip_trailing_comma(@select_by_2);
 
+    @select_by_2 = "#{@select_by_2}
     from ( select "
 
     @select_by = ", pa,
@@ -1050,24 +1088,25 @@ module QueryHelper
     if p_hash[:group_bteam] == '1' || !p_hash[:bteam].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'bteam'
     end
+    #Agsisanego
 
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'avg'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'pa'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'hit'
-     chash[("c" + (colcount+=1).to_s).to_sym] =  'walk'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'obp'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'slg'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'ops'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'outs'
-     chash[("c" + (colcount+=1).to_s).to_sym] =  'era'
-     chash[("c" + (colcount+=1).to_s).to_sym] =  'whip'
-      chash[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
-    chash[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs'
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'avg' if p_hash[:s_avg].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'pa' if p_hash[:s_pa].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'  if p_hash[:s_at_bat].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'hit' if p_hash[:s_hit].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'walk' if p_hash[:s_walk].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'rbi' if p_hash[:s_rbi].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'obp' if p_hash[:s_obp].to_s.empty?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'slg' if p_hash[:s_slg].to_s.empty?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'ops'  if p_hash[:s_ops].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'sacfly' if p_hash[:s_sacfly].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'hbp' if p_hash[:s_hbp].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'outs' if p_hash[:s_outs].to_s.empty?
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'era' if p_hash[:s_era].to_s.empty?
+     chash[("c" + (colcount+=1).to_s).to_sym] =  'whip' if p_hash[:s_whip].to_s.empty?
+      chash[("c" + (colcount+=1).to_s).to_sym] =  'ippies' if p_hash[:s_ippies].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'  if p_hash[:s_earned_runs].to_s.empty?
+    chash[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs' if p_hash[:s_catholic_runs].to_s.empty?
 
     if p_hash[:group_catcher] == '1' || !p_hash[:catcher].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'catcher'
@@ -1119,75 +1158,76 @@ module QueryHelper
 
 
 
-
-    if !flush_left(p_hash)
+     
+    if !flush_left(p_hash) && !suppress(p_hash)
         $flannel = chash.clone
+      
 
     else
       h2 = Hash.new
       colcount = 0
       hidden = 100
-      if (p_hash.has_key?("c_pa"))
+      if (p_hash.has_key?("c_pa"))  && !(p_hash.has_key?("s_pa"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'pa'
       end
 
-      if (p_hash.has_key?("c_at_bat"))
+      if (p_hash.has_key?("c_at_bat")) && !(p_hash.has_key?("s_at_bat"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'at_bat'
       end
 
-      if (p_hash.has_key?("c_hit"))
+      if (p_hash.has_key?("c_hit")) && !(p_hash.has_key?("s_hit"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'hit'
       end
 
-      if (p_hash.has_key?("c_walk") )
+      if (p_hash.has_key?("c_walk") )  && !(p_hash.has_key?("s_walk"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'walk'
       end
 
-      if (p_hash.has_key?("c_obp"))
+      if (p_hash.has_key?("c_obp"))  && !(p_hash.has_key?("s_obp"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'obp'
       end
 
-      if (p_hash.has_key?("c_avg"))
+      if (p_hash.has_key?("c_avg")) && !(p_hash.has_key?("s_avg"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'avg'
       end
 
-      if (p_hash.has_key?("c_slg"))
+      if (p_hash.has_key?("c_slg")) && !(p_hash.has_key?("s_slg"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'slg'
       end
 
-      if (p_hash.has_key?("c_ops"))
+      if (p_hash.has_key?("c_ops")) && !(p_hash.has_key?("s_ops"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'ops'
       end
 
-      if (p_hash.has_key?("c_era"))
+      if (p_hash.has_key?("c_era"))  && !(p_hash.has_key?("s_era"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'era'
       end
 
-      if (p_hash.has_key?("c_whip"))
+      if (p_hash.has_key?("c_whip")) && !(p_hash.has_key?("s_whip"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'whip'
       end
 
-      if (p_hash.has_key?("c_rbi"))
+      if (p_hash.has_key?("c_rbi")) && !(p_hash.has_key?("s_rbi"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'rbi'
       end
 
-      if (p_hash.has_key?("c_sacfly"))
+      if (p_hash.has_key?("c_sacfly")) && !(p_hash.has_key?("s_sacfly"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'sacfly'
       end
 
-      if (p_hash.has_key?("c_hbp"))
+      if (p_hash.has_key?("c_hbp"))  && !(p_hash.has_key?("s_hbp"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'hbp'
       end
 
-      if (p_hash.has_key?("c_ippies"))
+      if (p_hash.has_key?("c_ippies"))   && !(p_hash.has_key?("s_ippies"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'ippies'
       end
 
-      if (p_hash.has_key?("c_earned_runs"))
+      if (p_hash.has_key?("c_earned_runs")) && !(p_hash.has_key?("s_earned_runs"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'earned_runs'
       end
 
-      if (p_hash.has_key?("c_catholic_runs"))
+      if (p_hash.has_key?("c_catholic_runs"))  && !(p_hash.has_key?("s_catholic_runs"))
         h2[("c" + (colcount+=1).to_s).to_sym] =  'catholic_runs'
       end
 
@@ -1229,8 +1269,6 @@ module QueryHelper
         $cheader[key] = 'ab'
       elsif val == 'sacfly' then
         $cheader[key] = 'sf'
-      elsif val == 'walk' then
-        $cheader[key] = 'bb'
       elsif val == 'ippies' then
         $cheader[key] = 'ip'
       elsif val == 'earned_runs' then
