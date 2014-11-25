@@ -31,3 +31,11 @@ end
 #group :production do
 #  gem 'pg', '0.12.2'
 #end
+
+#Deploy with Capistrano
+
+gem 'rvm1-capistrano3', :require => false
+
+gem 'capistrano', '~> 3.2.1'
+gem 'capistrano-rails'
+gem 'capistrano-bundler'
