@@ -1,0 +1,50 @@
+  # Ensure pg gem is defined in your Gemfile
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: batto_dev
+  pool: 5
+  username: blethary
+  password: oldp0m4d
+
+common: &common
+  adapter: postgresql
+  username: postgres
+  encoding: SQL_ASCII
+  template: template0
+  pool: 5
+  timeout: 5000
+
+redhiftdb: &redshiftdb
+  adapter: redshift
+  host: pinetar.cjmu4s5hl6zn.us-west-2.redshift.amazonaws.com
+  database: devo
+  port: 5439
+  username: masteruser
+  password: BeedieC4t
+
+xdevelopment:
+  <<: *common
+  <<: *redshiftdb
+  database: devo
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: postgresql
+  encoding: unicode
+  database: batto_test
+  pool: 5
+  username: blethary
+  password: oldp0m4d
+  
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: batto_prod
+  pool: 5
+  username: blethary
+  password: oldp0m4d
+
