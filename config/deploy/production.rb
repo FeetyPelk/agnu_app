@@ -1,3 +1,6 @@
+# continuing attempt to get deploy_to directory to work
+
+
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group
@@ -15,6 +18,7 @@ role :db,  %w{willum@54.69.186.29}
 # used to set extended properties on the server.
 
 server '54.69.186.29', user: 'willum', roles: %w{web app}, my_property: :my_value
+
 
 
 # Custom SSH Options
