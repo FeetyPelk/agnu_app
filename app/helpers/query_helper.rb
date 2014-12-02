@@ -200,8 +200,8 @@ module QueryHelper
 
     if ((p_hash[:group_year] == '1') ||
         (p_hash[:group_month] == '1') ||
-        (!p_hash[:start_date].to_s.blank?) ||
-        (!p_hash[:end_date].to_s.blank?))
+        ((!p_hash[:start_date].to_s.blank?) && (valid_date? p_hash[:start_date]) ||
+        ((!p_hash[:end_date].to_s.blank?)) && (valid_date? p_hash[:end_date])) )
       @inner_join = "#{@inner_join} join bb_date_dims dd on dd.id = pf.date_key"
       if !p_hash[:start_date].to_s.blank?
         @inner_join = "#{@inner_join} and dd.the_date >= '#{p_hash[:start_date]}'"
@@ -367,6 +367,14 @@ module QueryHelper
       end
 
     end
+  end
+
+  def outage_head
+    @outage_head = " select * from ( "
+  end
+
+  def outage_tail
+    @outage_tail = " ) outage "
   end
 
   def delimitem(p_hash)
@@ -716,6 +724,19 @@ module QueryHelper
 
 
   end
+
+  def outer_limit? (p_hash)
+    !p_hash[:min_ab].to_s.blank?
+  end
+
+  def outer_where (p_hash)
+    if outer_limit? p_hash
+      @outage_limit = "where "
+      @outage_limit ="#{@outage_limit} #{$flannel.key("at_bat")} > #{p_hash[:min_ab]}"
+      puts @outage_limit
+    end
+  end
+
 
   def groupem(p_hash)
 
@@ -1284,10 +1305,18 @@ module QueryHelper
     puts 'woopwoop'
   end
 
+
+  def valid_date? (q)
+    q =~/^(0[1-9]|1[012])[-\/.](0[1-9]|[12][0-9]|3[01])[-\/.](19|20)\d\d$/
+  end
+
   def buildquery (p_hash)
     build_hash  p_hash
     set_to_false
     default_query = true
+    @outage_limit = ""
+    @outage_head = ""
+    @outage_tail = ""
     @outer_select = ""
     @inner_select = ""
     @fielder_join = ""
@@ -1341,6 +1370,8 @@ module QueryHelper
         p_hash[:group_fteam] == '1' ||
         p_hash[:group_home_away] == '1')
       default_query = false
+      outage_head
+      outage_tail
       outer_select p_hash
       inner_select p_hash
       subselect_earned p_hash
@@ -1350,6 +1381,7 @@ module QueryHelper
       delimitem p_hash
       joinem p_hash
       selectem p_hash
+      outer_where p_hash
     end
 
 
@@ -1361,7 +1393,8 @@ module QueryHelper
                0 as c16, 0 as c17, 0 as c18, 0 as c19, 0 as c20 from play_facts limit 10"
     end
 
-    the__test_query =  "#{@select_by_1}
+    the__test_query =  " #{@outage_head}
+    #{@select_by_1}
     #{@outer_select}
     #{@select_by_2}
     #{@inner_select}
@@ -1375,9 +1408,13 @@ module QueryHelper
     #{@inner_group}
     #{@select_by_4}
     #{@outer_group}
-    #{@outer_by}"
+    #{@outer_by}
+    #{@outage_tail}
+    #{@outage_limit}
+    #{@delimit}"
 
-    the_query =  "#{@select_by_1}
+    the_query =  " #{@outage_head}
+    #{@select_by_1}
     #{@outer_select}
     #{@select_by_2}
     #{@inner_select}
@@ -1392,7 +1429,9 @@ module QueryHelper
     #{@select_by_4}
     #{@outer_group}
     #{@order_by}
-    #{@delimit} "
+    #{@outage_tail}
+    #{@outage_limit}
+    #{@delimit}"
 
   end
 

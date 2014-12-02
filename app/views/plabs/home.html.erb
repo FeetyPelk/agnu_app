@@ -62,15 +62,18 @@
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-              Dates
+              Limits
             </a>
           </div>
           <div id="collapseThree" class="accordion-body collapse">
             <div class="accordion-inner">
+              <p> 1970 - 2013 only </p>
+              <p> Format mm/dd/yyyy </p>
               <div class="row">
                 <p>
-                <div class="boop"><%= label_tag "Start Date" %><%= search_field_tag  :start_date, value = params[:start_date]%></div>
-                <div class="boop"><%= label_tag "End Date" %><%= search_field_tag  :end_date, value = params[:end_date]%></div>
+                <div class="boop"><%= label_tag "Start Date (mm/dd/yyyy)" %><%=search_field_tag  :start_date, value = params[:start_date]%></div>
+                <div class="boop"><%= label_tag "End Date (mm/dd/yyyy)" %><%= search_field_tag  :end_date, value = params[:end_date]%></div>
+                <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
                 </p>
               </div>
             </div>
@@ -158,7 +161,7 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
-          Suppress Column
+          Suppress
         </a>
       </div>
       <div id="collapseSix" class="accordion-body collapse">
@@ -231,14 +234,19 @@
         </div>
       </div>      -->
 
-      <p>
-        <%= submit_tag "Submit", class: "btn btn-large btn-primary"%>
+        <p>
+          <%= submit_tag "Submit", class: "btn btn-large btn-primary"%>
 
-      </p>
+        </p>
+
+        <p>
+
+          <button onclick="Reload()">Refresh table</button>
+        </p>
 
 
 
-      <table class="footable">
+        <table class="footable">
         <thead>
         <!--
         <th><%= link_to "TField", :sort => "tdf.id3_old"  if $fteam_colm%></th>

@@ -1,3 +1,178 @@
 <% provide(:title, 'Help') %>
 
 <h2>Help!  Help!</h2>
+
+<p class="midlish">Some basic things about Batomatic output:</p>
+<p class="midlish">Output is in a row/column format.  Rows go left to right.  Columns go top to bottom.  If you show all the Yankees batting stats for 1983, for instance,
+  each batter gets a row of output (left to right) and each stat -- avg, hits, at_bats, and so on -- is a column (top to bottom).</p>
+<p class="midlish"> Results can always be sorted on any column by clicking on the column header</p>
+<p class="midlish"> On smaller screens, there may not be enough real estate to display all the column data.  Don't worry -- it's there.
+The leftmost column will display a plus sign to indicate more data.  Click on the plus sign and the additional data will appear
+  (and the plus sign will change to a minus sign -- click on that to revert to the original display).
+  If you need to see one or more of the hidden columns as an "always visible" column -- to sort on it, for instance -- see "Flush Left Help" below.</p>
+
+
+<p class="midlish"> For info on the input fields, click below. </p>
+
+
+
+
+
+
+<div class="help_container">
+  <div class="accordion" id="accordion2">
+
+     <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+          Batting Help
+        </a>
+      </div>
+      <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
+      <div id="collapseOne" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class="midlish">  Enter search criteria for the batting team, batter, or baserunners here. You may enter many fields or none. To select a team, you must use the three-letter team abbreviation (we hope to improve this shortly). For team abbreviations see below.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+          Fielding Help
+        </a>
+      </div>
+      <div id="collapseTwo" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class="midlish">  Enter search criteria for the fielding team or players here. You may enter many fields or none.  To select a team, you must use the three-letter team abbreviation (we hope to improve this shortly). For team abbreviations see below.</p>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+          Limits Help
+        </a>
+      </div>
+      <div id="collapseThree" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class="midlish">  Dates:  A date range definitely helps performance, and helps weed out data you are not interested in anyway.  Enter start or end dates here  Format is mm/dd/yyyy -- anything else is ignored. </p>
+          <p class="midlish">  At-bat minimum:  Helpful when looking for league leaders, not so good when looking at, say, the St Louis Cardinals as a team for 1983.  You decide.  Default is no minimum.</p>
+        </div>
+      </div>
+    </div>
+    <!--   This is a comment   -->
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+          Grouping Help
+        </a>
+      </div>
+      <div id="collapseFour" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class="midlish"> Grouping is your friend!  THE best tool for drilling down into data.  Start with a batter and year,
+             for instance, and then add fielding team, pitchers, runners on third, whatever, to get more and more detail.
+             Or,as another example, if you are unsure how to spell a player's name, get his team data (for a given year is quickest)  grouped by batter (or pitcher or left field or whatever) to
+           see the player name.  Many possibilities here.</p>
+
+          <div class="groupies-by">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+          Flush Left Help
+        </a>
+      </div>
+      <div id="collapseFive" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <div class="groupies-by">
+            <p class="midlish"> You can alter the default column order here.  You may be particularly interested in hit by pitch, for example -- it is easier to follow it it is the leftmost column
+            Especially with smaller screen sizes you may opt to reposition a column or columns of interest to the left.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
+          Suppress Help
+        </a>
+      </div>
+      <div id="collapseSix" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <div class="groupies-by">
+
+            <p class="midlish">  You may not want to see a default column at all -- you may be on a small screen, or you may have added a lot of supplemental columns through "group_by.".  Check the box here to hide it.</p>
+            <p class="midlish"> Special case -- The  Delimit Checkbox:  Results are limited to 250 rows. For most inquiries, you probably won't even look that far.
+              Some inquiries can return thousands of rows, which will take forever to load.  If you are sure you want more than 250 rows, check this
+              box, but be careful what you ask for.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseZero">
+          Team Abbreviations
+        </a>
+      </div>
+      <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
+      <div id="collapseZero" class="accordion-body collapse">
+
+        <div class="accordion-inner">
+          <p class="smallish">Anaheim Angels ANA</p>
+          <p class="smallish">Arizona Diamondbacks ARI</p>
+          <p class="smallish">Atlanta Braves ATL</p>
+          <p class="smallish">Baltimore Orioles BAL</p>
+          <p class="smallish">Boston Red Sox BOS</p>
+          <p class="smallish">California Angels CAL</p>
+          <p class="smallish">Chicago Cubs CHN</p>
+          <p class="smallish">Chicago White Sox CHA</p>
+          <p class="smallish">Cincinnati Reds CIN</p>
+          <p class="smallish">Chicago White Sox CHA</p>
+          <p class="smallish">Cincinnati Reds CIN</p>
+          <p class="smallish">Cleveland Indians CLE</p>
+          <p class="smallish">Colorado Rockies COL</p>
+          <p class="smallish">Detroit Tigers DET</p>
+          <p class="smallish">Florida Marlins FLO</p>
+          <p class="smallish">Houston Astros HOU</p>
+          <p class="smallish">Kansas City Royals KCA</p>
+          <p class="smallish">Los Angeles Angels ANA</p>
+          <p class="smallish">Los Angeles Dodgers LAN</p>
+          <p class="smallish">Miami Marlins MIA</p>
+          <p class="smallish">Milwaukee Brewers MIL</p>
+          <p class="smallish">Minnesota Twins MIN</p>
+          <p class="smallish">Montreal Expos MON</p>
+          <p class="smallish">New York Mets NYN</p>
+          <p class="smallish">New York Yankees NYA</p>
+          <p class="smallish">Oakland Athletics OAK</p>
+          <p class="smallish">Philadelphia Phillies PHI</p>
+          <p class="smallish">Pittsburgh Pirates PIT</p>
+          <p class="smallish">San Diego Padres SDN</p>
+          <p class="smallish">San Francisco Giants SFN</p>
+          <p class="smallish">Seattle Mariners SEA</p>
+          <p class="smallish">St. Louis Cardinals SLN</p>
+          <p class="smallish">Tampa Bay Devil Rays TBA</p>
+          <p class="smallish">Tampa Bay Rays TBA</p>
+          <p class="smallish">Texas Rangers TEX</p>
+          <p class="smallish">Toronto Blue Jays TOR</p>
+          <p class="smallish">Washington Nationals WAS</p>
+          <p class="smallish">Washington Senators WS2</p>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
