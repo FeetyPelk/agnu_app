@@ -5,8 +5,8 @@
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:batto_dev</jdbc-url>
-      <user-name>smurdock</user-name>
-      <user-password>dfc3dfd9df9edfc8dfcfdfc6dfc6dfcb</user-password>
+      <user-name>blethary</user-name>
+      <user-password>dfc5dfc6dfcedfdadf9adfc7df9edfce</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
@@ -20,8 +20,8 @@
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:batto_test</jdbc-url>
-      <user-name>smurdock</user-name>
-      <user-password>dfc3dfd9df9edfc8dfcfdfc6dfc6dfcb</user-password>
+      <user-name>blethary</user-name>
+      <user-password>dfc5dfc6dfcedfdadf9adfc7df9edfce</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
@@ -47,9 +47,8 @@
     <data-source source="LOCAL" name="Rails agnu_app: xdevelopment" product="PostgreSQL" version="9.1.13" jdbc-version="3.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.1 JDBC3 (build 901)" uuid="5717e59c-db1f-4c09-9546-21292f659459">
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql:batto_dev</jdbc-url>
-      <user-name>smurdock</user-name>
-      <user-password>dfc3dfd9df9edfc8dfcfdfc6dfc6dfcb</user-password>
+      <jdbc-url>jdbc:postgresql:devo</jdbc-url>
+      <user-name>postgres</user-name>
       <libraries>
         <library>
           <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
@@ -75,9 +74,9 @@
     <data-source source="LOCAL" name="Rails agnu_app: production" product="PostgreSQL" version="9.1.14" jdbc-version="3.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.1 JDBC3 (build 901)" uuid="d7f49037-56df-46b4-9849-1221c4bf9642">
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql:batto_prod</jdbc-url>
-      <user-name>blethary</user-name>
-      <user-password>dfc5dfc6dfcedfdadf9adfc7df9edfce</user-password>
+      <jdbc-url>jdbc:postgresql://pgworld.cbxilpllykbb.us-west-2.rds.amazonaws.com:5432/miffmole</jdbc-url>
+      <user-name>ward</user-name>
+      <user-password>dfd0dfc3dfd2dfdadfcbdfc9dfc1dfde</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>
