@@ -68,7 +68,6 @@
           <div id="collapseThree" class="accordion-body collapse">
             <div class="accordion-inner">
               <p> 1970 - 2013 only </p>
-              <p> Format mm/dd/yyyy </p>
               <div class="row">
                 <p>
                 <div class="boop"><%= label_tag "Start Date (mm/dd/yyyy)" %><%=search_field_tag  :start_date, value = params[:start_date]%></div>
@@ -99,8 +98,8 @@
               <ul>
                 <li> <%= check_box_tag(:group_pitcher,"1",params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
                 <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
-                <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "BTeam?") %> </li>
-                <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "FTeam?") %> </li>
+                <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
+                <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
                 <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]) %><%= label_tag(:twitter_share, "Catcher?") %> </li>
                 <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]) %><%= label_tag(:twitter_share, "First Base?") %> </li>
                 <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]) %><%= label_tag(:twitter_share, "Second Base?") %> </li>
@@ -115,7 +114,7 @@
                 <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]) %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
                 <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]) %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
                 <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]) %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
-                <li> <%= check_box_tag(:group_booper,"1",params[:booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>
+                <!--<li> <%= check_box_tag(:group_booper,"1",params[:booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>   -->
                </ul>
               </div>
             </div>

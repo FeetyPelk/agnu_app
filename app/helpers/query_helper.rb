@@ -1390,7 +1390,8 @@ module QueryHelper
       return  "select 0 as c1, 0 as c2, 0 as c3, 0 as c4, 0 as c5,
                0 as c6, 0 as c7, 0 as c8, 0 as c9, 0 as c10,
                0 as c11, 0 as c12, 0 as c13, 0 as c14, 0 as c15,
-               0 as c16, 0 as c17, 0 as c18, 0 as c19, 0 as c20 from play_facts limit 10"
+               0 as c16, 0 as c17, 0 as c18, 0 as c19, 0 as c20 from play_facts limit 1"
+     # return "select * from batters_200 limit 1"
     end
 
     the__test_query =  " #{@outage_head}

@@ -11,7 +11,7 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
   (and the plus sign will change to a minus sign -- click on that to revert to the original display).
   If you need to see one or more of the hidden columns as an "always visible" column -- to sort on it, for instance -- see "Flush Left Help" below.</p>
 
-
+<p class="midlish"> The "For The Bruces" section below starts off with a  simple step by step example and and then gets more involved.  You may want to try a few steps to get the hang of what's going on. </p>
 <p class="midlish"> For info on the input fields, click below. </p>
 
 
@@ -114,6 +114,55 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
             <p class="midlish"> Special case -- The  Delimit Checkbox:  Results are limited to 250 rows. For most inquiries, you probably won't even look that far.
               Some inquiries can return thousands of rows, which will take forever to load.  If you are sure you want more than 250 rows, check this
               box, but be careful what you ask for.</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
+          For The Bruces
+        </a>
+      </div>
+      <div id="collapseSeven" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <div class="groupies-by">
+
+            <p class="midlish">  In this example, we will select a year and a batter. Try as many steps as you want -- you don't have to do them all.</p>
+            <p class="midlish">  Everything below is done on the home page.</p>
+            <p class="midlish">  Click on the Limits button </p>
+            <p class="midlish">  For the start date, enter "01/01/2010" without the quotation marks. </p>
+            <p class="midlish">  For the end date, enter "01/01/2011" without the quotation marks. </p>
+            <p class="midlish">  Now, still on the home page, click on the Batter Button </p>
+            <p class="midlish">  For the batter, enter "Derek Jeter" without the quotation marks </p>
+            <p class="midlish">  Now click the Submit button</p>
+            <p class="midlish">  Derek Jeter's stats for 2010 will appear in a single row in the results table.</p>
+            <p class="midlish">  Now for the fun stuff. Click on the Grouping button</p>
+            <p class="midlish">  Click the "Fielding Team?" box and then the Submit button again</p>
+            <p class="midlish">  Derek Jeter's 2010 stats will now appear, broken down by the opposing team.</p>
+            <p class="midlish">  You're looking at almost twenty rows.  You can sort the results on any column by clicking the column header.
+              Each time you lick the sort order will be reversed between ascending and descending order</p>
+            <p class="midlish">  Note that some of the stats are what are usually considered pitching stats. You may or may not find some that are useful to you form the batting point ov view</p>
+            <p class="midlish">  Let's try a pitcher this time, for the same year. </p>
+            <p class="midlish">  Clicking on the "Batting" button and remove Derek Jeter's name from the batter box.</p>
+            <p class="midlish">  Click on the "Fielding" button and, in the pitcher box, add "Phil Hughes" without the quotation marks.</p>
+            <p class="midlish">  Click on "Grouping".  Unclick "Fielding Team?" (you could leave it in, but will just be NYA for each row) and click 'Batting Team?"
+                                and press teh submit button.</p>
+            <p class="midlish">  You now see stats for Phil Hughes, still for 2011 and broken down by the opposing team</p>
+            <p class="midlish">  Try other stuff in grouping. You can see Phil Hughes's stats broken down by who his shortstop was, or who his left fielder was, or both.
+              You can leave Phil Hughes out altogether and get batting and "pitching" results broken down by left fielder, or catcher, or third_baseman, or
+              all three.   You can put "Thurman Munson " in as a batter and "Carlton Fisk" as a fielder
+              to see how they did against each other, and then group those any way you want.</p>
+            <p class="midlish"> Grouping is also useful for finding information to drill down in. You may get all the left fielders for 1975 for Johnny Bench by grouping,
+              then cut and paste one of them into the "left fielder" box in Fielding and drill down into the results for those two players.  You may not know
+              how to spell "Omar Vizquel" so you just group Cleveland fielding or batting by shortstop to get his name. And so on.</p
+            <p class="midlish">  A request can get very complex and take a long time to process and return thousands and thousands of rows.  Limiting your
+              requests by date is good way to speed things up.  With start date and end date, you can ask for a single day if you want. </p>
+            <p class="midlish">  Requests can return no data.  Vladimir Guerrero  never played with or against Rusty Staub, for example.  If you get no
+              results, you may well have something in your selection criteria that is contradictory.  Simplify what you are asking for, or back up
+              a step or two and use grouping to find combinations that really exist. Misspelling a name is also a good way to zero out the results.</p>
 
           </div>
         </div>
