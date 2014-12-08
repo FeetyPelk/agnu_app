@@ -291,7 +291,11 @@ module QueryHelper
     if ((p_hash[:group_fteam] == '1') ||!p_hash[:fteam].to_s.blank?)
       @inner_join = "#{@inner_join} join team_dims tdf on pf.field_team_key = tdf.id \n"
       if !p_hash[:fteam].to_s.blank?
-        @inner_join = "#{@inner_join} and tdf.id3_old = '#{p_hash[:fteam]}'"
+        @inner_join = "#{@inner_join} and (lower(tdf.id3_old) = '#{p_hash[:fteam].downcase}'
+                                      or lower(tdf.city) = '#{p_hash[:fteam].downcase}'
+                                      or lower(tdf.namo) = '#{p_hash[:fteam].downcase}'
+                                      or lower(tdf.nick) = '#{p_hash[:fteam].downcase}'
+                                      or lower(tdf.city)||' '||lower(tdf.namo) = '#{p_hash[:fteam].downcase}')"
       end
     end
   end
@@ -301,10 +305,16 @@ module QueryHelper
     if ((p_hash[:group_bteam] == '1') ||!p_hash[:bteam].to_s.blank?)
       @inner_join = "#{@inner_join} join team_dims tdb on pf.bat_team_key = tdb.id \n"
       if !p_hash[:bteam].to_s.blank?
-        @inner_join = "#{@inner_join} and tdb.id3_old = '#{p_hash[:bteam]}'"
+        @inner_join = "#{@inner_join} and (lower(tdb.id3_old) = '#{p_hash[:bteam].downcase}'
+                                      or lower(tdb.city) = '#{p_hash[:bteam].downcase}'
+                                      or lower(tdb.namo) = '#{p_hash[:bteam].downcase}'
+                                      or lower(tdb.nick) = '#{p_hash[:bteam].downcase}'
+                                      or lower(tdb.city)||' '||lower(tdb.namo) = '#{p_hash[:bteam].downcase}')"
       end
     end
   end
+
+  #replace( string, from_substring, to_substring )
 
   def join_add_fielder_dims (p_hash)
 
