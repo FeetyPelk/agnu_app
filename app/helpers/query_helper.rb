@@ -191,7 +191,11 @@ module QueryHelper
     if ((p_hash[:group_batter] == '1') ||!p_hash[:batter].to_s.blank?)
       @inner_join = "#{@inner_join} join player_dims pd on pf.player_key = pd.id "
       if !p_hash[:batter].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(pd.player_name) = '#{p_hash[:batter].downcase}'"
+        if !$ES_player_key.blank?
+          @inner_join = "#{@inner_join} and pd.id = #{$ES_player_key}"
+        else
+          @inner_join = "#{@inner_join} and lower(pd.player_name) = '#{p_hash[:batter].downcase}'"
+        end
       end
     end
   end
@@ -1320,7 +1324,43 @@ module QueryHelper
     q =~/^(0[1-9]|1[012])[-\/.](0[1-9]|[12][0-9]|3[01])[-\/.](19|20)\d\d$/
   end
 
+
+  def melfloo (p_hash)
+    $ES_player_key = ""
+    $foofter = false
+     begin
+     boopies = Sourdough.search query: {match: {namokey: p_hash[:batter]}}   #this works,, period
+     rescue
+       $foofter = true;
+     end
+     #boopies = Sourdough.search query: {match: {namoraw:"Derek Jeter"}}
+     # boopies = Sourdough.search
+    # {
+     #    query: {
+     #    match: {
+    #     namo: "derek jeter"
+     #}
+    # }
+    #}
+
+    if $foofter
+      puts "************ We had an error ******************"
+    else
+      boopies.each do |boopy|
+
+        $ES_player_key = boopy.player_key
+        puts '///////   '+boopy.player_key.to_s+'   ////////////'
+      end
+    end
+
+    #products = Product.search body: {match: {name: "milk"}}
+
+  end
+
+
   def buildquery (p_hash)
+
+    melfloo p_hash
     build_hash  p_hash
     set_to_false
     default_query = true

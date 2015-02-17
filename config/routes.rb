@@ -1,4 +1,8 @@
 AgnuApp::Application.routes.draw do
+  get "search/index"
+
+  get "search/query"
+
   get "plabs/home"
   #root to: 'static_pages#home'
   root to: 'plabs#home'

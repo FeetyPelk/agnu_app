@@ -6,6 +6,8 @@ gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'jquery-rails', '2.0.2'
 gem "footable-rails", "~> 0.0.1"
 gem 'activerecord-redshift-adapter', '~> 0.9.12'
+gem 'searchkick'
+gem 'twitter-typeahead-rails'
 
 
 group :development, :test do
