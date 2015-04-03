@@ -8,7 +8,7 @@
     <ignored path="agnu_app.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Ruby Console" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1397038229411" ignored="false" />
-    <file path="/a.dummy" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1421582095063" ignored="false" />
+    <file path="/a.dummy" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1424517403771" ignored="false" />
     <file path="/Dummy.txt" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1397039600127" ignored="false" />
     <file path="/_header.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1416830693368" ignored="false" />
     <file path="/_footer.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1415704461255" ignored="false" />
@@ -33,7 +33,7 @@
     <file path="/sourdough.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1419688203909" ignored="false" />
     <file path="/index.html.erb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1420373309322" ignored="false" />
     <file path="/search.js.coffee" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1419860623628" ignored="false" />
-    <file path="/article.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1419853125322" ignored="false" />
+    <file path="/article.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1424516879872" ignored="false" />
     <file path="/author.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1419853211867" ignored="false" />
     <file path="/search_controller.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1420372928021" ignored="false" />
     <file path="/simon.rb" changelist="76173ca5-cb7c-4fd0-aa5c-1613f282387d" time="1421076533431" ignored="false" />
@@ -79,28 +79,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="141" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="article.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/article.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="108" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
+            <state line="6" column="115" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="search_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/search_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="144" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
+            <state line="22" column="104" selection-start="660" selection-end="660" vertical-scroll-proportion="0.49512196">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search_helper.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/helpers/search_helper.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,7 +118,7 @@
       <file leaf-file-name="sourdough.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/sourdough.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="59" selection-start="493" selection-end="493" vertical-scroll-proportion="0.0">
+            <state line="14" column="145" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -133,10 +133,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query_helper.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="query_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="121" column="83" selection-start="4340" selection-end="4340" vertical-scroll-proportion="2.3073287">
+            <state line="72" column="64" selection-start="2167" selection-end="2167" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -172,7 +172,6 @@
         <option value="$PROJECT_DIR$/app/helpers/query_helper.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/plabs.js.coffee" />
-        <option value="$PROJECT_DIR$/app/models/article.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/searchy.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/searchy.js.coffee" />
@@ -180,6 +179,7 @@
         <option value="$PROJECT_DIR$/app/views/search/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/search_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/simon.rb" />
+        <option value="$PROJECT_DIR$/app/models/article.rb" />
       </list>
     </option>
   </component>
@@ -223,6 +223,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -409,7 +410,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -836,13 +836,13 @@
       <method />
     </configuration>
     <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="Cucumber.All features in: agnu_app" />
-      <item index="1" class="java.lang.String" itemvalue="IRB console.Rails console: agnu_app" />
-      <item index="2" class="java.lang.String" itemvalue="RSpec.All specs in: agnu_app" />
-      <item index="3" class="java.lang.String" itemvalue="Rake.assets:clean" />
-      <item index="4" class="java.lang.String" itemvalue="Rake.db:create" />
-      <item index="5" class="java.lang.String" itemvalue="Rails.Development: agnu_apps" />
-      <item index="6" class="java.lang.String" itemvalue="Rails.Redshift:agnu_apps" />
+      <item index="0" class="java.lang.String" itemvalue="Rails.Development: agnu_apps" />
+      <item index="1" class="java.lang.String" itemvalue="Rails.Redshift:agnu_apps" />
+      <item index="2" class="java.lang.String" itemvalue="Cucumber.All features in: agnu_app" />
+      <item index="3" class="java.lang.String" itemvalue="IRB console.Rails console: agnu_app" />
+      <item index="4" class="java.lang.String" itemvalue="RSpec.All specs in: agnu_app" />
+      <item index="5" class="java.lang.String" itemvalue="Rake.assets:clean" />
+      <item index="6" class="java.lang.String" itemvalue="Rake.db:create" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -886,18 +886,18 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.057814486" sideWeight="0.674221" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.057814486" sideWeight="0.6558074" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24205846" sideWeight="0.674221" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24205846" sideWeight="0.6558074" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34419262" sideWeight="0.7782719" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32577905" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38668555" sideWeight="0.5698857" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34419262" sideWeight="0.22172809" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38668555" sideWeight="0.8545108" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32577905" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32577905" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.52867043" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -969,21 +969,19 @@
           <url>file://$PROJECT_DIR$/app/models/simon.rb</url>
           <option name="timeStamp" value="215" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/app/controllers/search_controller.rb</url>
+          <line>6</line>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="216" />
+      <option name="time" value="217" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="139" selection-start="265" selection-end="265" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="20" selection-start="78" selection-end="78" vertical-scroll-proportion="0.0">
@@ -1013,7 +1011,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="141" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0">
+        <state line="3" column="141" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/search/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="6" selection-start="28" selection-end="125" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/static_pages_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1025,9 +1035,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="64" selection-start="2167" selection-end="2167" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/article.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="108" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
+        <state line="6" column="115" selection-start="245" selection-end="245" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/search_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/sourdough.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="145" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/simon.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="133" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1041,42 +1079,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/search_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="144" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/search/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="6" selection-start="28" selection-end="125" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/sourdough.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="59" selection-start="493" selection-end="493" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/simon.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="133" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/static_pages_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="83" selection-start="4340" selection-end="4340" vertical-scroll-proportion="2.3073287">
+        <state line="22" column="104" selection-start="660" selection-end="660" vertical-scroll-proportion="0.49512196">
           <folding />
         </state>
       </provider>
