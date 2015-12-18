@@ -509,7 +509,6 @@ module QueryHelper
       @outer_select += "right_field as #{$flannel.key("right_field").to_s}"
     end
 
-    #no!  tyou are using a case statemnet to converst 1 or 0 to H or A
     #if p_hash[:group_home_away] == '1' || !p_hash[:home_away].to_s.blank?
      # if !@outer_select.blank?; @outer_select+= ", "; end
      # @outer_select += "home_away as #{$flannel.key("home_away").to_s}"
@@ -1175,15 +1174,15 @@ module QueryHelper
       chash[("c" + (colcount+=1).to_s).to_sym] =  'right_field'
     end
 
-    if p_hash[:group_runner1b] == '1' || !p_hash[:runner_1b].to_s.blank?
+    if p_hash[:group_runner1b] == '1' || !p_hash[:runner1b].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'runner1b'
     end
 
-    if p_hash[:group_runner2b] == '1' || !p_hash[:runner_2b].to_s.blank?
+    if p_hash[:group_runner2b] == '1' || !p_hash[:runner2b].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'runner2b'
     end
 
-    if p_hash[:group_runner3b] == '1' || !p_hash[:runner_3b].to_s.blank?
+    if p_hash[:group_runner3b] == '1' || !p_hash[:runner3b].to_s.blank?
       chash[("c" + (colcount+=1).to_s).to_sym] =  'runner3b'
     end
 

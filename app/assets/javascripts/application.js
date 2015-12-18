@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui.min
 //= require bootstrap
 //= require footable
-//= require twitter/typeahead
 //= require_tree .

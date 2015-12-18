@@ -4,10 +4,74 @@
 
 <p id="minihead"> Baseball statistics.  Sideways, sometimes.<p>    -->
 
+<script>
+$(document).ready(function() {
+
+
+$('#airport').autocomplete({
+source: function (request, response) {
+var data = {
+"query": {
+"match": {
+"namo": {
+// "query": "Munsen",
+"query": "",
+"fuzziness": 2,
+"prefix_length": 3
+}
+}
+}
+}
+data.query.match.namo.query = request.term
+$.getJSON("http://localhost:9200/sourdoughs_development_20151211054544873/_search?q=namo:" + request.term, function(data){
+var hoobers = []
+$.each(data, function(index, d){
+if (index == "hits") {   // elastico.hits
+$.each(d, function(index, e){
+if (index == "hits") {                //elastico.hits.hits
+$.each(e, function(index, f){
+hoobers.push({
+label: f._source.namo  + ' ' + f._source.start_date + ' ' + f._source.end_date,
+namo: f._source.namo,
+value: f._source.player_key
+});
+});
+}
+});
+}
+});
+response(hoobers)
+}).error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
+/* alert(jqXHR.responseText) */
+alert("error occurred!");
+});
+},
+minLength: 2,
+
+
+/////////////////////////////////////////////////////
+select: function( event, ui ) {
+event.preventDefault();
+$('#airport').val(ui.item.namo);
+this.value = ui.item.namo;
+$('#playerid').val(ui.item.value);
+}
+///////////////////////////////////////////////////
+});  //end autocomplete
+}); // end ready
+</script>
+
+
+
 <h2> Baseball statistics.  Sideways, sort of.</h2>
 
 
 <%= form_tag root_path  :method => :get  do %>
+
+
+    <div class="airport">
+      <input  id="airport" class="ui-autocomplete-input" type="text" name="airport" autocomplete="off">
+    </div>
 
 
     <div class="container">
@@ -192,7 +256,6 @@
       </div>
     </div>
 
-
     <!--
 
         <div class="accordion-group">
@@ -237,14 +300,6 @@
           <%= submit_tag "Submit", class: "btn btn-large btn-primary"%>
 
         </p>
-
-        <p>
-
-          <%= button_tag "Poopsie"%>
-        </p>
-
-
-
 
 
         <table class="footable">
@@ -323,6 +378,6 @@
           </tbody>
         </div>
       </table>
+      </div>
     </div> <!--container -->
 <% end %>
-

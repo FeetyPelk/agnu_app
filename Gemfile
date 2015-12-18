@@ -4,10 +4,15 @@ gem 'rails', '3.2.14'
 gem 'pg', '0.12.2'
 gem 'bootstrap-sass', '~> 2.3.1.0'
 gem 'jquery-rails', '2.0.2'
+#gem 'rails3-jquery-autocomplete'
+#gem 'jquery-rails', '3.0.4'
+gem 'jquery-ui-rails'
+
 gem "footable-rails", "~> 0.0.1"
-gem 'activerecord-redshift-adapter', '~> 0.9.12'
+#gem 'activerecord-redshift-adapter', '~> 0.9.12'
+#gem 'searchkick', :path => "/home/smurdock/rails_projects/agnu_app/workspace/searchkook/searchkick"
 gem 'searchkick'
-gem 'twitter-typeahead-rails'
+#gem 'twitter-typeahead-rails'
 
 
 group :development, :test do

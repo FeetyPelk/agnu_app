@@ -8,12 +8,12 @@ class Sourdough < ActiveRecord::Base
 #      }
 #  }
 
-  searchkick mappings: {
+  searchkick merge_mappings: true, mappings: {
                sourdough: {
                  properties: {
                    namo: {
                          type: "string",
-                         analyzer: "standard"
+                         analyzer: "searchkick_word_start_index"
                   },
 
                    namokey: {
