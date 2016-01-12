@@ -379,6 +379,33 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
     t.datetime "updated_at"
   end
 
+  create_table "fielder_dims_2014", :id => false, :force => true do |t|
+    t.integer  "id"
+    t.integer  "pitcher_key"
+    t.integer  "catcher_key"
+    t.integer  "first_base_key"
+    t.integer  "second_base_key"
+    t.integer  "third_base_key"
+    t.integer  "shortstop_key"
+    t.integer  "left_field_key"
+    t.integer  "center_field_key"
+    t.integer  "right_field_key"
+    t.string   "pitcher"
+    t.string   "catcher"
+    t.string   "first_base"
+    t.string   "second_base"
+    t.string   "third_base"
+    t.string   "shortstop"
+    t.string   "left_field"
+    t.string   "center_field"
+    t.string   "right_field"
+    t.integer  "is_current"
+    t.date     "date_from"
+    t.date     "date_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fielder_dims_3", :id => false, :force => true do |t|
     t.integer  "id"
     t.integer  "pitcher_key"
@@ -1903,11 +1930,15 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
   add_index "run_facts_slim", ["field_key"], :name => "idx_rfsfield_key"
   add_index "run_facts_slim", ["ppn_id"], :name => "idx_rfsppn_key"
 
+  create_table "simon_saves", :id => false, :force => true do |t|
+    t.integer "id"
+    t.integer "value"
+    t.string  "term"
+  end
+
   create_table "simons", :force => true do |t|
-    t.integer  "value"
-    t.string   "term"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "value"
+    t.string  "term"
   end
 
   create_table "sourdough_save", :id => false, :force => true do |t|
@@ -1920,12 +1951,23 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
 
   add_index "sourdough_save", ["id"], :name => "idx_sourdough_id_key"
 
-  create_table "sourdoughs", :force => true do |t|
+  create_table "sourdough_save2", :id => false, :force => true do |t|
+    t.integer "id"
     t.integer "player_key"
     t.string  "namo"
     t.date    "start_date"
     t.date    "end_date"
     t.string  "namokey"
+  end
+
+  create_table "sourdoughs", :force => true do |t|
+    t.integer "player_key"
+    t.string  "namo"
+    t.date    "start_year_full"
+    t.date    "end_year_full"
+    t.string  "namokey"
+    t.integer "start_date"
+    t.integer "end_date"
   end
 
   create_table "summer", :id => false, :force => true do |t|

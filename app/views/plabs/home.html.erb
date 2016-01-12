@@ -6,62 +6,64 @@
 
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
 
-$('#airport').autocomplete({
-source: function (request, response) {
-var data = {
-"query": {
-"match": {
-"namo": {
+        $('.looky').autocomplete({
+            source: function (request, response) {
+                var data = {
+                    "query": {
+                        "match": {
+                            "namo": {
 // "query": "Munsen",
-"query": "",
-"fuzziness": 2,
-"prefix_length": 3
-}
-}
-}
-}
-data.query.match.namo.query = request.term
-$.getJSON("http://localhost:9200/sourdoughs_development_20151211054544873/_search?q=namo:" + request.term, function(data){
-var hoobers = []
-$.each(data, function(index, d){
-if (index == "hits") {   // elastico.hits
-$.each(d, function(index, e){
-if (index == "hits") {                //elastico.hits.hits
-$.each(e, function(index, f){
-hoobers.push({
-label: f._source.namo  + ' ' + f._source.start_date + ' ' + f._source.end_date,
-namo: f._source.namo,
-value: f._source.player_key
-});
-});
-}
-});
-}
-});
-response(hoobers)
-}).error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
-/* alert(jqXHR.responseText) */
-alert("error occurred!");
-});
-},
-minLength: 2,
+                                "query": "",
+                                "fuzziness": 2,
+                                "prefix_length": 3
+                            }
+                        }
+                    }
+                }
+                data.query.match.namo.query = request.term
+                $.getJSON("http://localhost:9200/sourdoughs_development_20160109065536117/_search?q=namo:" + request.term, function(data){
+                    var hoobers = []
+                    $.each(data, function(index, d){
+                        if (index == "hits") {   // elastico.hits
+                            $.each(d, function(index, e){
+                                if (index == "hits") {                //elastico.hits.hits
+                                    $.each(e, function(index, f){
+                                        hoobers.push({
+                                            label: f._source.namo  + ' ' + f._source.start_date + ' ' + f._source.end_date,
+                                            namo: f._source.namo,
+                                            value: f._source.player_key
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    response(hoobers)
+                }).error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
+                            /* alert(jqXHR.responseText) */
+                            alert("error occurred!");
+                        });
+            },
+            minLength: 2,
 
 
 /////////////////////////////////////////////////////
-select: function( event, ui ) {
-event.preventDefault();
-$('#airport').val(ui.item.namo);
-this.value = ui.item.namo;
-$('#playerid').val(ui.item.value);
-}
+            select: function( event, ui ) {
+               event.preventDefault();
+                $('#playerid').val(ui.item.namo);
+                playaposition = "x" + this.id.toString();
+                this.value = ui.item.namo;
+                $("#" + playaposition).val(ui.item.value);
+                //#{inputId}
+                //$('#xrunner1b').val(ui.item.value);
+            }
 ///////////////////////////////////////////////////
-});  //end autocomplete
-}); // end ready
+        });  //end autocomplete
+    }); // end ready
 </script>
-
 
 
 <h2> Baseball statistics.  Sideways, sort of.</h2>
@@ -70,29 +72,55 @@ $('#playerid').val(ui.item.value);
 <%= form_tag root_path  :method => :get  do %>
 
 
-    <div class="airport">
-      <input  id="airport" class="ui-autocomplete-input" type="text" name="airport" autocomplete="off">
-    </div>
+    <!--   <div class="airport">
+         <input  id="airport" class="ui-autocomplete-input" type="text" name="airport" autocomplete="off">
+       </div>
+    -->
 
+       <div class="container">
+       <p>
+         <div>
+           <label class="label" for="numbero">player_id</label>
+           <input id="playerid" type="text" name="numberone">
+         </div>
+       <div>
+         <label class="label" for="numbero">batter</label>
+         <input id="xbatter" type="text" name="bat">
+       </div>
+       <div>
+         <label class="label" for="numbero">runner ib</label>
+         <input id="xrunner1b" type="text" name="run1">
+       </div>
 
-    <div class="container">
-      <div class="accordion" id="accordion2">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-              Batting
-            </a>
-          </div>
-    <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
+         <div>
+           <label class="label" for="numbero">runner 2b</label>
+           <input id="xrunner2b" type="text" name="run2">
+         </div>
+
+         <div>
+           <label class="label" for="numbero">runner 3b</label>
+           <input id="xrunner3b" type="text" name="run3">
+         </div>
+
+         </p>
+       <div class="accordion" id="accordion2">
+           <div class="accordion-group">
+             <div class="accordion-heading">
+               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                 Batting
+               </a>
+             </div>
+       <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
           <div id="collapseOne" class="accordion-body collapse">
           <div class="accordion-inner">
               <div class="row">
                 <p>
                 <div class="boop"><%= label_tag "Batting Team" %><%= search_field_tag  :bteam, value = params[:bteam]%></div>
-                <div class="boop"><%= label_tag "Batter" %><%= search_field_tag  :batter, value = params[:batter]%></div>
-                <div class="boop"><%= label_tag "Runner on First" %><%= search_field_tag  :runner1b, value = params[:runner1b]%></div>
-                <div class="boop"><%= label_tag "Runner on Second" %><%= search_field_tag  :runner2b, value = params[:runner2b]%></div>
-                <div class="boop"><%= label_tag "Runner on Third" %><%= search_field_tag  :runner3b, value = params[:runner3b]%></div>
+                <div class="boop"><%= label_tag "Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="batter" <%= search_field_tag  :batter, value = params[:batter]%></div>
+                <div class="boop"><%= label_tag "Runner on First"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner1b" <%=search_field_tag  :runner1b,value = params[:runner1b]%> </div>
+                <div class="boop"><%= label_tag "Runner on Second"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner2b" <%=search_field_tag  :runner2b,value = params[:runner2b]%> </div>
+                <div class="boop"><%= label_tag "Runner on Thoid"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner3b" <%=search_field_tag  :runner3b,value = params[:runner3b]%> </div>
+
                 </p>
               </div>
 
@@ -110,15 +138,15 @@ $('#playerid').val(ui.item.value);
               <div class="row">
                 <p>
                 <div class="boop"><%= label_tag "Fielding Team" %><%= search_field_tag  :fteam, value = params[:fteam]%></div>
-                <div class="boop"><%= label_tag "Pitcher" %><%= search_field_tag  :pitcher, value = params[:pitcher]%></div>
-                <div class="boop"><%= label_tag "Catcher" %><%= search_field_tag  :catcher, value = params[:catcher]%></div>
-                <div class="boop"><%= label_tag "First Base" %><%= search_field_tag  :first_base, value = params[:first_base]%></div>
-                <div class="boop"><%= label_tag "Second Base" %><%= search_field_tag  :second_base, value = params[:second_base]%></div>
-                <div class="boop"><%= label_tag "Third Base" %><%= search_field_tag  :third_base, value = params[:third_base]%></div>
-                <div class="boop"><%= label_tag "Shortstop" %><%= search_field_tag  :shortstop, value = params[:shortstop]%></div>
-                <div class="boop"><%= label_tag "Left Field" %><%= search_field_tag  :left_field, value = params[:left_field]%></div>
-                <div class="boop"><%= label_tag "Center Field" %><%= search_field_tag  :center_field, value = params[:center_field]%></div>
-                <div class="boop"><%= label_tag "Right Field" %><%= search_field_tag  :right_field, value = params[:right_field]%></div>
+                <div class="boop"><%= label_tag "Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="pitcher" <%= search_field_tag  :pitcher, value = params[:pitcher]%></div>
+                <div class="boop"><%= label_tag "Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="catcher" <%= search_field_tag  :catcher, value = params[:catcher]%></div>
+                <div class="boop"><%= label_tag "First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="first_base" <%= search_field_tag  :first_base, value = params[:first_base]%></div>
+                <div class="boop"><%= label_tag "Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="second_base" <%= search_field_tag  :second_base, value = params[:second_base]%></div>
+                <div class="boop"><%= label_tag "Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="third_base" <%= search_field_tag  :third_base, value = params[:third_base]%></div>
+                <div class="boop"><%= label_tag "Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="shortstop" <%= search_field_tag  :shortstop, value = params[:shortstop]%></div>
+                <div class="boop"><%= label_tag "Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="left_field" <%= search_field_tag  :left_field, value = params[:left_field]%></div>
+                <div class="boop"><%= label_tag "Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="center_field" <%= search_field_tag  :center_field, value = params[:center_field]%></div>
+                <div class="boop"><%= label_tag "Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="right_field" <%= search_field_tag  :right_field, value = params[:right_field]%></div>
                 </p>
               </div>
             </div>

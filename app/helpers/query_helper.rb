@@ -1388,6 +1388,10 @@ module QueryHelper
 
     a = p_hash[:batter]
 
+    if (!p_hash[:airport].to_s.blank?)
+      p_hash[:runner3b] = p_hash[:airport]
+    end
+
     if (!p_hash[:batter].to_s.blank? || !a.to_s.blank?||
         !p_hash[:pitcher].to_s.blank? ||
         !p_hash[:catcher].to_s.blank? ||

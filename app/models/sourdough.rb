@@ -16,19 +16,28 @@ class Sourdough < ActiveRecord::Base
                          analyzer: "searchkick_word_start_index"
                   },
 
-                   namokey: {
-                     type: "string",
-                     analyzer: "keyword"
-                  },
+              #     namokey: {
+              #         type: "string",
+               #        analyzer: "keyword"
+                #   },
+                   first_name: {
+                       type: "string",
+                       analyzer: "keyword"
+                   },
+                   last_name: {
+                       type: "string",
+                       analyzer: "keyword"
+                   },
 
-                   id: {
-                     type: "integer"
-                   },
-                   plays: {
-                     type: "integer"
-                   },
+                   #     id: {
+              #       type: "integer"
+              #     },
+               #    plays: {
+                #     type: "integer"
+                #   },
                    player_key: {
-                     type: "integer"
+                     type: "integer" ,
+                     index: "not_analyzed"
                    },
                    start_date: {
                      type: "string",
@@ -44,5 +53,5 @@ class Sourdough < ActiveRecord::Base
 
 
 
-  attr_accessible :end_date, :namo, :namokey, :player_key, :start_date
+  attr_accessible :end_date, :namo, :namokey, :player_key, :start_date, :end_date
 end
