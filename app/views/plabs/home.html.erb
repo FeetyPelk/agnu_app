@@ -4,9 +4,23 @@
 
 <p id="minihead"> Baseball statistics.  Sideways, sometimes.<p>    -->
 
+<script>
+    function wipeout() {
+        var x = document.getElementById("fname");
+        x.value = x.value.toUpperCase();
+    }
+</script>
 
 <script>
     $(document).ready(function() {
+        //$('input[id^="lieferdatum"]').datepicker({dateFormat: 'mm/dd/yy'});
+
+        $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
+
+       // $('input[id^="boopdate"]').datepicker({dateFormat: 'mm/dd/yy'});
+
+        $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
+
 
 
         $('.looky').autocomplete({
@@ -54,11 +68,9 @@
             select: function( event, ui ) {
                event.preventDefault();
                 $('#playerid').val(ui.item.namo);
-                playaposition = "x" + this.id.toString();
+                playaposition = "qp" + this.id.toString();
                 this.value = ui.item.namo;
                 $("#" + playaposition).val(ui.item.value);
-                //#{inputId}
-                //$('#xrunner1b').val(ui.item.value);
             }
 ///////////////////////////////////////////////////
         });  //end autocomplete
@@ -78,32 +90,107 @@
     -->
 
        <div class="container">
-       <p>
-         <div>
-           <label class="label" for="numbero">player_id</label>
-           <input id="playerid" type="text" name="numberone">
-         </div>
-       <div>
-         <label class="label" for="numbero">batter</label>
-         <input id="xbatter" type="text" name="bat">
-       </div>
-       <div>
-         <label class="label" for="numbero">runner ib</label>
-         <input id="xrunner1b" type="text" name="run1">
-       </div>
 
-         <div>
-           <label class="label" for="numbero">runner 2b</label>
-           <input id="xrunner2b" type="text" name="run2">
-         </div>
+        <div class="disappear">
+          <div class="row">
+            <p>
+              <div class=dismember><%= label_tag " QP Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpbatter" name="qpbatter" <%= search_field_tag  :qobatter, value = params[:qpbatter]%>
+              </div>
+            <div class=dismember><%= label_tag " QP Run1" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qprunner1b" name="qprunner1b" <%= search_field_tag  :qprunner1b, value = params[:qprunner1b]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Run2" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qprunner2b" name="qprunner2b" <%= search_field_tag  :qprunner2b, value = params[:qprunner2b]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Run3" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qprunner3b" name="qprunner3b" <%= search_field_tag  :qprunner3b, value = params[:qprunner3b]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qppitcher" name="qppitcher" <%= search_field_tag  :qppitcher, value = params[:qppitcher]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpcatcher" name="qpcatcher" <%= search_field_tag  :qpcatcher, value = params[:qpcatcher]%>
+            </div>
+            <div class=dismember><%= label_tag " QP First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpfirst_base" name="qpfirst_base" <%= search_field_tag  :qpfirst_base, value = params[:qpfirst_base]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpsecond_base" name="qpsecond_base" <%= search_field_tag  :qpsecond_base, value = params[:qpsecond_base]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpthird_base" name="qpthird_base" <%= search_field_tag  :qpthird_base, value = params[:qpthird_base]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpshortstop" name="qpshortstop" <%= search_field_tag  :qpshortstop, value = params[:qpshortstop]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpleft_field" name="qpleft_field" <%= search_field_tag  :qpleft_field, value = params[:qpleft_field]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpcenter_field" name="qpcenter_field" <%= search_field_tag  :qpcenter_field, value = params[:qpcenter_field]%>
+            </div>
+            <div class=dismember><%= label_tag " QP Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+                 id = "qpright_field" name="qpright_field" onchange="wipeout()" <%= search_field_tag  :qpright_field, value = params[:qpright_field]%>
+            </div>
+            </p>
+          </div>
+        </div>
 
-         <div>
-           <label class="label" for="numbero">runner 3b</label>
-           <input id="xrunner3b" type="text" name="run3">
-         </div>
 
-         </p>
-       <div class="accordion" id="accordion2">
+   <!--     <div class="accordion" id="accordion9">
+        <div class="accordion-group">
+        <div class="accordion-heading">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#collapseNine">
+              Leebers
+            </a>
+          </div>
+
+          <div id="collapseNine" class="accordion-body collapse">
+            <div class="accordion-inner">
+
+
+
+
+                <h4><a href="#">Lieferung 1 </a></h4>
+          <div class="boop">
+            <input type="text" name="lieferdatum-1" id="lieferdatum-1" value="01.01.2009"/>
+          </div>
+
+          <h4><a href="#">Lieferung 2 </a></h4>
+          <div class="boop">
+            <input type="text" name="lieferdatum-2" id="lieferdatum-2" value="05.06.2009"/>
+          </div>
+          <h4><a href="#">Lieferung 3 </a></h4>
+          <div class="boop">
+            <input type="text" name="lieferdatum-3" id="lieferdatum-3" value="07.08.2009"/>
+          </div>
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+     -->
+
+   <!--     <div>
+          <label for="boopdate" class="label">Pick a departure date</label>
+          <input type="text" class="boopdate" name="boopdate">
+        </div>
+
+        <div>
+          <label for="boopdate2" class="label">Pick a departure date</label>
+          <input type="text" class="boopdate" name="boopdate2">
+        </div>
+    -->
+
+
+
+
+        <div class="accordion" id="accordion2">
            <div class="accordion-group">
              <div class="accordion-heading">
                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
@@ -115,7 +202,7 @@
           <div class="accordion-inner">
               <div class="row">
                 <p>
-                <div class="boop"><%= label_tag "Batting Team" %><%= search_field_tag  :bteam, value = params[:bteam]%></div>
+                <div class="boop"><%= label_tag "Batting Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="bteam"<%= search_field_tag  :bteam, value = params[:bteam]%></div>
                 <div class="boop"><%= label_tag "Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="batter" <%= search_field_tag  :batter, value = params[:batter]%></div>
                 <div class="boop"><%= label_tag "Runner on First"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner1b" <%=search_field_tag  :runner1b,value = params[:runner1b]%> </div>
                 <div class="boop"><%= label_tag "Runner on Second"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner2b" <%=search_field_tag  :runner2b,value = params[:runner2b]%> </div>
@@ -137,7 +224,7 @@
             <div class="accordion-inner">
               <div class="row">
                 <p>
-                <div class="boop"><%= label_tag "Fielding Team" %><%= search_field_tag  :fteam, value = params[:fteam]%></div>
+                <div class="boop"><%= label_tag "Fielding Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="fteam" <%= search_field_tag  :fteam, value = params[:fteam]%></div>
                 <div class="boop"><%= label_tag "Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="pitcher" <%= search_field_tag  :pitcher, value = params[:pitcher]%></div>
                 <div class="boop"><%= label_tag "Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="catcher" <%= search_field_tag  :catcher, value = params[:catcher]%></div>
                 <div class="boop"><%= label_tag "First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="first_base" <%= search_field_tag  :first_base, value = params[:first_base]%></div>
@@ -160,11 +247,13 @@
           </div>
           <div id="collapseThree" class="accordion-body collapse">
             <div class="accordion-inner">
-              <p> 1970 - 2013 only </p>
+              <p> 1970 - 2015 only </p>
               <div class="row">
                 <p>
-                <div class="boop"><%= label_tag "Start Date (mm/dd/yyyy)" %><%=search_field_tag  :start_date, value = params[:start_date]%></div>
-                <div class="boop"><%= label_tag "End Date (mm/dd/yyyy)" %><%= search_field_tag  :end_date, value = params[:end_date]%></div>
+
+    <!--        <div class="boop" ><%= label_tag "Start Date (mm/dd/yyyy)" %><%=search_field_tag :start_date, value = params[:start_date]%></div>     -->
+                <div class="boop"><%= label_tag "Start Date" %><input id="pickdate1"<%=search_field_tag :start_date, value = params[:start_date]%></div>
+                <div class="boop"><%= label_tag "End Date (mm/dd/yyyy)" %><input id="pickdate2"<%= search_field_tag  :end_date, value = params[:end_date]%></div>
                 <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
                 </p>
               </div>

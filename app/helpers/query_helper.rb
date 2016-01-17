@@ -191,8 +191,8 @@ module QueryHelper
     if ((p_hash[:group_batter] == '1') ||!p_hash[:batter].to_s.blank?)
       @inner_join = "#{@inner_join} join player_dims pd on pf.player_key = pd.id "
       if !p_hash[:batter].to_s.blank?
-        if !$ES_player_key.blank?
-          @inner_join = "#{@inner_join} and pd.id = #{$ES_player_key}"
+        if !p_hash[:qpbatter].to_s.blank?
+          @inner_join = "#{@inner_join} and pd.id = #{p_hash[:qpbatter]}"
         else
           @inner_join = "#{@inner_join} and lower(pd.player_name) = '#{p_hash[:batter].downcase}'"
         end
@@ -226,31 +226,41 @@ module QueryHelper
   def join_runner1_dims(p_hash)
 
     if ((p_hash[:group_runner1b] == '1') ||!p_hash[:runner1b].to_s.blank?)
-      @inner_join = "#{@inner_join}join player_dims br1 on pf.run1 = br1.id"
+      @inner_join = "#{@inner_join} join player_dims br1 on pf.run1 = br1.id "
       if !p_hash[:runner1b].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(br1.player_name) = '#{p_hash[:runner1b].downcase}'"
+        if !p_hash[:qprunner1b].to_s.blank?
+          @inner_join = "#{@inner_join} and br1.id = #{p_hash[:qprunner1b]}"
+        else
+          @inner_join = "#{@inner_join} and lower(br1.player_name) = '#{p_hash[:runner1b].downcase}'"
+        end
       end
     end
-    #@runner1b_join = "join player_dims br1 on pf.run1 = br1.id and br1.player_name = 'Fred Turlock'"
-    #@messo = @player_join
+
   end
 
   def join_runner2_dims(p_hash)
 
     if ((p_hash[:group_runner2b] == '1') ||!p_hash[:runner2b].to_s.blank?)
-      @inner_join = "#{@inner_join} join player_dims br2 on pf.run2 = br2.id \n"
+      @inner_join = "#{@inner_join} join player_dims br2 on pf.run2 = br2.id "
       if !p_hash[:runner2b].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(br2.player_name) = '#{p_hash[:runner2b].downcase}'"
+        if !p_hash[:qprunner2b].to_s.blank?
+          @inner_join = "#{@inner_join} and br2.id = #{p_hash[:qprunner2b]}"
+        else
+          @inner_join = "#{@inner_join} and lower(br2.player_name) = '#{p_hash[:runner2b].downcase}'"
+        end
       end
     end
   end
 
   def join_runner3_dims(p_hash)
-
     if ((p_hash[:group_runner3b] == '1') ||!p_hash[:runner3b].to_s.blank?)
-      @inner_join = "#{@inner_join}join player_dims br3 on pf.run3 = br3.id"
+      @inner_join = "#{@inner_join} join player_dims br3 on pf.run3 = br3.id "
       if !p_hash[:runner3b].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(br3.player_name) = '#{p_hash[:runner3b].downcase}'"
+        if !p_hash[:qprunner3b].to_s.blank?
+          @inner_join = "#{@inner_join} and br3.id = #{p_hash[:qprunner3b]}"
+        else
+          @inner_join = "#{@inner_join} and lower(br3.player_name) = '#{p_hash[:runner3b].downcase}'"
+        end
       end
     end
   end
@@ -345,39 +355,75 @@ module QueryHelper
       @inner_join = "#{@inner_join} join fielder_dims fd on pf.field_key = fd.id "
 
       if !p_hash[:pitcher].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.pitcher = '#{p_hash[:pitcher]}'"
+        if !p_hash[:qppitcher].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.pitcher_key = #{p_hash[:qppitcher]}"
+        else
+          @inner_join = "#{@inner_join} and fd.pitcher = '#{p_hash[:pitcher]}'"
+        end
       end
 
       if !p_hash[:catcher].to_s.blank?
-        @inner_join = "#{@inner_join} and fd.catcher = '#{p_hash[:catcher]}'"
+        if !p_hash[:qpcatcher].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.catcher_key = #{p_hash[:qpcatcher]}"
+        else
+          @inner_join = "#{@inner_join} and fd.catcher = '#{p_hash[:catcher]}'"
+        end
       end
 
       if !p_hash[:first_base].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.first_base) = '#{p_hash[:first_base].downcase}'"
+        if !p_hash[:qpfirst_base].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.first_base_key = #{p_hash[:qpfirst_base]}"
+        else
+          @inner_join = "#{@inner_join} and fd.first_base = '#{p_hash[:first_base]}'"
+        end
       end
 
       if !p_hash[:second_base].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.second_base) = '#{p_hash[:second_base].downcase}'"
+        if !p_hash[:qpsecond_base].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.second_base_key = #{p_hash[:qpsecond_base]}"
+        else
+          @inner_join = "#{@inner_join} and fd.second_base = '#{p_hash[:second_base]}'"
+        end
       end
 
       if !p_hash[:shortstop].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.shortstop) = '#{p_hash[:shortstop].downcase}'"
+        if !p_hash[:qpshortstop].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.shortstop_key = #{p_hash[:qpshortstop]}"
+        else
+          @inner_join = "#{@inner_join} and fd.shortstop = '#{p_hash[:shortstop]}'"
+        end
       end
 
       if !p_hash[:third_base].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.third_base) = '#{p_hash[:third_base].downcase}'"
+        if !p_hash[:qpthird_base].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.third_base_key = #{p_hash[:qpthird_base]}"
+        else
+          @inner_join = "#{@inner_join} and fd.third_base = '#{p_hash[:third_base]}'"
+        end
       end
 
       if !p_hash[:left_field].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.left_field) = '#{p_hash[:left_field].downcase}'"
+        if !p_hash[:qpleft_field].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.left_field_key = #{p_hash[:qpleft_field]}"
+        else
+          @inner_join = "#{@inner_join} and lower(fd.left_field) = '#{p_hash[:left_field].downcase}'"
+        end
       end
 
       if !p_hash[:center_field].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.center_field) = '#{p_hash[:center_field].downcase}'"
+        if !p_hash[:qpcenter_field].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.center_field_key = #{p_hash[:qpcenter_field]}"
+        else
+          @inner_join = "#{@inner_join} and lower(fd.center_field) = '#{p_hash[:center_field].downcase}'"
+        end
       end
 
       if !p_hash[:right_field].to_s.blank?
-        @inner_join = "#{@inner_join} and lower(fd.right_field) = '#{p_hash[:right_field].downcase}'"
+        if !p_hash[:qpleft_field].to_s.blank?
+          @inner_join = "#{@inner_join} and fd.right_field_key = #{p_hash[:qpright_field]}"
+        else
+          @inner_join = "#{@inner_join} and lower(fd.right_field) = '#{p_hash[:right_field].downcase}'"
+        end
       end
 
     end
@@ -1359,7 +1405,7 @@ module QueryHelper
 
   def buildquery (p_hash)
 
-    melfloo p_hash
+    melfloo p_hash   #I think this is a nothing.  Does something with searching sourdough, which now gets handled by elasticsearch.  ???
     build_hash  p_hash
     set_to_false
     default_query = true
