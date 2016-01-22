@@ -1405,6 +1405,7 @@ module QueryHelper
 
   def buildquery (p_hash)
 
+
     melfloo p_hash   #I think this is a nothing.  Does something with searching sourdough, which now gets handled by elasticsearch.  ???
     build_hash  p_hash
     set_to_false

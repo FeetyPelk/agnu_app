@@ -22,11 +22,11 @@ class Sourdough < ActiveRecord::Base
                 #   },
                    first_name: {
                        type: "string",
-                       analyzer: "keyword"
+                       analyzer: "searchkick_word_start_index"
                    },
                    last_name: {
                        type: "string",
-                       analyzer: "keyword"
+                       analyzer: "searchkick_word_start_index"
                    },
 
                    #     id: {
@@ -53,5 +53,5 @@ class Sourdough < ActiveRecord::Base
 
 
 
-  attr_accessible :end_date, :namo, :namokey, :player_key, :start_date, :end_date
+  attr_accessible :end_date, :namo, :first_name, :last_name, :player_key, :start_date, :end_date
 end

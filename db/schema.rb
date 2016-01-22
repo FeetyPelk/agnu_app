@@ -648,6 +648,10 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
   add_index "interim_crap", ["datestring"], :name => "idx_icrap_datestring_id"
   add_index "interim_crap", ["id"], :name => "idx_icrap_id"
 
+  create_table "look_for_twins_2015", :id => false, :force => true do |t|
+    t.integer "player_key"
+  end
+
   create_table "mbfc", :id => false, :force => true do |t|
     t.integer "decade"
     t.integer "game_key"
@@ -880,7 +884,13 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
     t.integer "sb_outs"
   end
 
+  add_index "play_facts", ["date_key"], :name => "idx_playfacts_date_key_n"
+  add_index "play_facts", ["field_key"], :name => "idx_playfacts_field_key_n"
+  add_index "play_facts", ["game_key"], :name => "idx_pf_game"
+  add_index "play_facts", ["id"], :name => "idx_playfacts_id_n"
   add_index "play_facts", ["id"], :name => "idx_playfacts_ppnid_n"
+  add_index "play_facts", ["player_key"], :name => "idx_pf_player_key"
+  add_index "play_facts", ["player_key"], :name => "idx_playfacts_player_key_n"
 
   create_table "play_facts_0305", :id => false, :force => true do |t|
     t.integer "id"
@@ -1961,13 +1971,14 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
   end
 
   create_table "sourdoughs", :force => true do |t|
-    t.integer "player_key"
-    t.string  "namo"
-    t.date    "start_year_full"
-    t.date    "end_year_full"
-    t.string  "namokey"
-    t.integer "start_date"
-    t.integer "end_date"
+    t.integer  "player_key"
+    t.string   "first_name", :limit => 30
+    t.string   "last_name",  :limit => 30
+    t.string   "namo"
+    t.string   "start_date", :limit => 15
+    t.string   "end_date",   :limit => 15
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "summer", :id => false, :force => true do |t|
@@ -2019,6 +2030,11 @@ ActiveRecord::Schema.define(:version => 20150112110110) do
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "twins_2015", :id => false, :force => true do |t|
+    t.integer "player_key"
+    t.string  "player_name"
   end
 
   create_table "unearned_facts_fat", :id => false, :force => true do |t|

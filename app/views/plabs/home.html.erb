@@ -13,32 +13,55 @@
 
 <script>
     $(document).ready(function() {
-        //$('input[id^="lieferdatum"]').datepicker({dateFormat: 'mm/dd/yy'});
-
         $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
-
-       // $('input[id^="boopdate"]').datepicker({dateFormat: 'mm/dd/yy'});
-
         $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
-
-
-
         $('.looky').autocomplete({
             source: function (request, response) {
                 var data = {
                     "query": {
-                        "match": {
-                            "namo": {
-// "query": "Munsen",
-                                "query": "",
-                                "fuzziness": 2,
-                                "prefix_length": 3
-                            }
+                        "multi_match": {
+                            "query":       "",
+                            "type":        "cross_fields",
+                            "operator":    "and",
+                            "fields":      [ "first_name", "last_name" ]
                         }
                     }
                 }
-                data.query.match.namo.query = request.term
-                $.getJSON("http://localhost:9200/sourdoughs_development_20160109065536117/_search?q=namo:" + request.term, function(data){
+                data.query.multi_match.query = request.term
+
+                //alert(JSON.stringify(data));
+
+                $.ajax({
+                    url:"http://localhost:9200/sourdoughs_development_20160118084056787/_search",
+                    dataType:"json",
+                    type:"POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(data){
+
+
+              // $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search",  datadata,
+                       // {
+                            //query: {
+                               // multi_match: {
+              // {namo :       "dav ort"  },
+                                  //  type :        "cross_fields",
+                                  //  operator :    "and",
+                                  //  fields:      [ "first_name", "last_name" ]
+                              // }
+                            //}
+                       // },
+
+                     //  function(data){
+                    //$.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search", function(data){
+
+                  //  $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search?q=namo:" + request.term, function(data){
+
+                    //  $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search/template" -d "{\"template": \"tuco\",\"params\": {\"userQuery\": \"brock ho\"}}", function(data){
+               // $.getJSON('http://localhost:9200/sourdoughs_development_20160118084056787/_search/template', 'userQUery=Sam', function(data){
+
+                //$.getJSON("http%3A%2F%2Flocalhost%3A9200%2Fsourdoughs_development_20160118084056787%2F_search%2Ftemplate" -d '%7B%22template%22%3A%20%22tuco%22%2C%22params%22%3A%20%7B%22userQuery%22%3A%20%22brock%20ho%22%7D%7D',  function(data){
+                //$.getJSON("%22http%3A%2F%2Flocalhost%3A9200%2Fsourdoughs_development_20160118084056787%2F_search%2Ftemplate%22%20-d%20%27%0A%7B%0A%20%22template%22%3A%20%22tuco%22%2C%0A%20%22params%22%3A%20%7B%0A%20%20%22userQuery%22%3A%20%22brock%20ho%22%0A%20%7D%0A%7D%27", function(data){
                     var hoobers = []
                     $.each(data, function(index, d){
                         if (index == "hits") {   // elastico.hits
@@ -56,10 +79,12 @@
                         }
                     });
                     response(hoobers)
-                }).error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
-                            /* alert(jqXHR.responseText) */
-                            alert("error occurred!");
-                        });
+                }//.error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
+                    //        /* alert(jqXHR.responseText) */
+                    //        /* alert("error occurred!");   */
+                    //        response(null) ;
+                     //   })
+              });
             },
             minLength: 2,
 
@@ -74,7 +99,15 @@
             }
 ///////////////////////////////////////////////////
         });  //end autocomplete
+
+
     }); // end ready
+</script>
+
+<script>
+    $(window).load(function() {
+        $('#loading').hide();
+    });
 </script>
 
 
@@ -188,16 +221,20 @@
     -->
 
 
-
-
-        <div class="accordion" id="accordion2">
-           <div class="accordion-group">
-             <div class="accordion-heading">
-               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                 Batting
-               </a>
+             <div id="loading">
+               <img id="loading-image" src="/assets/pg_loader.gif" alt="LOADING..." />
              </div>
-       <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
+
+
+
+             <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                      Batting
+                    </a>
+                  </div>
+            <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
           <div id="collapseOne" class="accordion-body collapse">
           <div class="accordion-inner">
               <div class="row">
@@ -415,7 +452,7 @@
       </div>      -->
 
         <p>
-          <%= submit_tag "Submit", class: "btn btn-large btn-primary"%>
+          <%= submit_tag "Submit", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
 
         </p>
 
@@ -428,32 +465,32 @@
      -->
 
         <tr>
-           <th data-class="expand"><%= link_to "#{$cheader[:c1]}", params.merge(:sort_by=>"#{$flannel[:c1]}")%></th>
-          <th><%= link_to "#{$cheader[:c2]}", params.merge(:sort_by=>"#{$flannel[:c2]}") if $flannel.has_key?(:c2)%></th>
-          <th><%= link_to "#{$cheader[:c3]}", params.merge(:sort_by=>"#{$flannel[:c3]}") if $flannel.has_key?(:c3)%></th>
-          <th><%= link_to "#{$cheader[:c4]}", params.merge(:sort_by=>"#{$flannel[:c4]}") if $flannel.has_key?(:c4)%></th>
-          <th><%= link_to "#{$cheader[:c5]}", params.merge(:sort_by=>"#{$flannel[:c5]}") if $flannel.has_key?(:c5)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c6]}", params.merge(:sort_by=>"#{$flannel[:c6]}") if $flannel.has_key?(:c6)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c7]}", params.merge(:sort_by=>"#{$flannel[:c7]}") if $flannel.has_key?(:c7)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c8]}", params.merge(:sort_by=>"#{$flannel[:c8]}") if $flannel.has_key?(:c8)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c9]}", params.merge(:sort_by=>"#{$flannel[:c9]}") if $flannel.has_key?(:c9)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c10]}", params.merge(:sort_by=>"#{$flannel[:c10]}") if $flannel.has_key?(:c10)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c11]}", params.merge(:sort_by=>"#{$flannel[:c11]}") if $flannel.has_key?(:c11)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c12]}", params.merge(:sort_by=>"#{$flannel[:c12]}") if $flannel.has_key?(:c12)%></th>
-          <th data-hide="phone"><%= link_to "#{$cheader[:c13]}", params.merge(:sort_by=>"#{$flannel[:c13]}") if $flannel.has_key?(:c13)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c14]}", params.merge(:sort_by=>"#{$flannel[:c14]}") if $flannel.has_key?(:c14)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c15]}", params.merge(:sort_by=>"#{$flannel[:c15]}") if $flannel.has_key?(:c15)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c16]}", params.merge(:sort_by=>"#{$flannel[:c16]}") if $flannel.has_key?(:c16)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c17]}", params.merge(:sort_by=>"#{$flannel[:c17]}") if $flannel.has_key?(:c17)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c18]}", params.merge(:sort_by=>"#{$flannel[:c18]}") if $flannel.has_key?(:c18)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c22]}", params.merge(:sort_by=>"#{$flannel[:c22]}") if $flannel.has_key?(:c22)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c23]}", params.merge(:sort_by=>"#{$flannel[:c23]}") if $flannel.has_key?(:c23)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c24]}", params.merge(:sort_by=>"#{$flannel[:c24]}") if $flannel.has_key?(:c24)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c25]}", params.merge(:sort_by=>"#{$flannel[:c25]}") if $flannel.has_key?(:c25)%></th>
-          <th data-hide="phone,tablet"><%= link_to "#{$cheader[:c26]}", params.merge(:sort_by=>"#{$flannel[:c26]}") if $flannel.has_key?(:c26)%></th>
+           <th onclick ="$('#loading').show();" data-class="expand" ><%= link_to "#{$cheader[:c1]}", params.merge(:sort_by=>"#{$flannel[:c1]}")%></th>
+          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c2]}", params.merge(:sort_by=>"#{$flannel[:c2]}") if $flannel.has_key?(:c2)%></th>
+          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c3]}", params.merge(:sort_by=>"#{$flannel[:c3]}") if $flannel.has_key?(:c3)%></th>
+          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c4]}", params.merge(:sort_by=>"#{$flannel[:c4]}") if $flannel.has_key?(:c4)%></th>
+          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c5]}", params.merge(:sort_by=>"#{$flannel[:c5]}") if $flannel.has_key?(:c5)%></th>
+          <th onclick ="$('#loading').show();" data-hide="phone"><%= link_to "#{$cheader[:c6]}", params.merge(:sort_by=>"#{$flannel[:c6]}") if $flannel.has_key?(:c6)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c7]}", params.merge(:sort_by=>"#{$flannel[:c7]}") if $flannel.has_key?(:c7)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c8]}", params.merge(:sort_by=>"#{$flannel[:c8]}") if $flannel.has_key?(:c8)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c9]}", params.merge(:sort_by=>"#{$flannel[:c9]}") if $flannel.has_key?(:c9)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c10]}", params.merge(:sort_by=>"#{$flannel[:c10]}") if $flannel.has_key?(:c10)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c11]}", params.merge(:sort_by=>"#{$flannel[:c11]}") if $flannel.has_key?(:c11)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c12]}", params.merge(:sort_by=>"#{$flannel[:c12]}") if $flannel.has_key?(:c12)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c13]}", params.merge(:sort_by=>"#{$flannel[:c13]}") if $flannel.has_key?(:c13)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c14]}", params.merge(:sort_by=>"#{$flannel[:c14]}") if $flannel.has_key?(:c14)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c15]}", params.merge(:sort_by=>"#{$flannel[:c15]}") if $flannel.has_key?(:c15)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c16]}", params.merge(:sort_by=>"#{$flannel[:c16]}") if $flannel.has_key?(:c16)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c17]}", params.merge(:sort_by=>"#{$flannel[:c17]}") if $flannel.has_key?(:c17)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c18]}", params.merge(:sort_by=>"#{$flannel[:c18]}") if $flannel.has_key?(:c18)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c22]}", params.merge(:sort_by=>"#{$flannel[:c22]}") if $flannel.has_key?(:c22)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c23]}", params.merge(:sort_by=>"#{$flannel[:c23]}") if $flannel.has_key?(:c23)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c24]}", params.merge(:sort_by=>"#{$flannel[:c24]}") if $flannel.has_key?(:c24)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c25]}", params.merge(:sort_by=>"#{$flannel[:c25]}") if $flannel.has_key?(:c25)%></th>
+          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c26]}", params.merge(:sort_by=>"#{$flannel[:c26]}") if $flannel.has_key?(:c26)%></th>
 
 
         </tr>
