@@ -2,16 +2,20 @@
 
 <h2>Help!  Help!</h2>
 
-<p class="midlish">Some basic things about Batomatic output:</p>
-<p class="midlish">Output is in a row/column format.  Rows go left to right.  Columns go top to bottom.  If you show all the Yankees batting stats for 1983, for instance,
+
+<p class="midlish">Batomatic output:</p>
+<p class="midlish"> No results?  See "No Results?" below. </p>
+<p class="midlish">Output is in a row/column format.  Rows go left to right.  Columns go top to bottom.  If you show all the Yankee batting stats for 1983, for instance ( start by and end by dates selected, and group by batter box checked),
   each batter gets a row of output (left to right) and each stat -- avg, hits, at_bats, and so on -- is a column (top to bottom).</p>
 <p class="midlish"> Results can always be sorted on any column by clicking on the column header</p>
+<p class="midlish"> "Group by" is the most helpful option for just messing around with data. You can start with a batter (or anything), and then group by any number of combinations:  year, and /or fielding team, and /or pitcher, or whatever.  Then you can sort the results by clicking on a column header.</p>
 <p class="midlish"> On smaller screens, there may not be enough real estate to display all the column data.  Don't worry -- it's there.
 The leftmost column will display a plus sign to indicate more data.  Click on the plus sign and the additional data will appear
   (and the plus sign will change to a minus sign -- click on that to revert to the original display).
-  If you need to see one or more of the hidden columns as an "always visible" column -- to sort on it, for instance -- see "Flush Left Help" below.</p>
+  </p>
 
-<p class="midlish"> The "For The Bruces" section below starts off with a  simple step by step example and and then gets more involved.  You may want to try a few steps to get the hang of what's going on. </p>
+<p class="midlish"> See "Flush left" and "Suppress" below for help with restricting table width or changing column order for smaller screens.</p>
+
 <p class="midlish"> For info on the input fields, click below. </p>
 
 
@@ -31,7 +35,9 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
       <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
       <div id="collapseOne" class="accordion-body collapse">
         <div class="accordion-inner">
-          <p class="midlish">  Enter search criteria for the batting team, batter, or baserunners here. You may enter many fields or none. To select a team, the city or team name or both is acceptable, or the 3-letter team abbreviation. For team abbreviations see below.
+          <p class="midlish">  Enter search criteria for the batting team, batter, or baserunners here. You may enter many fields or none. Team selections transform to a three-character abbreviation. For team abbreviations see below.
+          </p>
+          <p class="midlish">  The batter is the player at the plate only.   If you enter "Derek Jeter" as a batter any fielders you show (with group by, or by specifying them) will be limited to those playing defense on the opposing teams while Jeter is batting.  To see Jeter's fellow fielders, enter him as a shortstop in "Fielding." In that case when you group by, say, third base you will see stats broken down by all the third basemen Jeter played with.
           </p>
         </div>
       </div>
@@ -45,7 +51,7 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
       </div>
       <div id="collapseTwo" class="accordion-body collapse">
         <div class="accordion-inner">
-          <p class="midlish">  Enter search criteria for the fielding team or players here. You may enter many fields or none.  To select a team, the city or team name or both is acceptable, or the 3-letter team abbreviation. For team abbreviations see below.</p>
+          <p class="midlish">  Enter search criteria for the fielding team or players here. You may enter many fields or none.  Team selections transform to a three-character abbreviation. For team abbreviations see below.</p>
 
         </div>
       </div>
@@ -59,7 +65,7 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
       </div>
       <div id="collapseThree" class="accordion-body collapse">
         <div class="accordion-inner">
-          <p class="midlish">  Dates:  A date range definitely helps performance, and helps weed out data you are not interested in anyway.  Enter start or end dates here  Format is mm/dd/yyyy -- anything else is ignored. </p>
+          <p class="midlish">  Dates:  A date range will help performance, and helps weed out data you are not interested in.  Enter start or end dates here.   Format is mm/dd/yyyy.  If instead of using the datepicker you manually edit the date keep that mm/dd/yyyy format -- anything else is ignored </p>
           <p class="midlish">  At-bat minimum:  Helpful when looking for league leaders, not so good when looking at, say, the St Louis Cardinals as a team for 1983.  You decide.  Default is no minimum.</p>
         </div>
       </div>
@@ -75,8 +81,8 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
         <div class="accordion-inner">
           <p class="midlish"> Grouping is your friend!  THE best tool for drilling down into data.  Start with a batter and year,
              for instance, and then add fielding team, pitchers, runners on third, whatever, to get more and more detail.
-             Or,as another example, if you are unsure how to spell a player's name, get his team data (for a given year is quickest)  grouped by batter (or pitcher or left field or whatever) to
-           see the player name.  Many possibilities here.</p>
+             Or,as another example, if you are unsure who might have played right field for a team, get the team data (for a given year is quickest)  grouped by right field(or pitcher or left field or whatever) to
+           see all the right fielders.  Many possibilities here.</p>
 
           <div class="groupies-by">
           </div>
@@ -123,62 +129,39 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
-          For The Bruces
+          No Results?
         </a>
       </div>
       <div id="collapseSeven" class="accordion-body collapse">
         <div class="accordion-inner">
           <div class="groupies-by">
 
-            <p class="midlish">  In this example, we will select a year and a batter. Try as many steps as you want -- you don't have to do them all.  Doing only the next seven lines -- three entries -- will get you going. </p>
-            <p class="midlish">  Everything below is done on the home page.</p>
-            <p class="midlish">  Click on the Limits button </p>
-            <p class="midlish">  For the start date, enter "01/01/2010" without the quotation marks. </p>
-            <p class="midlish">  For the end date, enter "01/01/2011" without the quotation marks. </p>
-            <p class="midlish">  Now, still on the home page, click on the Batter Button </p>
-            <p class="midlish">  For the batter, enter "Derek Jeter" without the quotation marks </p>
-            <p class="midlish">  Now click the Submit button</p>
-            <p class="midlish">  Derek Jeter's stats for 2010 will appear in a single row in the results table.</p>
-            <p class="midlish">  Now for the fun stuff. Click on the Grouping button</p>
-            <p class="midlish">  Click the "Fielding Team?" box and then the Submit button again</p>
-            <p class="midlish">  Derek Jeter's 2010 stats will now appear, broken down by the opposing team.</p>
-            <p class="midlish">  You're looking at almost twenty rows.  You can sort the results on any column by clicking the column header.
-              Each time you lick the sort order will be reversed between ascending and descending order</p>
-            <p class="midlish">  Note that some of the stats are what are usually considered pitching stats. You may or may not find some that are useful to you form the batting point ov view</p>
-            <p class="midlish">  Let's try a pitcher this time, for the same year. </p>
-            <p class="midlish">  Clicking on the "Batting" button and remove Derek Jeter's name from the batter box.</p>
-            <p class="midlish">  Click on the "Fielding" button and, in the pitcher box, add "Phil Hughes" without the quotation marks.</p>
-            <p class="midlish">  Click on "Grouping".  Unclick "Fielding Team?" (you could leave it in, but will just be NYA for each row) and click 'Batting Team?"
-                                and press teh submit button.</p>
-            <p class="midlish">  You now see stats for Phil Hughes, still for 2011 and broken down by the opposing team</p>
-            <p class="midlish">  Try other stuff in grouping. You can see Phil Hughes's stats broken down by who his shortstop was, or who his left fielder was, or both.
-              You can leave Phil Hughes out altogether and get batting and "pitching" results broken down by left fielder, or catcher, or third_baseman, or
-              all three.   You can put "Thurman Munson " in as a batter and "Carlton Fisk" as a fielder
-              to see how they did against each other, and then group those any way you want.</p>
-            <p class="midlish"> Grouping is also useful for finding information to drill down in. You may get all the left fielders for 1975 for Johnny Bench by grouping,
-              then cut and paste one of them into the "left fielder" box in Fielding and drill down into the results for those two players.  You may not know
-              how to spell "Omar Vizquel" so you just group Cleveland fielding or batting by shortstop to get his name. And so on.</p
-            <p class="midlish">  A request can get very complex and take a long time to process and return thousands and thousands of rows.  Limiting your
-              requests by date is good way to speed things up.  With start date and end date, you can ask for a single day if you want. </p>
-            <p class="midlish">  Requests can return no data.  Vladimir Guerrero  never played with or against Rusty Staub, for example.  If you get no
-              results, you may well have something in your selection criteria that is contradictory.  Simplify what you are asking for, or back up
-              a step or two and use grouping to find combinations that really exist. Misspelling a name is also a good way to zero out the results.</p>
+            <p class="midlish">  Check for misspelled player names.  It's safest to select names frorm the drop down lists offered.</p>
+
+            <p class="midlish">  Check that the batting or fielding team entry is a three character code.  You do not have to know the code -- when you type in a team name or a partial team name and then select from the drop down list the proper code will be inserted.</p>
+
+            <p class="midlish">  Check that dates, if entered, are correct.  If you look for Jeter stats from 1970 to 1975 you won't get anything.</p>
+
+            <p class="midlish">  Check for combinations that cannot exist -- Jeter playing shortstop with Pedroia at second, for instance, or Glavine pitching for the Padres.  Keep paring back selection fields until you get a result, and then use "group by" to find valid combinations.  For instance, with Derek Jeter at shortstop, group by second base to see all the second basemen he played with -- which won't include Pedroia. Then limit the results by one of the second basemen, if you choose, and then group that by left field, or batter, or whatever.  Drill down as much as you like.</p>
 
           </div>
         </div>
       </div>
     </div>
 
+
+
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseZero">
-          Team Abbreviations
+          Team Codes
         </a>
       </div>
       <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
       <div id="collapseZero" class="accordion-body collapse">
-
         <div class="accordion-inner">
+          <p class="smallish">You do not have to enter these yourself.  Selecting a team from the drop down list will insert the proper code.</p>
+          <br>
           <p class="smallish">Anaheim Angels ANA</p>
           <p class="smallish">Arizona Diamondbacks ARI</p>
           <p class="smallish">Atlanta Braves ATL</p>
@@ -216,7 +199,7 @@ The leftmost column will display a plus sign to indicate more data.  Click on th
           <p class="smallish">Texas Rangers TEX</p>
           <p class="smallish">Toronto Blue Jays TOR</p>
           <p class="smallish">Washington Nationals WAS</p>
-          <p class="smallish">Washington Senators WS2</p>
+          <p class="smallish">Washington Senators TEX</p>
         </div>
       </div>
     </div>

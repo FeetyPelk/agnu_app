@@ -4,110 +4,82 @@
 
 <p id="minihead"> Baseball statistics.  Sideways, sometimes.<p>    -->
 
-<script>
-    function wipeout() {
-        var x = document.getElementById("fname");
-        x.value = x.value.toUpperCase();
-    }
-</script>
 
 <script>
-    $(document).ready(function() {
-        $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
-        $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
-        $('.looky').autocomplete({
-            source: function (request, response) {
-                var data = {
-                    "query": {
-                        "multi_match": {
-                            "query":       "",
-                            "type":        "cross_fields",
-                            "operator":    "and",
-                            "fields":      [ "first_name", "last_name" ]
-                        }
-                    }
+  $(document).ready(function() {
+    $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
+
+    $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
+
+    $('.looky').autocomplete({
+      source: function (request, response) {
+        var data = {
+          "query": {
+            "multi_match": {
+              "query":       "",
+              "type":        "cross_fields",
+              "operator":    "and",
+               "fields":      [ "first_name", "last_name" ]
+            }
+          }
+        }
+        data.query.multi_match.query = request.term
+
+      //alert(JSON.stringify(data));
+
+      $.ajax({
+        url:"http://localhost:9200/sodo/_search",
+        dataType:"json",
+        type:"POST",
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(data){
+          var hoobers = []
+          $.each(data, function(index, d){
+            if (index == "hits") {   // elastico.hits
+              $.each(d, function(index, e){
+                if (index == "hits") {                //elastico.hits.hits
+                  $.each(e, function(index, f){
+                     hoobers.push({
+                       label: f._source.namo  + ' ' + f._source.start_date + ' ' + f._source.end_date,
+                       namo: f._source.namo,
+                       value: f._source.player_key
+                     });
+                  });
                 }
-                data.query.multi_match.query = request.term
-
-                //alert(JSON.stringify(data));
-
-                $.ajax({
-                    url:"http://localhost:9200/sourdoughs_development_20160118084056787/_search",
-                    dataType:"json",
-                    type:"POST",
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: function(data){
-
-
-              // $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search",  datadata,
-                       // {
-                            //query: {
-                               // multi_match: {
-              // {namo :       "dav ort"  },
-                                  //  type :        "cross_fields",
-                                  //  operator :    "and",
-                                  //  fields:      [ "first_name", "last_name" ]
-                              // }
-                            //}
-                       // },
-
-                     //  function(data){
-                    //$.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search", function(data){
-
-                  //  $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search?q=namo:" + request.term, function(data){
-
-                    //  $.getJSON("http://localhost:9200/sourdoughs_development_20160118084056787/_search/template" -d "{\"template": \"tuco\",\"params\": {\"userQuery\": \"brock ho\"}}", function(data){
-               // $.getJSON('http://localhost:9200/sourdoughs_development_20160118084056787/_search/template', 'userQUery=Sam', function(data){
-
-                //$.getJSON("http%3A%2F%2Flocalhost%3A9200%2Fsourdoughs_development_20160118084056787%2F_search%2Ftemplate" -d '%7B%22template%22%3A%20%22tuco%22%2C%22params%22%3A%20%7B%22userQuery%22%3A%20%22brock%20ho%22%7D%7D',  function(data){
-                //$.getJSON("%22http%3A%2F%2Flocalhost%3A9200%2Fsourdoughs_development_20160118084056787%2F_search%2Ftemplate%22%20-d%20%27%0A%7B%0A%20%22template%22%3A%20%22tuco%22%2C%0A%20%22params%22%3A%20%7B%0A%20%20%22userQuery%22%3A%20%22brock%20ho%22%0A%20%7D%0A%7D%27", function(data){
-                    var hoobers = []
-                    $.each(data, function(index, d){
-                        if (index == "hits") {   // elastico.hits
-                            $.each(d, function(index, e){
-                                if (index == "hits") {                //elastico.hits.hits
-                                    $.each(e, function(index, f){
-                                        hoobers.push({
-                                            label: f._source.namo  + ' ' + f._source.start_date + ' ' + f._source.end_date,
-                                            namo: f._source.namo,
-                                            value: f._source.player_key
-                                        });
-                                    });
-                                }
-                            });
-                        }
-                    });
-                    response(hoobers)
-                }//.error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
-                    //        /* alert(jqXHR.responseText) */
-                    //        /* alert("error occurred!");   */
-                    //        response(null) ;
-                     //   })
               });
-            },
-            minLength: 2,
+            }
+          });
+          response(hoobers)
+                //.error(function(jqXHR, textStatus, errorThrown){ /* assign handler */
+                        //    /* alert(jqXHR.responseText) */
+                        //    /* alert("error occurred!");   */
+                         //   response(null) ;
+        } //)
+      });
+    },
+    minLength: 2,
 
 
 /////////////////////////////////////////////////////
-            select: function( event, ui ) {
-               event.preventDefault();
-                $('#playerid').val(ui.item.namo);
-                playaposition = "qp" + this.id.toString();
-                this.value = ui.item.namo;
-                $("#" + playaposition).val(ui.item.value);
-            }
+    select: function( event, ui ) {
+      event.preventDefault();
+      $('#playerid').val(ui.item.namo);
+      playaposition = "qp" + this.id.toString();
+      this.value = ui.item.namo;
+      $("#" + playaposition).val(ui.item.value);
+    }
 ///////////////////////////////////////////////////
-        });  //end autocomplete
+  });  //end autocomplete
 
 
-    }); // end ready
+}); // end ready
 </script>
 
 <script>
-    $(window).load(function() {
-        $('#loading').hide();
-    });
+  $(window).load(function() {
+    $('#loading').hide();
+  });
 </script>
 
 
@@ -116,230 +88,166 @@
 
 <%= form_tag root_path  :method => :get  do %>
 
+<div class="container">
 
-    <!--   <div class="airport">
-         <input  id="airport" class="ui-autocomplete-input" type="text" name="airport" autocomplete="off">
-       </div>
-    -->
+  <div class="disappear">
+    <div class="row">
+      <p>
+        <div class=dismember><%= label_tag " QP Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+          id = "qpbatter" name="qpbatter" <%= search_field_tag  :qobatter, value = params[:qpbatter]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Run1" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qprunner1b" name="qprunner1b" <%= search_field_tag  :qprunner1b, value = params[:qprunner1b]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Run2" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qprunner2b" name="qprunner2b" <%= search_field_tag  :qprunner2b, value = params[:qprunner2b]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Run3" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qprunner3b" name="qprunner3b" <%= search_field_tag  :qprunner3b, value = params[:qprunner3b]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qppitcher" name="qppitcher" <%= search_field_tag  :qppitcher, value = params[:qppitcher]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpcatcher" name="qpcatcher" <%= search_field_tag  :qpcatcher, value = params[:qpcatcher]%>
+        </div>
+        <div class=dismember><%= label_tag " QP First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpfirst_base" name="qpfirst_base" <%= search_field_tag  :qpfirst_base, value = params[:qpfirst_base]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpsecond_base" name="qpsecond_base" <%= search_field_tag  :qpsecond_base, value = params[:qpsecond_base]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpthird_base" name="qpthird_base" <%= search_field_tag  :qpthird_base, value = params[:qpthird_base]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpshortstop" name="qpshortstop" <%= search_field_tag  :qpshortstop, value = params[:qpshortstop]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpleft_field" name="qpleft_field" <%= search_field_tag  :qpleft_field, value = params[:qpleft_field]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpcenter_field" name="qpcenter_field" <%= search_field_tag  :qpcenter_field, value = params[:qpcenter_field]%>
+        </div>
+        <div class=dismember><%= label_tag " QP Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+             id = "qpright_field" name="qpright_field" <%= search_field_tag  :qpright_field, value = params[:qpright_field]%>
+        </div>
+      </p>
+     </div>
+  </div>
 
-       <div class="container">
 
-        <div class="disappear">
+  <div id="loading">
+    <img id="loading-image" src="/assets/pg_loader.gif" alt="LOADING..." />
+  </div>
+
+
+  <div class="accordion" id="accordion2">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                      Batting
+        </a>
+      </div>
+
+      <div id="collapseOne" class="accordion-body collapse">
+        <div class="accordion-inner">
           <div class="row">
             <p>
-              <div class=dismember><%= label_tag " QP Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpbatter" name="qpbatter" <%= search_field_tag  :qobatter, value = params[:qpbatter]%>
-              </div>
-            <div class=dismember><%= label_tag " QP Run1" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qprunner1b" name="qprunner1b" <%= search_field_tag  :qprunner1b, value = params[:qprunner1b]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Run2" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qprunner2b" name="qprunner2b" <%= search_field_tag  :qprunner2b, value = params[:qprunner2b]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Run3" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qprunner3b" name="qprunner3b" <%= search_field_tag  :qprunner3b, value = params[:qprunner3b]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qppitcher" name="qppitcher" <%= search_field_tag  :qppitcher, value = params[:qppitcher]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpcatcher" name="qpcatcher" <%= search_field_tag  :qpcatcher, value = params[:qpcatcher]%>
-            </div>
-            <div class=dismember><%= label_tag " QP First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpfirst_base" name="qpfirst_base" <%= search_field_tag  :qpfirst_base, value = params[:qpfirst_base]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpsecond_base" name="qpsecond_base" <%= search_field_tag  :qpsecond_base, value = params[:qpsecond_base]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpthird_base" name="qpthird_base" <%= search_field_tag  :qpthird_base, value = params[:qpthird_base]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpshortstop" name="qpshortstop" <%= search_field_tag  :qpshortstop, value = params[:qpshortstop]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpleft_field" name="qpleft_field" <%= search_field_tag  :qpleft_field, value = params[:qpleft_field]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpcenter_field" name="qpcenter_field" <%= search_field_tag  :qpcenter_field, value = params[:qpcenter_field]%>
-            </div>
-            <div class=dismember><%= label_tag " QP Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-                 id = "qpright_field" name="qpright_field" onchange="wipeout()" <%= search_field_tag  :qpright_field, value = params[:qpright_field]%>
-            </div>
+              <div class="boop"><%= label_tag "Batting Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="bteam"<%= search_field_tag  :bteam, value = params[:bteam]%></div>
+              <div class="boop"><%= label_tag "Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="batter" <%= search_field_tag  :batter, value = params[:batter]%></div>
+              <div class="boop"><%= label_tag "Runner on First"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner1b" <%=search_field_tag  :runner1b,value = params[:runner1b]%> </div>
+              <div class="boop"><%= label_tag "Runner on Second"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner2b" <%=search_field_tag  :runner2b,value = params[:runner2b]%> </div>
+              <div class="boop"><%= label_tag "Runner on Thoid"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner3b" <%=search_field_tag  :runner3b,value = params[:runner3b]%> </div>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+              Fielding
+        </a>
+      </div>
+      <div id="collapseTwo" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <div class="row">
+            <p>
+              <div class="boop"><%= label_tag "Fielding Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="fteam" <%= search_field_tag  :fteam, value = params[:fteam]%></div>
+              <div class="boop"><%= label_tag "Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="pitcher" <%= search_field_tag  :pitcher, value = params[:pitcher]%></div>
+              <div class="boop"><%= label_tag "Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="catcher" <%= search_field_tag  :catcher, value = params[:catcher]%></div>
+              <div class="boop"><%= label_tag "First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="first_base" <%= search_field_tag  :first_base, value = params[:first_base]%></div>
+              <div class="boop"><%= label_tag "Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="second_base" <%= search_field_tag  :second_base, value = params[:second_base]%></div>
+              <div class="boop"><%= label_tag "Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="third_base" <%= search_field_tag  :third_base, value = params[:third_base]%></div>
+              <div class="boop"><%= label_tag "Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="shortstop" <%= search_field_tag  :shortstop, value = params[:shortstop]%></div>
+              <div class="boop"><%= label_tag "Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="left_field" <%= search_field_tag  :left_field, value = params[:left_field]%></div>
+              <div class="boop"><%= label_tag "Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="center_field" <%= search_field_tag  :center_field, value = params[:center_field]%></div>
+              <div class="boop"><%= label_tag "Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="right_field" <%= search_field_tag  :right_field, value = params[:right_field]%></div>
             </p>
           </div>
         </div>
+      </div>
+    </div>
 
-
-   <!--     <div class="accordion" id="accordion9">
-        <div class="accordion-group">
-        <div class="accordion-heading">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion9" href="#collapseNine">
-              Leebers
-            </a>
-          </div>
-
-          <div id="collapseNine" class="accordion-body collapse">
-            <div class="accordion-inner">
-
-
-
-
-                <h4><a href="#">Lieferung 1 </a></h4>
-          <div class="boop">
-            <input type="text" name="lieferdatum-1" id="lieferdatum-1" value="01.01.2009"/>
-          </div>
-
-          <h4><a href="#">Lieferung 2 </a></h4>
-          <div class="boop">
-            <input type="text" name="lieferdatum-2" id="lieferdatum-2" value="05.06.2009"/>
-          </div>
-          <h4><a href="#">Lieferung 3 </a></h4>
-          <div class="boop">
-            <input type="text" name="lieferdatum-3" id="lieferdatum-3" value="07.08.2009"/>
-          </div>
-
-
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-
-     -->
-
-   <!--     <div>
-          <label for="boopdate" class="label">Pick a departure date</label>
-          <input type="text" class="boopdate" name="boopdate">
-        </div>
-
-        <div>
-          <label for="boopdate2" class="label">Pick a departure date</label>
-          <input type="text" class="boopdate" name="boopdate2">
-        </div>
-    -->
-
-
-             <div id="loading">
-               <img id="loading-image" src="/assets/pg_loader.gif" alt="LOADING..." />
-             </div>
-
-
-
-             <div class="accordion" id="accordion2">
-                <div class="accordion-group">
-                  <div class="accordion-heading">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                      Batting
-                    </a>
-                  </div>
-            <!--  <div id="collapseOne" class="accordion-body collapse in">     -->
-          <div id="collapseOne" class="accordion-body collapse">
-          <div class="accordion-inner">
-              <div class="row">
-                <p>
-                <div class="boop"><%= label_tag "Batting Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="bteam"<%= search_field_tag  :bteam, value = params[:bteam]%></div>
-                <div class="boop"><%= label_tag "Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="batter" <%= search_field_tag  :batter, value = params[:batter]%></div>
-                <div class="boop"><%= label_tag "Runner on First"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner1b" <%=search_field_tag  :runner1b,value = params[:runner1b]%> </div>
-                <div class="boop"><%= label_tag "Runner on Second"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner2b" <%=search_field_tag  :runner2b,value = params[:runner2b]%> </div>
-                <div class="boop"><%= label_tag "Runner on Thoid"%><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="runner3b" <%=search_field_tag  :runner3b,value = params[:runner3b]%> </div>
-
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-              Fielding
-            </a>
-          </div>
-          <div id="collapseTwo" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <div class="row">
-                <p>
-                <div class="boop"><%= label_tag "Fielding Team" %><input autocomplete="off" class="teem" class="ui-autocomplete-input" name="fteam" <%= search_field_tag  :fteam, value = params[:fteam]%></div>
-                <div class="boop"><%= label_tag "Pitcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="pitcher" <%= search_field_tag  :pitcher, value = params[:pitcher]%></div>
-                <div class="boop"><%= label_tag "Catcher" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="catcher" <%= search_field_tag  :catcher, value = params[:catcher]%></div>
-                <div class="boop"><%= label_tag "First Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="first_base" <%= search_field_tag  :first_base, value = params[:first_base]%></div>
-                <div class="boop"><%= label_tag "Second Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="second_base" <%= search_field_tag  :second_base, value = params[:second_base]%></div>
-                <div class="boop"><%= label_tag "Third Base" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="third_base" <%= search_field_tag  :third_base, value = params[:third_base]%></div>
-                <div class="boop"><%= label_tag "Shortstop" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="shortstop" <%= search_field_tag  :shortstop, value = params[:shortstop]%></div>
-                <div class="boop"><%= label_tag "Left Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="left_field" <%= search_field_tag  :left_field, value = params[:left_field]%></div>
-                <div class="boop"><%= label_tag "Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="center_field" <%= search_field_tag  :center_field, value = params[:center_field]%></div>
-                <div class="boop"><%= label_tag "Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input" name="right_field" <%= search_field_tag  :right_field, value = params[:right_field]%></div>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
               Limits
-            </a>
-          </div>
-          <div id="collapseThree" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <p> 1970 - 2015 only </p>
-              <div class="row">
-                <p>
-
-    <!--        <div class="boop" ><%= label_tag "Start Date (mm/dd/yyyy)" %><%=search_field_tag :start_date, value = params[:start_date]%></div>     -->
-                <div class="boop"><%= label_tag "Start Date" %><input id="pickdate1"<%=search_field_tag :start_date, value = params[:start_date]%></div>
-                <div class="boop"><%= label_tag "End Date (mm/dd/yyyy)" %><input id="pickdate2"<%= search_field_tag  :end_date, value = params[:end_date]%></div>
-                <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
-                </p>
-              </div>
-            </div>
+        </a>
+      </div>
+      <div id="collapseThree" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class = "subbie"> 1970 - 2015 only </p>
+          <div class="row">
+            <p>
+              <div class="boop"><%= label_tag "Start Date" %><input id="pickdate1"<%=search_field_tag :start_date, value = params[:start_date]%></div>
+              <div class="boop"><%= label_tag "End Date" %><input id="pickdate2"<%= search_field_tag  :end_date, value = params[:end_date]%></div>
+              <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
+            </p>
           </div>
         </div>
+      </div>
+    </div>
 
         <!--   This is a comment   -->
 
-
-
-
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
               Grouping
-            </a>
-          </div>
-          <div id="collapseFour" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <p> Group by: </p>
-              <div class="groupies-by">
-
-              <ul>
-                <li> <%= check_box_tag(:group_pitcher,"1",params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
-                <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
-                <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
-                <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
-                <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]) %><%= label_tag(:twitter_share, "Catcher?") %> </li>
-                <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]) %><%= label_tag(:twitter_share, "First Base?") %> </li>
-                <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]) %><%= label_tag(:twitter_share, "Second Base?") %> </li>
-                <li> <%= check_box_tag(:group_shortstop,"1",params[:group_shortstop]) %><%= label_tag(:twitter_share, "Shortstop?") %> </li>
-                <li> <%= check_box_tag(:group_third_base,"1",params[:group_third_base]) %><%= label_tag(:twitter_share, "Third Base?") %> </li>
-                <li> <%= check_box_tag(:group_left_field,"1",params[:group_left_field]) %><%= label_tag(:twitter_share, "Left Field?") %> </li>
-                <li> <%= check_box_tag(:group_center_field,"1",params[:group_center_field]) %><%= label_tag(:twitter_share, "Center Field?") %> </li>
-                <li> <%= check_box_tag(:group_right_field,"1",params[:group_right_field]) %><%= label_tag(:twitter_share, "Right Field?") %> </li>
-                <li> <%= check_box_tag(:group_home_away,"1",params[:group_home_away]) %><%= label_tag(:twitter_share, "Home/Away?") %> </li>
-                <li> <%= check_box_tag(:group_month,"1",params[:group_month]) %><%= label_tag(:twitter_share, "Month?") %> </li>
-                <li> <%= check_box_tag(:group_year,"1",params[:group_year]) %><%= label_tag(:twitter_share, "Year?") %> </li>
-                <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]) %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
-                <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]) %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
-                <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]) %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
-                <!--<li> <%= check_box_tag(:group_booper,"1",params[:booper]) %><%= label_tag(:twitter_share, "Booper?") %> </li>   -->
-               </ul>
-              </div>
-            </div>
+        </a>
+      </div>
+      <div id="collapseFour" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <p class="subbie"> Group by: </p>
+          <div class="groupies-by">
+            <ul>
+              <li> <%= check_box_tag(:group_pitcher,"1",params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
+              <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
+              <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
+              <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
+              <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]) %><%= label_tag(:twitter_share, "Catcher?") %> </li>
+              <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]) %><%= label_tag(:twitter_share, "First Base?") %> </li>
+              <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]) %><%= label_tag(:twitter_share, "Second Base?") %> </li>
+              <li> <%= check_box_tag(:group_shortstop,"1",params[:group_shortstop]) %><%= label_tag(:twitter_share, "Shortstop?") %> </li>
+              <li> <%= check_box_tag(:group_third_base,"1",params[:group_third_base]) %><%= label_tag(:twitter_share, "Third Base?") %> </li>
+              <li> <%= check_box_tag(:group_left_field,"1",params[:group_left_field]) %><%= label_tag(:twitter_share, "Left Field?") %> </li>
+              <li> <%= check_box_tag(:group_center_field,"1",params[:group_center_field]) %><%= label_tag(:twitter_share, "Center Field?") %> </li>
+              <li> <%= check_box_tag(:group_right_field,"1",params[:group_right_field]) %><%= label_tag(:twitter_share, "Right Field?") %> </li>
+              <li> <%= check_box_tag(:group_home_away,"1",params[:group_home_away]) %><%= label_tag(:twitter_share, "Home/Away?") %> </li>
+              <li> <%= check_box_tag(:group_month,"1",params[:group_month]) %><%= label_tag(:twitter_share, "Month?") %> </li>
+              <li> <%= check_box_tag(:group_year,"1",params[:group_year]) %><%= label_tag(:twitter_share, "Year?") %> </li>
+              <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]) %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
+              <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]) %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
+              <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]) %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
+            </ul>
           </div>
         </div>
-
+      </div>
+    </div>
 
     <div class="accordion-group">
       <div class="accordion-heading">
@@ -350,7 +258,6 @@
       <div id="collapseFive" class="accordion-body collapse">
         <div class="accordion-inner">
           <div class="groupies-by">
-
             <ul>
               <li> <%= check_box_tag(:c_pa,"1",params[:c_pa]) %><%= label_tag(:twitter_share, "PA?") %> </li>
               <li> <%= check_box_tag(:c_at_bat,"1",params[:c_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
@@ -385,7 +292,6 @@
       <div id="collapseSix" class="accordion-body collapse">
         <div class="accordion-inner">
           <div class="groupies-by">
-
             <ul>
               <li> <%= check_box_tag(:s_pa,"1",params[:s_pa]) %><%= label_tag(:twitter_share, "PA?") %> </li>
               <li> <%= check_box_tag(:s_at_bat,"1",params[:s_at_bat]) %><%= label_tag(:twitter_share, "At_bat?") %> </li>
@@ -410,129 +316,81 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!--
+  <p>
+    <%= submit_tag "Submit", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
+  </p>
 
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
-              Grouping
-            </a>
-          </div>
-          <div id="collapseFour" class="accordion-body collapse">
-            <div class="accordion-inner">
-              <div class="row">
-                <p>
-                <div class="span3"><%= search_field_tag(:group_batter, value = params[:group_batter]) %><%= label_tag(:twitter_share, "Group by Batter?") %></div>
-                <div class="span3"><%= search_field_tag(:group_bteam, value = params[:group_bteam]) %><%= label_tag(:twitter_share, "Group by BTeam?") %></div>
-                <div class="span3"><%= search_field_tag(:group_fteam,value = params[:group_fteam]) %><%= label_tag(:twitter_share, "Group by FTeam?") %></div>
-                <div class="span3"><%= search_field_tag(:group_pitcher, value = params[:group_pitcher]) %><%= label_tag(:twitter_share, "Group by Pitcher?") %></div>
-                <div class="span3"><%= search_field_tag(:group_catcher, value = params[:group_catcher]) %><%= label_tag(:twitter_share, "Group by Catcher?") %></div>
-                <div class="span3"><%= search_field_tag(:group_first_base, value = params[:group_first_base]) %><%= label_tag(:twitter_share, "Group by First Base?") %></div>
-                <div class="span3"><%= search_field_tag(:group_second_base, value = params[:group_second_base]) %><%= label_tag(:twitter_share, "Group by Second Base?") %></div>
-                <div class="span3"><%= search_field_tag(:group_shortstop, value = params[:group_shortstop]) %><%= label_tag(:twitter_share, "Group by Shortstop?") %></div>
-                <div class="span3"><%= search_field_tag(:group_third_base, value = params[:group_third_base]) %><%= label_tag(:twitter_share, "Group by Third Base?") %></div>
-                <div class="span3"><%= search_field_tag(:group_left_field, value = params[:group_left_field]) %><%= label_tag(:twitter_share, "Group by Left Field?") %></div>
-                <div class="span3"><%= search_field_tag(:group_center_field, value = params[:group_center_field]) %><%= label_tag(:twitter_share, "Group by Center Field?") %></div>
-                <div class="span3"><%= search_field_tag(:group_right_field, value = params[:group_right_field]) %><%= label_tag(:twitter_share, "Group by Right Field?") %></div>
-                <div class="span3"><%= search_field_tag(:group_runner1b, value = params[:group_runner1b]) %><%= label_tag(:twitter_share, "Group by Runner On First?") %></div>
-                <div class="span3"><%= search_field_tag(:group_runner2b, value = params[:group_runner2b]) %><%= label_tag(:twitter_share, "Group by Runner On Second") %></div>
-                <div class="span3"><%= search_field_tag(:group_runner3b, value = params[:group_runner3b]) %><%= label_tag(:twitter_share, "Group by Riunner On Third?") %></div>
-                <div class="span3"><%= search_field_tag(:group_home_away, value = params[:group_home_away]) %><%= label_tag(:twitter_share, "Group by Home/Away?") %></div>
-                <div class="span3"><%= search_field_tag(:group_month, value = params[:group_month]) %><%= label_tag(:twitter_share, "Group by Month?") %></div>
-                <div class="span3"><%= search_field_tag(:group_year, value = params[:group_year]) %><%= label_tag(:twitter_share, "Group by Year?") %></div>
-                <div class="span3"><%= check_box_tag(:group_booper) %><%= label_tag(:twitter_share, "Group by Boop?") %></div>
+  <table class="footable">
+    <thead>
+      <tr>
+        <th onclick ="$('#loading').show();" data-class="expand" ><%= link_to "#{$cheader[:c1]}", params.merge(:sort_by=>"#{$flannel[:c1]}")%></th>
+        <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c2]}", params.merge(:sort_by=>"#{$flannel[:c2]}") if $flannel.has_key?(:c2)%></th>
+        <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c3]}", params.merge(:sort_by=>"#{$flannel[:c3]}") if $flannel.has_key?(:c3)%></th>
+        <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c4]}", params.merge(:sort_by=>"#{$flannel[:c4]}") if $flannel.has_key?(:c4)%></th>
+        <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c5]}", params.merge(:sort_by=>"#{$flannel[:c5]}") if $flannel.has_key?(:c5)%></th>
+        <th onclick ="$('#loading').show();" data-hide="phone"><%= link_to "#{$cheader[:c6]}", params.merge(:sort_by=>"#{$flannel[:c6]}") if $flannel.has_key?(:c6)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c7]}", params.merge(:sort_by=>"#{$flannel[:c7]}") if $flannel.has_key?(:c7)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c8]}", params.merge(:sort_by=>"#{$flannel[:c8]}") if $flannel.has_key?(:c8)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c9]}", params.merge(:sort_by=>"#{$flannel[:c9]}") if $flannel.has_key?(:c9)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c10]}", params.merge(:sort_by=>"#{$flannel[:c10]}") if $flannel.has_key?(:c10)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c11]}", params.merge(:sort_by=>"#{$flannel[:c11]}") if $flannel.has_key?(:c11)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c12]}", params.merge(:sort_by=>"#{$flannel[:c12]}") if $flannel.has_key?(:c12)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c13]}", params.merge(:sort_by=>"#{$flannel[:c13]}") if $flannel.has_key?(:c13)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c14]}", params.merge(:sort_by=>"#{$flannel[:c14]}") if $flannel.has_key?(:c14)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c15]}", params.merge(:sort_by=>"#{$flannel[:c15]}") if $flannel.has_key?(:c15)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c16]}", params.merge(:sort_by=>"#{$flannel[:c16]}") if $flannel.has_key?(:c16)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c17]}", params.merge(:sort_by=>"#{$flannel[:c17]}") if $flannel.has_key?(:c17)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c18]}", params.merge(:sort_by=>"#{$flannel[:c18]}") if $flannel.has_key?(:c18)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c22]}", params.merge(:sort_by=>"#{$flannel[:c22]}") if $flannel.has_key?(:c22)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c23]}", params.merge(:sort_by=>"#{$flannel[:c23]}") if $flannel.has_key?(:c23)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c24]}", params.merge(:sort_by=>"#{$flannel[:c24]}") if $flannel.has_key?(:c24)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c25]}", params.merge(:sort_by=>"#{$flannel[:c25]}") if $flannel.has_key?(:c25)%></th>
+        <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c26]}", params.merge(:sort_by=>"#{$flannel[:c26]}") if $flannel.has_key?(:c26)%></th>
+      </tr>
+    </thead>
 
+    <div id="tabby">
+      <tbody>
+        <% @Plabs.each do |plab| %>
+          <tr>
+            <td><%= plab.c1%></td>
+            <td><%= plab.c2%></td>
+            <td><%= plab.c3%></td>
+            <td><%= plab.c4 if $flannel.has_key?(:c4)%></td>
+            <td><%= plab.c5 if $flannel.has_key?(:c5)%></td>
+            <td><%= plab.c6 if $flannel.has_key?(:c6)%></td>
+            <td><%= plab.c7 if $flannel.has_key?(:c7)%></td>
+            <td><%= plab.c8 if $flannel.has_key?(:c8)%></td>
+            <td><%= plab.c9 if $flannel.has_key?(:c9)%></td>
+            <td><%= plab.c10 if $flannel.has_key?(:c10)%></td>
+            <td><%= plab.c11 if $flannel.has_key?(:c11)%></td>
+            <td><%= plab.c12 if $flannel.has_key?(:c12)%></td>
+            <td><%= plab.c13 if $flannel.has_key?(:c13)%></td>
+            <td><%= plab.c14 if $flannel.has_key?(:c14)%></td>
+            <td><%= plab.c15 if $flannel.has_key?(:c15)%></td>
+            <td><%= plab.c16 if $flannel.has_key?(:c16)%></td>
+            <td><%= plab.c17 if $flannel.has_key?(:c17)%></td>
+            <!-- comments anybody? -->
+            <td><%= plab.c18 if $flannel.has_key?(:c18)%></td>
+            <td><%= plab.c19 if $flannel.has_key?(:c19)%></td>
+            <td><%= plab.c20 if $flannel.has_key?(:c20)%></td>
+            <td><%= plab.c21 if $flannel.has_key?(:c21)%></td>
+            <td><%= plab.c22 if $flannel.has_key?(:c22)%></td>
+            <td><%= plab.c23 if $flannel.has_key?(:c23)%></td>
+            <td><%= plab.c24 if $flannel.has_key?(:c24)%></td>
+            <td><%= plab.c25 if $flannel.has_key?(:c25)%></td>
+            <td><%= plab.c26 if $flannel.has_key?(:c26)%></td>
 
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>      -->
+          </tr>
+        <% end unless @Plabs.nil?%>
+     </tbody>
+    </div>
+  </table>
+</div> <!--container -->
 
-        <p>
-          <%= submit_tag "Submit", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
-
-        </p>
-
-
-        <table class="footable">
-        <thead>
-        <!--
-        <th><%= link_to "TField", :sort => "tdf.id3_old"  if $fteam_colm%></th>
-        <th><%= link_to 'TField' do %> <i class: "btn btn-large btn-primary"</i> if $fteam_colm% <% end %> </th>
-     -->
-
-        <tr>
-           <th onclick ="$('#loading').show();" data-class="expand" ><%= link_to "#{$cheader[:c1]}", params.merge(:sort_by=>"#{$flannel[:c1]}")%></th>
-          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c2]}", params.merge(:sort_by=>"#{$flannel[:c2]}") if $flannel.has_key?(:c2)%></th>
-          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c3]}", params.merge(:sort_by=>"#{$flannel[:c3]}") if $flannel.has_key?(:c3)%></th>
-          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c4]}", params.merge(:sort_by=>"#{$flannel[:c4]}") if $flannel.has_key?(:c4)%></th>
-          <th onclick ="$('#loading').show();" ><%= link_to "#{$cheader[:c5]}", params.merge(:sort_by=>"#{$flannel[:c5]}") if $flannel.has_key?(:c5)%></th>
-          <th onclick ="$('#loading').show();" data-hide="phone"><%= link_to "#{$cheader[:c6]}", params.merge(:sort_by=>"#{$flannel[:c6]}") if $flannel.has_key?(:c6)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c7]}", params.merge(:sort_by=>"#{$flannel[:c7]}") if $flannel.has_key?(:c7)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c8]}", params.merge(:sort_by=>"#{$flannel[:c8]}") if $flannel.has_key?(:c8)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c9]}", params.merge(:sort_by=>"#{$flannel[:c9]}") if $flannel.has_key?(:c9)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c10]}", params.merge(:sort_by=>"#{$flannel[:c10]}") if $flannel.has_key?(:c10)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c11]}", params.merge(:sort_by=>"#{$flannel[:c11]}") if $flannel.has_key?(:c11)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c12]}", params.merge(:sort_by=>"#{$flannel[:c12]}") if $flannel.has_key?(:c12)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone"><%= link_to "#{$cheader[:c13]}", params.merge(:sort_by=>"#{$flannel[:c13]}") if $flannel.has_key?(:c13)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c14]}", params.merge(:sort_by=>"#{$flannel[:c14]}") if $flannel.has_key?(:c14)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c15]}", params.merge(:sort_by=>"#{$flannel[:c15]}") if $flannel.has_key?(:c15)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c16]}", params.merge(:sort_by=>"#{$flannel[:c16]}") if $flannel.has_key?(:c16)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c17]}", params.merge(:sort_by=>"#{$flannel[:c17]}") if $flannel.has_key?(:c17)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c18]}", params.merge(:sort_by=>"#{$flannel[:c18]}") if $flannel.has_key?(:c18)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c19]}", params.merge(:sort_by=>"#{$flannel[:c19]}") if $flannel.has_key?(:c19)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c20]}", params.merge(:sort_by=>"#{$flannel[:c20]}") if $flannel.has_key?(:c20)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c21]}", params.merge(:sort_by=>"#{$flannel[:c21]}") if $flannel.has_key?(:c21)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c22]}", params.merge(:sort_by=>"#{$flannel[:c22]}") if $flannel.has_key?(:c22)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c23]}", params.merge(:sort_by=>"#{$flannel[:c23]}") if $flannel.has_key?(:c23)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c24]}", params.merge(:sort_by=>"#{$flannel[:c24]}") if $flannel.has_key?(:c24)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c25]}", params.merge(:sort_by=>"#{$flannel[:c25]}") if $flannel.has_key?(:c25)%></th>
-          <th onclick ="$('#loading').show();"  data-hide="phone,tablet"><%= link_to "#{$cheader[:c26]}", params.merge(:sort_by=>"#{$flannel[:c26]}") if $flannel.has_key?(:c26)%></th>
-
-
-        </tr>
-        </thead>
-
-        <div id="tabby">
-          <tbody>
-          <% @Plabs.each do |plab| %>
-              <tr>
-                <td><%= plab.c1%></td>
-                <td><%= plab.c2%></td>
-                <td><%= plab.c3%></td>
-                <td><%= plab.c4 if $flannel.has_key?(:c4)%></td>
-                <td><%= plab.c5 if $flannel.has_key?(:c5)%></td>
-                <td><%= plab.c6 if $flannel.has_key?(:c6)%></td>
-                <td><%= plab.c7 if $flannel.has_key?(:c7)%></td>
-                <td><%= plab.c8 if $flannel.has_key?(:c8)%></td>
-                <td><%= plab.c9 if $flannel.has_key?(:c9)%></td>
-                <td><%= plab.c10 if $flannel.has_key?(:c10)%></td>
-                <td><%= plab.c11 if $flannel.has_key?(:c11)%></td>
-                <td><%= plab.c12 if $flannel.has_key?(:c12)%></td>
-                <td><%= plab.c13 if $flannel.has_key?(:c13)%></td>
-                <td><%= plab.c14 if $flannel.has_key?(:c14)%></td>
-                <td><%= plab.c15 if $flannel.has_key?(:c15)%></td>
-                <td><%= plab.c16 if $flannel.has_key?(:c16)%></td>
-                <td><%= plab.c17 if $flannel.has_key?(:c17)%></td>
-                <!-- comments anybody? -->
-                <td><%= plab.c18 if $flannel.has_key?(:c18)%></td>
-                <td><%= plab.c19 if $flannel.has_key?(:c19)%></td>
-                <td><%= plab.c20 if $flannel.has_key?(:c20)%></td>
-                <td><%= plab.c21 if $flannel.has_key?(:c21)%></td>
-                <td><%= plab.c22 if $flannel.has_key?(:c22)%></td>
-                <td><%= plab.c23 if $flannel.has_key?(:c23)%></td>
-                <td><%= plab.c24 if $flannel.has_key?(:c24)%></td>
-                <td><%= plab.c25 if $flannel.has_key?(:c25)%></td>
-                <td><%= plab.c26 if $flannel.has_key?(:c26)%></td>
-
-              </tr>
-          <% end unless @Plabs.nil?%>
-          </tbody>
-        </div>
-      </table>
-      </div>
-    </div> <!--container -->
 <% end %>
