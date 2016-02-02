@@ -28,10 +28,13 @@
       //alert(JSON.stringify(data));
 
       $.ajax({
-        url:"http://localhost:9200/sodo/_search",
-        dataType:"json",
+          //url:"http://localhost:9200/sodo/_search",
+          url:"http://batomatic.com:9200/sodo/_search",
+          dataType:"json",
+          //Origin: "http://localhost",
+          //crossDomain: true,
         type:"POST",
-        contentType: 'application/json',
+         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function(data){
           var hoobers = []

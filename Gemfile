@@ -8,6 +8,8 @@ gem 'jquery-rails', '2.0.2'
 #gem 'jquery-rails', '3.0.4'
 gem 'jquery-ui-rails'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 gem "footable-rails", "~> 0.0.1"
 #gem 'activerecord-redshift-adapter', '~> 0.9.12'
 #gem 'searchkick', :path => "/home/smurdock/rails_projects/agnu_app/workspace/searchkook/searchkick"
