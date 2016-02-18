@@ -5,9 +5,85 @@
 <p id="minihead"> Baseball statistics.  Sideways, sometimes.<p>    -->
 
 
+
 <script>
+
   $(document).ready(function() {
-    $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
+
+
+     // alert($('#batter').val());
+
+      // $('#toggle-example').on('hidden.bs.collapse', function(){
+      $('#collapseOne').on('hidden.bs.collapse', function(){
+                batto =  ' ';
+            if ($('#bteam').val().trim().length > 0) {batto += ' '+ $('#bteam').val();}
+            if ($('#batter').val().trim().length > 0) {batto +=  ' batter: '+$('#batter').val();}
+            if ($('#runner1b').val().trim().length > 0) {batto +=  ' runner 1b:'+$('#runner1b').val();}
+            if ($('#runner2b').val().trim().length > 0) {batto +=  ' runner 2b:'+$('#runner2b').val();}
+            if ($('#runner3b').val().trim().length > 0) {batto +=  ' runner 3b:'+$('#runner3b').val();}
+            if (batto.trim().length > 0) {batto = " *** " + batto}
+         // alert(batto);
+         // $('#bluebird').contents('boop');
+          ($("#bluebird")).text(batto);
+      });
+      $('#collapseTwo').on('hidden.bs.collapse', function(){
+          feeld =  ' ';
+          if ($('#fteam').val().trim().length > 0) {feeld += ' '+ $('#fteam').val();}
+          if ($('#pitcher').val().trim().length > 0) {feeld +=  ' pitcher: '+$('#pitcher').val();}
+          if ($('#catcher').val().trim().length > 0) {feeld +=  ' catcher:'+$('#catcher').val();}
+          if ($('#first_base').val().trim().length > 0) {feeld +=  ' 1b:'+$('#first_base').val();}
+          if ($('#second_base').val().trim().length > 0) {feeld +=  ' 2b:'+$('#second_base').val();}
+          if ($('#third_base').val().trim().length > 0) {feeld +=  ' 3b:'+$('#third_base').val();}
+          if ($('#shortstop').val().trim().length > 0) {feeld +=  ' ss:'+$('#shortstop').val();}
+          if ($('#left_field').val().trim().length > 0) {feeld +=  ' lf:'+$('#left_field').val();}
+          if ($('#center_field').val().trim().length > 0) {feeld +=  ' cf:'+$('#center_field').val();}
+          if ($('#right_field').val().trim().length > 0) {feeld +=  ' rf:'+$('#right_field').val();}
+          if (feeld.trim().length > 0) {feeld = " *** " + feeld}
+          // alert(batto);
+          // $('#bluebird').contents('boop');
+          ($("#robin")).text(feeld);
+      });
+
+      $('#collapseThree').on('hidden.bs.collapse', function(){
+          limmo =  ' ';
+          if ($('#pickdate1').val().trim().length > 0) {limmo += ' start:'+ $('#pickdate1').val();}
+          if ($('#pickdate2').val().trim().length > 0) {limmo +=  ' end: '+$('#pickdate2').val();}
+          if ($('#min_ab').val().trim().length > 0) {limmo +=  ' min-at-bats:'+$('#min_ab').val();}
+          if (limmo.trim().length > 0) {limmo = " *** " + limmo}
+          // alert(batto);
+          // $('#bluebird').contents('boop');
+          ($("#wren")).text(limmo);
+      });
+
+      $('#collapseFour').on('hidden.bs.collapse', function(){
+          groop =  '';
+          if (document.getElementById('group_pitcher').checked)  {groop += ' pitcher';};
+          if (document.getElementById('group_batter').checked)    {groop += ' batter';}
+          if (document.getElementById('group_bteam').checked)  {groop += ' batting-team';}
+          if (document.getElementById('group_fteam').checked)  {groop += ' fielding-team';}
+          if (document.getElementById('group_catcher').checked)  {groop += ' catcher';}
+          if (document.getElementById('group_first_base').checked)  {groop += ' 1b';}
+          if (document.getElementById('group_second_base').checked)  {groop += ' 2b';}
+          if (document.getElementById('group_third_base').checked)  {groop += ' 3b';}
+          if (document.getElementById('group_shortstop').checked)  {groop += ' ss';}
+          if (document.getElementById('group_left_field').checked)  {groop += ' lf';}
+          if (document.getElementById('group_center_field').checked)  {groop += ' cf';}
+          if (document.getElementById('group_right_field').checked)  {groop += ' rf';}
+          if (document.getElementById('group_home_away').checked)  {groop += ' H-A';}
+          if (document.getElementById('group_month').checked)  {groop += ' month';}
+          if (document.getElementById('group_year').checked)  {groop += ' year';}
+          if (document.getElementById('group_runner1b').checked)  {groop += ' runner-on-1st';}
+          if (document.getElementById('group_runner2b').checked)  {groop += ' runner-on-2nd';}
+          if (document.getElementById('group_runner3b').checked)  {groop += ' runner-on-3rd';}
+          if (groop.trim().length > 0) {groop = "  *** " + groop}
+          // alert(batto);
+          // $('#bluebird').contents('boop');
+          ($("#finch")).text(groop);
+      });
+
+
+
+      $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
 
     $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
 
@@ -75,15 +151,44 @@
 ///////////////////////////////////////////////////
   });  //end autocomplete
 
+      $("#rambo").click(function (event) {
+          $('group_pitcher').prop('checked', false);
+          $('group_batter').prop('checked', false);
+          $('group_bteam').prop('checked', false);
+          $('group_fteam').prop('checked', false);
+          $('group_catcher').prop('checked', false);
+          $('group_first_base').prop('checked', false);
+          $('group_second_base').prop('checked', false);
+          $('group_third_base').prop('checked', false);
+          $('group_shortstop').prop('checked', false);
+          $('group_left_field').prop('checked', false);
+          $('group_center_field').prop('checked', false);
+          $('group_right_field').prop('checked', false);
+          $('group_home_away').prop('checked', false);
+          $('group_year').prop('checked', false);
+          $('group_month').prop('checked', false);
+          $('group_runner1b').prop('checked', false);
+          $('group_runner2b').prop('checked', false);
+          $('group_runner3b').prop('checked', false);
+
+      });
+
+
 
 }); // end ready
 </script>
 
-<script>
+
+
+ <script>
   $(window).load(function() {
     $('#loading').hide();
   });
-</script>
+ </script>
+
+
+
+
 
 
 <h2> Baseball statistics.  Sideways, sort of.</h2>
@@ -145,14 +250,17 @@
   </div>
 
 
+
   <div class="accordion" id="accordion2">
     <div class="accordion-group">
-      <div class="accordion-heading">
+      <div class="accordion-heading" id="acc_box1">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                      Batting
+          <div class='acc_head'>
+            Batting
+          </div>
+           <div class='linotype' id='bluebird'>  <%= params[:bteam].to_s %> <%= params[:batter].to_s %> <%=params[:runner1b].to_s %> <%=params[:runner2b].to_s %> <%=params[:runner3b].to_s %>  </div>
         </a>
       </div>
-
       <div id="collapseOne" class="accordion-body collapse">
         <div class="accordion-inner">
           <div class="row">
@@ -170,9 +278,17 @@
     </div>
 
     <div class="accordion-group">
-      <div class="accordion-heading">
+      <div class="accordion-heading" id="acc_box2">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+          <div class='acc_head'>
               Fielding
+          </div>
+          <div class='linotype' id='robin'>  <%= params[:fteam].to_s %> <%= params[:pitcher].to_s %>
+            <%=params[:catcher].to_s %> <%=params[:first_base].to_s %> <%=params[:second_base].to_s %>
+            <%=params[:shortstop].to_s %> <%=params[:third_base].to_s %>
+            <%=params[:left_field].to_s %> <%=params[:center_field].to_s %> <%=params[:right_field].to_s %>
+
+          </div>
         </a>
       </div>
       <div id="collapseTwo" class="accordion-body collapse">
@@ -196,20 +312,23 @@
     </div>
 
     <div class="accordion-group">
-      <div class="accordion-heading">
+      <div class="accordion-heading" id="acc_box3">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
-              Limits
+          <div class='acc_head'>
+            Limits
+          </div>
+            <div class='linotype' id='wren'><%= params[:start_date].to_s %> <%= params[:end_date].to_s %> <%=params[:min_ab].to_s %>
+            </div>
         </a>
-      </div>
-      <div id="collapseThree" class="accordion-body collapse">
-        <div class="accordion-inner">
-          <p class = "subbie"> 1970 - 2015 only </p>
-          <div class="row">
-            <p>
-              <div class="boop"><%= label_tag "Start Date" %><input id="pickdate1"<%=search_field_tag :start_date, value = params[:start_date]%></div>
-              <div class="boop"><%= label_tag "End Date" %><input id="pickdate2"<%= search_field_tag  :end_date, value = params[:end_date]%></div>
-              <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
-            </p>
+        <div id="collapseThree" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <div class="row">
+              <p>
+                <div class="boop"><%= label_tag "Start Date" %><input id="pickdate1"<%=search_field_tag :start_date, value = params[:start_date]%></div>
+                <div class="boop"><%= label_tag "End Date" %><input id="pickdate2"<%= search_field_tag  :end_date, value = params[:end_date]%></div>
+                <div class="boop"><%= label_tag "Min At Bats" %><%= search_field_tag  :min_ab, value = params[:min_ab]%></div>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -218,17 +337,41 @@
         <!--   This is a comment   -->
 
     <div class="accordion-group">
-      <div class="accordion-heading">
+      <div class="accordion-heading" id="acc_box4">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+          <div class='acc_head'>
               Grouping
+          </div>
+          <!--<div class='linotype'>  <div id="gpitcher"><%= params[:group_pitcher] %> </div>    -->
+          <div class='linotype' id="finch">  <%= params[:group_pitcher].nil? ? " " : "  pitcher" %>
+
+            <%= params[:group_batter].nil? ? " " : " batter" %>
+            <%= params[:group_bteam].nil? ? " " : " batting-team" %>
+            <%= params[:group_fteam].nil? ? " " : " fielding-team" %>
+            <%= params[:group_catcher].nil? ? " " : " catcher" %>
+            <%= params[:group_first_base].nil? ? " " : " 1b" %>
+            <%= params[:group_second_base].nil? ? " " : " 2b" %>
+            <%= params[:group_shortstop].nil? ? " " : " ss" %>
+            <%= params[:group_third_base].nil? ? " " : " 3b" %>
+            <%= params[:group_left_field].nil? ? " " : " lf" %>
+            <%= params[:group_center_field].nil? ? " " : " cf" %>
+            <%= params[:group_right_field].nil? ? " " : " rf" %>
+            <%= params[:group_home_away].nil? ? " " : " h/a" %>
+            <%= params[:group_month].nil? ? " " : " month" %>
+            <%= params[:group_year].nil? ? " " : " year" %>
+            <%= params[:group_runner1b].nil? ? " " : " runner-on-1st" %>
+            <%= params[:group_runner2b].nil? ? " " : " runner-on-2nd" %>
+            <%= params[:group_runner3b].nil? ? " " : " runner-on-3rd" %>
+
+          </div>
         </a>
       </div>
+
       <div id="collapseFour" class="accordion-body collapse">
         <div class="accordion-inner">
-          <p class="subbie"> Group by: </p>
           <div class="groupies-by">
             <ul>
-              <li> <%= check_box_tag(:group_pitcher,"1",params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
+              <li> <%= check_box_tag(:group_pitcher,params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
               <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
               <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
               <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
@@ -255,8 +398,8 @@
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
-          Flush Left
-        </a>
+           Flush Left
+         </a>
       </div>
       <div id="collapseFive" class="accordion-body collapse">
         <div class="accordion-inner">
@@ -323,6 +466,15 @@
 
   <p>
     <%= submit_tag "Submit", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
+
+    <!-- <input type="button" onclick="location.href='/';" value="Clear" />  ????this was the original "clear"-->
+    <input type="button" onclick="location.href='/';" value="Clear" />
+
+    <input type="submit" value="rambo" id="rambo" name="rambo">
+
+
+
+
   </p>
 
   <table class="footable">
@@ -395,5 +547,6 @@
     </div>
   </table>
 </div> <!--container -->
+
 
 <% end %>

@@ -38,6 +38,12 @@ module QueryHelper
         (p_hash.has_key?("s_catholic_runs")) )
   end
 
+  def cleanout_checkboxes(p_hash)
+     if !p_hash[:group_pitcher].nil?
+       p_hash[:group_pitcher]=''
+     end
+  end
+
 
    def strip_trailing_comma(s)
      p = /, *$/
@@ -1403,10 +1409,22 @@ module QueryHelper
   end
 
 
+  def melflooNU (p_hash)
+    if p_hash[:rambo] == "rambo"
+      cleanout_checkboxes (p_hash)
+    end
+
+
+  end
+
+
+
+
+
   def buildquery (p_hash)
 
 
-    melfloo p_hash   #I think this is a nothing.  Does something with searching sourdough, which now gets handled by elasticsearch.  ???
+    melflooNU p_hash   #I think this is a nothing.  Does something with searching sourdough, which now gets handled by elasticsearch.  ???
     build_hash  p_hash
     set_to_false
     default_query = true

@@ -202,3 +202,40 @@ footer ul li {
  // left: 240px;
  // z-index: 100;
 }
+
+.linotype {
+  font-style: italic;
+  font-size: 80%;
+  margin-left: 5em;
+}
+
+.acc_head {
+  float: left;
+  bottom-margin: 2.5em;
+}
+
+#acc_box1 {
+  overflow: hidden;
+  min-height: 2.5em;
+  //background-color: green;
+}
+#acc_box2 {
+  overflow: hidden;
+  min-height: 2.5em;
+  //background-color: green;
+}
+#acc_box3{
+  overflow: hidden;
+  min-height: 2.5em;
+  //background-color: green;
+}
+#acc_box4{
+  overflow: hidden;
+  min-height: 2.5em;
+  //background-color: green;
+}
+
+//#gpitcher:before{
+//  content: " Pitcher ";
+//}
+
