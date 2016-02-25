@@ -1,5 +1,7 @@
 module QueryHelper
 
+
+
   def flush_left(p_hash)
     ((p_hash.has_key?("c_pa")) ||
         (p_hash.has_key?("c_at_bat")) ||
@@ -38,10 +40,61 @@ module QueryHelper
         (p_hash.has_key?("s_catholic_runs")) )
   end
 
+
+  def cleanout_text(p_hash)
+    p_hash[:qpbatter] = ""
+    p_hash[:qprunner1b] = ""
+    p_hash[:qprunner2b] = ""
+    p_hash[:qprunner3b] = ""
+    p_hash[:qppitcher] = ""
+    p_hash[:qpcatcher] = ""
+    p_hash[:qpfirst_base] = ""
+    p_hash[:qpsecond_base] = ""
+    p_hash[:qpthird_base] = ""
+    p_hash[:qpshortstop] = ""
+    p_hash[:qpleft_field] = ""
+    p_hash[:qpcenter_field] = ""
+    p_hash[:qpright_field] = ""
+    p_hash[:bteam]= ""
+    p_hash[:batter]= ""
+    p_hash[:runner1b]= ""
+    p_hash[:runner2b]= ""
+    p_hash[:runner3b]= ""
+    p_hash[:fteam] = ""
+    p_hash[:pitcher] = ""
+    p_hash[:catcher] = ""
+    p_hash[:first_base] = ""
+    p_hash[:second_base] = ""
+    p_hash[:third_base] = ""
+    p_hash[:shortstop] = ""
+    p_hash[:left_field] = ""
+    p_hash[:center_field] = ""
+    p_hash[:right_field] = ""
+    p_hash[:start_date] = ""
+    p_hash[:end_date]= ""
+    p_hash[:min_ab]= ""
+
+  end
+
   def cleanout_checkboxes(p_hash)
-     if !p_hash[:group_pitcher].nil?
-       p_hash[:group_pitcher]=''
-     end
+    if !p_hash[:group_pitcher].nil? then p_hash[:group_pitcher]='' end
+    if !p_hash[:group_batter].nil? then p_hash[:group_batter]='' end
+    if !p_hash[:group_bteam].nil? then p_hash[:group_bteam]='' end
+    if !p_hash[:group_fteam].nil? then p_hash[:group_fteam]='' end
+    if !p_hash[:group_catcher].nil? then p_hash[:group_catcher]='' end
+    if !p_hash[:group_first_base].nil? then p_hash[:group_first_base]='' end
+    if !p_hash[:group_second_base].nil? then p_hash[:group_second_base]='' end
+    if !p_hash[:group_shortstop].nil? then p_hash[:group_shortstop]='' end
+    if !p_hash[:group_third_base].nil? then p_hash[:group_third_base]='' end
+    if !p_hash[:group_left_field].nil? then p_hash[:group_left_field]='' end
+    if !p_hash[:group_center_field].nil? then p_hash[:group_center_field]='' end
+    if !p_hash[:group_right_field].nil? then p_hash[:group_right_field]='' end
+    if !p_hash[:group_home_away].nil? then p_hash[:group_home_away]='' end
+    if !p_hash[:group_month].nil? then p_hash[:group_month]='' end
+    if !p_hash[:group_year].nil? then p_hash[:group_year]='' end
+    if !p_hash[:group_runner1b].nil? then p_hash[:group_runner1b]='' end
+    if !p_hash[:group_runner2b].nil? then p_hash[:group_runner2b]='' end
+    if !p_hash[:group_runner3b].nil? then p_hash[:group_runner3b]='' end
   end
 
 
@@ -271,7 +324,7 @@ module QueryHelper
     end
   end
 
-  def subselect_earned_facts(p_hash)
+    def subselect_earned_facts(p_hash)
     @earned_facts_sub = "(select count(field) from earned_facts sn
 	                        join fielder_dim fd2 on fd2.field_key= sn.field "
 
@@ -1376,46 +1429,42 @@ module QueryHelper
   end
 
 
-  def melfloo (p_hash)
-    $ES_player_key = ""
-    $foofter = false
-     begin
-     boopies = Sourdough.search query: {match: {namokey: p_hash[:batter]}}   #this works,, period
-     rescue
-       $foofter = true;
-     end
-     #boopies = Sourdough.search query: {match: {namoraw:"Derek Jeter"}}
-     # boopies = Sourdough.search
-    # {
-     #    query: {
-     #    match: {
-    #     namo: "derek jeter"
-     #}
-    # }
-    #}
-
-    if $foofter
-      puts "************ We had an error ******************"
-    else
-      boopies.each do |boopy|
-
-        $ES_player_key = boopy.player_key
-        puts '///////   '+boopy.player_key.to_s+'   ////////////'
-      end
-    end
-
-    #products = Product.search body: {match: {name: "milk"}}
-
-  end
-
 
   def melflooNU (p_hash)
-    if p_hash[:rambo] == "rambo"
-      cleanout_checkboxes (p_hash)
+
+    if p_hash[:qpxcounta].nil?
+      counta = rand(6)
+    elsif  p_hash[:qpxcounta] == "5"
+      counta = 0
+    else
+      counta = p_hash[:qpxcounta].to_i + 1
     end
 
 
+    p_hash[:qpxcounta] = counta.to_s
+
+    redhash0 = {qpbatter: "32809", batter: "Albert Pujols", group_year: "1"}
+    redhash1 = {qpbatter: "31860", batter: "David Ortiz", group_fteam: "1"}
+    redhash2 = {start_date: "01/01/2014", end_date: "01/01/2016", group_year: "1", group_bteam: "1"}
+    redhash3 = {qpbatter: "25909", batter: "Josh Hamilton", group_runner1b: "1"}
+    redhash4 = {qppitcher: "30565", pitcher: "Wade Miley", group_shortstop: "1"}
+    redhash5 = {qppitcher: "22736", pitcher: "Johnny Cueto", group_fteam: "1"}
+     arroyo = []
+    arroyo.push(redhash0)
+    arroyo.push(redhash1)
+    arroyo.push(redhash2)
+    arroyo.push(redhash3)
+    arroyo.push(redhash4)
+    arroyo.push(redhash5)
+    cleanout_text (p_hash)
+    cleanout_checkboxes (p_hash)
+    arroyo[counta].each do |key, val|
+      p_hash["#{key}"] = "#{val}"
+    end
+
   end
+
+
 
 
 
@@ -1423,8 +1472,10 @@ module QueryHelper
 
   def buildquery (p_hash)
 
-
-    melflooNU p_hash   #I think this is a nothing.  Does something with searching sourdough, which now gets handled by elasticsearch.  ???
+    if p_hash[:rambo] == "rambo" then
+      melflooNU p_hash
+      p_hash[:rambo] = ""
+    end
     build_hash  p_hash
     set_to_false
     default_query = true

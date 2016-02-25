@@ -5,8 +5,8 @@
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:batto_dev</jdbc-url>
-      <user-name>blethary</user-name>
-      <user-password>dfc5dfc6dfcedfdadf9adfc7df9edfce</user-password>
+      <user-name>smurdock</user-name>
+      <user-password>dfc3dfd9df9edfc8dfcfdfc6dfc6dfcb</user-password>
       <libraries>
         <library>
           <url>file://$USER_HOME$/.RubyMine50/config/jdbc-drivers/postgresql-driver-license.txt</url>

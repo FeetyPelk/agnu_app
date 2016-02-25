@@ -85,7 +85,14 @@
 
       $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
 
-    $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
+      $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
+
+      $('.looky').click(function( event, ui ) {
+        event.preventDefault();
+        playaposition = "qp" + this.id.toString();
+        $("#" + playaposition).val(null);
+      });
+
 
     $('.looky').autocomplete({
       source: function (request, response) {
@@ -104,8 +111,8 @@
       //alert(JSON.stringify(data));
 
       $.ajax({
-          //url:"http://localhost:9200/sodo/_search",
-          url:"http://batomatic.com:9200/sodo/_search",
+          url:"http://localhost:9200/sodo/_search",
+          //url:"http://batomatic.com:9200/sodo/_search",
           dataType:"json",
           //Origin: "http://localhost",
           //crossDomain: true,
@@ -151,31 +158,8 @@
 ///////////////////////////////////////////////////
   });  //end autocomplete
 
-      $("#rambo").click(function (event) {
-          $('group_pitcher').prop('checked', false);
-          $('group_batter').prop('checked', false);
-          $('group_bteam').prop('checked', false);
-          $('group_fteam').prop('checked', false);
-          $('group_catcher').prop('checked', false);
-          $('group_first_base').prop('checked', false);
-          $('group_second_base').prop('checked', false);
-          $('group_third_base').prop('checked', false);
-          $('group_shortstop').prop('checked', false);
-          $('group_left_field').prop('checked', false);
-          $('group_center_field').prop('checked', false);
-          $('group_right_field').prop('checked', false);
-          $('group_home_away').prop('checked', false);
-          $('group_year').prop('checked', false);
-          $('group_month').prop('checked', false);
-          $('group_runner1b').prop('checked', false);
-          $('group_runner2b').prop('checked', false);
-          $('group_runner3b').prop('checked', false);
 
-      });
-
-
-
-}); // end ready
+  }); // end ready
 </script>
 
 
@@ -193,6 +177,8 @@
 
 <h2> Baseball statistics.  Sideways, sort of.</h2>
 
+<h4>  Enter as many or as few fields as you like.</h4>
+
 
 <%= form_tag root_path  :method => :get  do %>
 
@@ -201,9 +187,9 @@
   <div class="disappear">
     <div class="row">
       <p>
-        <div class=dismember><%= label_tag " QP Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-          id = "qpbatter" name="qpbatter" <%= search_field_tag  :qobatter, value = params[:qpbatter]%>
-        </div>
+      <div class=dismember><%= label_tag " QP Batter" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+           id = "qpbatter" name="qpbatter" <%= search_field_tag  :qpbatter, value = params[:qpbatter]%>
+      </div>
         <div class=dismember><%= label_tag " QP Run1" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
              id = "qprunner1b" name="qprunner1b" <%= search_field_tag  :qprunner1b, value = params[:qprunner1b]%>
         </div>
@@ -237,9 +223,12 @@
         <div class=dismember><%= label_tag " QP Center Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
              id = "qpcenter_field" name="qpcenter_field" <%= search_field_tag  :qpcenter_field, value = params[:qpcenter_field]%>
         </div>
-        <div class=dismember><%= label_tag " QP Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
-             id = "qpright_field" name="qpright_field" <%= search_field_tag  :qpright_field, value = params[:qpright_field]%>
-        </div>
+      <div class=dismember><%= label_tag " QP Right Field" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+           id = "qpright_field" name="qpright_field" <%= search_field_tag  :qpright_field, value = params[:qpright_field]%>
+      </div>
+      <div class=dismember><%= label_tag " QP Example Counta" %><input autocomplete="off" class="looky" class="ui-autocomplete-input"
+           id = "qpxcounta" name="qpxcounta" <%= search_field_tag  :qpright_field, value = params[:qpxcounta]%>
+      </div>
       </p>
      </div>
   </div>
@@ -343,25 +332,25 @@
               Grouping
           </div>
           <!--<div class='linotype'>  <div id="gpitcher"><%= params[:group_pitcher] %> </div>    -->
-          <div class='linotype' id="finch">  <%= params[:group_pitcher].nil? ? " " : "  pitcher" %>
-
-            <%= params[:group_batter].nil? ? " " : " batter" %>
-            <%= params[:group_bteam].nil? ? " " : " batting-team" %>
-            <%= params[:group_fteam].nil? ? " " : " fielding-team" %>
-            <%= params[:group_catcher].nil? ? " " : " catcher" %>
-            <%= params[:group_first_base].nil? ? " " : " 1b" %>
-            <%= params[:group_second_base].nil? ? " " : " 2b" %>
-            <%= params[:group_shortstop].nil? ? " " : " ss" %>
-            <%= params[:group_third_base].nil? ? " " : " 3b" %>
-            <%= params[:group_left_field].nil? ? " " : " lf" %>
-            <%= params[:group_center_field].nil? ? " " : " cf" %>
-            <%= params[:group_right_field].nil? ? " " : " rf" %>
-            <%= params[:group_home_away].nil? ? " " : " h/a" %>
-            <%= params[:group_month].nil? ? " " : " month" %>
-            <%= params[:group_year].nil? ? " " : " year" %>
-            <%= params[:group_runner1b].nil? ? " " : " runner-on-1st" %>
-            <%= params[:group_runner2b].nil? ? " " : " runner-on-2nd" %>
-            <%= params[:group_runner3b].nil? ? " " : " runner-on-3rd" %>
+          <div class='linotype' id="finch">
+            <%=!(params[:group_pitcher] == "1") ? " " : "  pitcher" %>
+            <%= !(params[:group_batter] == "1") ? " " : " batter" %>
+            <%= !(params[:group_bteam] == "1") ? " " : " batting-team" %>
+            <%= !(params[:group_fteam] == "1") ? " " : " fielding-team" %>
+            <%= !(params[:group_catcher] == "1") ? " " : " catcher" %>
+            <%= !(params[:group_first_base] == "1") ? " " : " 1b" %>
+            <%= !(params[:group_second_base] == "1") ? " " : " 2b" %>
+            <%= !(params[:group_shortstop] == "1") ? " " : " ss" %>
+            <%= !(params[:group_third_base] == "1") ? " " : " 3b" %>
+            <%= !(params[:group_left_field] == "1") ? " " : " lf" %>
+            <%= !(params[:group_center_field] == "1") ? " " : " cf" %>
+            <%= !(params[:group_right_field] == "1") ? " " : " rf" %>
+            <%= !(params[:group_home_away] == "1") ? " " : " h/a" %>
+            <%= !(params[:group_month] == "1") ? " " : " month" %>
+            <%= !(params[:group_year] == "1") ? " " : " year" %>
+            <%= !(params[:group_runner1b] == "1") ? " " : " runner-on-1st" %>
+            <%= !(params[:group_runner2b] == "1") ? " " : " runner-on-2nd" %>
+            <%= !(params[:group_runner3b] == "1") ? " " : " runner-on-3rd" %>
 
           </div>
         </a>
@@ -371,24 +360,24 @@
         <div class="accordion-inner">
           <div class="groupies-by">
             <ul>
-              <li> <%= check_box_tag(:group_pitcher,params[:group_pitcher]) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
-              <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]) %><%= label_tag(:twitter_share, "Batter?") %> </li>
-              <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]) %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
-              <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]) %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
-              <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]) %><%= label_tag(:twitter_share, "Catcher?") %> </li>
-              <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]) %><%= label_tag(:twitter_share, "First Base?") %> </li>
-              <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]) %><%= label_tag(:twitter_share, "Second Base?") %> </li>
-              <li> <%= check_box_tag(:group_shortstop,"1",params[:group_shortstop]) %><%= label_tag(:twitter_share, "Shortstop?") %> </li>
-              <li> <%= check_box_tag(:group_third_base,"1",params[:group_third_base]) %><%= label_tag(:twitter_share, "Third Base?") %> </li>
-              <li> <%= check_box_tag(:group_left_field,"1",params[:group_left_field]) %><%= label_tag(:twitter_share, "Left Field?") %> </li>
-              <li> <%= check_box_tag(:group_center_field,"1",params[:group_center_field]) %><%= label_tag(:twitter_share, "Center Field?") %> </li>
-              <li> <%= check_box_tag(:group_right_field,"1",params[:group_right_field]) %><%= label_tag(:twitter_share, "Right Field?") %> </li>
-              <li> <%= check_box_tag(:group_home_away,"1",params[:group_home_away]) %><%= label_tag(:twitter_share, "Home/Away?") %> </li>
-              <li> <%= check_box_tag(:group_month,"1",params[:group_month]) %><%= label_tag(:twitter_share, "Month?") %> </li>
-              <li> <%= check_box_tag(:group_year,"1",params[:group_year]) %><%= label_tag(:twitter_share, "Year?") %> </li>
-              <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]) %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
-              <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]) %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
-              <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]) %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
+              <li> <%= check_box_tag(:group_pitcher,"1",(params[:group_pitcher]=='1')) %><%= label_tag(:twitter_share, "Pitcher?") %> </li>
+              <li> <%= check_box_tag(:group_batter,"1",params[:group_batter]=='1') %><%= label_tag(:twitter_share, "Batter?") %> </li>
+              <li> <%= check_box_tag(:group_bteam,"1",params[:group_bteam]=='1') %><%= label_tag(:twitter_share, "Batting Team?") %> </li>
+              <li> <%= check_box_tag(:group_fteam,"1",params[:group_fteam]=='1') %><%= label_tag(:twitter_share, "Fielding Team?") %> </li>
+              <li> <%= check_box_tag(:group_catcher,"1",params[:group_catcher]=='1') %><%= label_tag(:twitter_share, "Catcher?") %> </li>
+              <li> <%= check_box_tag(:group_first_base,"1",params[:group_first_base]=='1') %><%= label_tag(:twitter_share, "First Base?") %> </li>
+              <li> <%= check_box_tag(:group_second_base,"1",params[:group_second_base]=='1') %><%= label_tag(:twitter_share, "Second Base?") %> </li>
+              <li> <%= check_box_tag(:group_shortstop,"1",params[:group_shortstop]=='1') %><%= label_tag(:twitter_share, "Shortstop?") %> </li>
+              <li> <%= check_box_tag(:group_third_base,"1",params[:group_third_base]=='1') %><%= label_tag(:twitter_share, "Third Base?") %> </li>
+              <li> <%= check_box_tag(:group_left_field,"1",params[:group_left_field]=='1') %><%= label_tag(:twitter_share, "Left Field?") %> </li>
+              <li> <%= check_box_tag(:group_center_field,"1",params[:group_center_field]=='1') %><%= label_tag(:twitter_share, "Center Field?") %> </li>
+              <li> <%= check_box_tag(:group_right_field,"1",params[:group_right_field]=='1') %><%= label_tag(:twitter_share, "Right Field?") %> </li>
+              <li> <%= check_box_tag(:group_home_away,"1",params[:group_home_away]=='1') %><%= label_tag(:twitter_share, "Home/Away?") %> </li>
+              <li> <%= check_box_tag(:group_month,"1",params[:group_month]=='1') %><%= label_tag(:twitter_share, "Month?") %> </li>
+              <li> <%= check_box_tag(:group_year,"1",params[:group_year]=='1') %><%= label_tag(:twitter_share, "Year?") %> </li>
+              <li> <%= check_box_tag(:group_runner1b,"1",params[:group_runner1b]=='1') %><%= label_tag(:twitter_share, "Runner on 1st?") %> </li>
+              <li> <%= check_box_tag(:group_runner2b,"1",params[:group_runner2b]=='1') %><%= label_tag(:twitter_share, "Runner On  2nd?") %> </li>
+              <li> <%= check_box_tag(:group_runner3b,"1",params[:group_runner3b]=='1') %><%= label_tag(:twitter_share, "Runner on 3rd?") %> </li>
             </ul>
           </div>
         </div>
@@ -464,14 +453,27 @@
     </div>
   </div>
 
-  <p>
-    <%= submit_tag "Submit", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
+  <p id="clickies">
+    <%= submit_tag "Submit", id: "submission", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
 
-    <!-- <input type="button" onclick="location.href='/';" value="Clear" />  ????this was the original "clear"-->
-    <input type="button" onclick="location.href='/';" value="Clear" />
+    <!-- <input type="button" onclick="location.href='/';" value="Clear" />  ????this was the original "clear"
+    <input type="button" onclick="location.href='/';" value="Clear All" />
 
-    <input type="submit" value="rambo" id="rambo" name="rambo">
+    <input type="submit" value="rambo" id="rambo" name="rambo" />   -->
 
+
+    <input type="button" id = "clearo" onclick="location.href='/';" value="Clear All" />
+
+    <button type="submit" value="rambo" id="rambo" name="rambo" onclick= "$('#loading').show();">Examples</button>
+
+
+
+    <!-- <%= submit_tag "Clear All", class: "btn btn-small btn-primary", :onclick => "location.href='/';" %>
+
+
+    <%= submit_tag "Examples", class: "btn btn-small btn-primary", id: "rambo", :onclick => "$('#loading').show();" %>
+
+      -->
 
 
 

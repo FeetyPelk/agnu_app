@@ -56,6 +56,20 @@ h2 {
   color: #999;
 }
 
+h4 {
+  clear: both;
+  font-size: 1.0em;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  font-style: italic;
+  text-align: keft;
+  font-weight: normal;
+  color: #999;
+}
+
+
+
 #minihead {
   font-size: 1.3em;
   text-align: center;
@@ -206,7 +220,7 @@ footer ul li {
 .linotype {
   font-style: italic;
   font-size: 80%;
-  margin-left: 5em;
+  margin-left: 7em;
 }
 
 .acc_head {
@@ -234,6 +248,30 @@ footer ul li {
   min-height: 2.5em;
   //background-color: green;
 }
+
+#clickies {
+  text-align: center;
+
+}
+
+#submission{
+  float: left;
+
+}
+
+#clearo{
+  background-color: #dce9f9;
+  color: #005580;
+  disply: inline;
+}
+
+#rambo{
+  background-color: #dce9f9;
+  color: #005580;
+  float: right;
+}
+
+
 
 //#gpitcher:before{
 //  content: " Pitcher ";
