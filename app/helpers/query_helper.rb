@@ -844,7 +844,9 @@ module QueryHelper
   end
 
   def outer_limit? (p_hash)
-    !p_hash[:min_ab].to_s.blank?
+    (!p_hash[:min_ab].to_s.blank?) && (p_hash[:min_ab] =~ /\A[-+]?[0-9]*\.?[0-9]+\Z/)
+   # s =~ /^[1-9]*E/
+
   end
 
   def outer_where (p_hash)
@@ -1443,12 +1445,12 @@ module QueryHelper
 
     p_hash[:qpxcounta] = counta.to_s
 
-    redhash0 = {qpbatter: "32809", batter: "Albert Pujols", group_year: "1"}
-    redhash1 = {qpbatter: "31860", batter: "David Ortiz", group_fteam: "1"}
-    redhash2 = {start_date: "01/01/2014", end_date: "01/01/2016", group_year: "1", group_bteam: "1"}
+    redhash0 = {qpbatter: "31860", batter: "David Ortiz", group_year: "1"}
+    redhash1 = {qpbatter: "38490", pitcher: "Jacob deGrom", group_year: "1", group_home_away: "1"}
+    redhash2 = {start_date: "01/01/2015", end_date: "01/01/2016", group_year: "1", group_bteam: "1"}
     redhash3 = {qpbatter: "25909", batter: "Josh Hamilton", group_runner1b: "1"}
-    redhash4 = {qppitcher: "30565", pitcher: "Wade Miley", group_shortstop: "1"}
-    redhash5 = {qppitcher: "22736", pitcher: "Johnny Cueto", group_fteam: "1"}
+    redhash4 = {qppitcher: "38194", batter: "Nolan Arenado", group_pitcher: "1", group_catcher: "1", start_date: "07/01/2015", end_date: "07/10/2015",}
+    redhash5 = {qppitcher: "22736", pitcher: "Johnny Cueto", group_fteam: "1", group_shortstop: "1"}
      arroyo = []
     arroyo.push(redhash0)
     arroyo.push(redhash1)

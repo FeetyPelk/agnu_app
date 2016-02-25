@@ -11,9 +11,6 @@
   $(document).ready(function() {
 
 
-     // alert($('#batter').val());
-
-      // $('#toggle-example').on('hidden.bs.collapse', function(){
       $('#collapseOne').on('hidden.bs.collapse', function(){
                 batto =  ' ';
             if ($('#bteam').val().trim().length > 0) {batto += ' '+ $('#bteam').val();}
@@ -22,8 +19,6 @@
             if ($('#runner2b').val().trim().length > 0) {batto +=  ' runner 2b:'+$('#runner2b').val();}
             if ($('#runner3b').val().trim().length > 0) {batto +=  ' runner 3b:'+$('#runner3b').val();}
             if (batto.trim().length > 0) {batto = " *** " + batto}
-         // alert(batto);
-         // $('#bluebird').contents('boop');
           ($("#bluebird")).text(batto);
       });
       $('#collapseTwo').on('hidden.bs.collapse', function(){
@@ -39,8 +34,6 @@
           if ($('#center_field').val().trim().length > 0) {feeld +=  ' cf:'+$('#center_field').val();}
           if ($('#right_field').val().trim().length > 0) {feeld +=  ' rf:'+$('#right_field').val();}
           if (feeld.trim().length > 0) {feeld = " *** " + feeld}
-          // alert(batto);
-          // $('#bluebird').contents('boop');
           ($("#robin")).text(feeld);
       });
 
@@ -50,8 +43,6 @@
           if ($('#pickdate2').val().trim().length > 0) {limmo +=  ' end: '+$('#pickdate2').val();}
           if ($('#min_ab').val().trim().length > 0) {limmo +=  ' min-at-bats:'+$('#min_ab').val();}
           if (limmo.trim().length > 0) {limmo = " *** " + limmo}
-          // alert(batto);
-          // $('#bluebird').contents('boop');
           ($("#wren")).text(limmo);
       });
 
@@ -76,14 +67,13 @@
           if (document.getElementById('group_runner2b').checked)  {groop += ' runner-on-2nd';}
           if (document.getElementById('group_runner3b').checked)  {groop += ' runner-on-3rd';}
           if (groop.trim().length > 0) {groop = "  *** " + groop}
-          // alert(batto);
-          // $('#bluebird').contents('boop');
           ($("#finch")).text(groop);
       });
 
 
 
       $('input[id^="pickdate"]').datepicker({dateFormat: 'mm/dd/yy'});
+
 
       $('.teem').autocomplete({source : teems});     //thank you p 382 errata http://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=0636920032663
 
@@ -111,8 +101,8 @@
       //alert(JSON.stringify(data));
 
       $.ajax({
-          url:"http://localhost:9200/sodo/_search",
-          //url:"http://batomatic.com:9200/sodo/_search",
+          //url:"http://localhost:9200/sodo/_search",
+          url:"http://batomatic.com:9200/sodo/_search",
           dataType:"json",
           //Origin: "http://localhost",
           //crossDomain: true,
@@ -345,7 +335,7 @@
             <%= !(params[:group_left_field] == "1") ? " " : " lf" %>
             <%= !(params[:group_center_field] == "1") ? " " : " cf" %>
             <%= !(params[:group_right_field] == "1") ? " " : " rf" %>
-            <%= !(params[:group_home_away] == "1") ? " " : " h/a" %>
+            <%= !(params[:group_home_away] == "1") ? " " : " home-away" %>
             <%= !(params[:group_month] == "1") ? " " : " month" %>
             <%= !(params[:group_year] == "1") ? " " : " year" %>
             <%= !(params[:group_runner1b] == "1") ? " " : " runner-on-1st" %>
@@ -410,7 +400,6 @@
               <li> <%= check_box_tag(:c_ippies,"1",params[:c_ippies]) %><%= label_tag(:twitter_share, "ip?") %> </li>
               <li> <%= check_box_tag(:c_earned_runs,"1",params[:c_earned_runs]) %><%= label_tag(:twitter_share, "er?") %> </li>
               <li> <%= check_box_tag(:c_catholic_runs,"1",params[:c_catholic_runs]) %><%= label_tag(:twitter_share, "r?") %> </li>
-              <li> <%= check_box_tag(:c_x,"1",params[:c_x]) %><%= label_tag(:twitter_share, "x?") %> </li>
               <li> <%= check_box_tag(:c_delim,"1",params[:c_delim]) %><%= label_tag(:twitter_share, "delimit?") %> </li>
             </ul>
           </div>
@@ -444,7 +433,6 @@
               <li> <%= check_box_tag(:s_ippies,"1",params[:s_ippies]) %><%= label_tag(:twitter_share, "ip?") %> </li>
               <li> <%= check_box_tag(:s_earned_runs,"1",params[:s_earned_runs]) %><%= label_tag(:twitter_share, "er?") %> </li>
               <li> <%= check_box_tag(:s_catholic_runs,"1",params[:s_catholic_runs]) %><%= label_tag(:twitter_share, "r?") %> </li>
-              <li> <%= check_box_tag(:s_x,"1",params[:s_x]) %><%= label_tag(:twitter_share, "x?") %> </li>
               <li> <%= check_box_tag(:s_delim,"1",params[:s_delim]) %><%= label_tag(:twitter_share, "delimit?") %> </li>
             </ul>
           </div>
@@ -456,28 +444,13 @@
   <p id="clickies">
     <%= submit_tag "Submit", id: "submission", class: "btn btn-large btn-primary", :onclick => "$('#loading').show();" %>
 
-    <!-- <input type="button" onclick="location.href='/';" value="Clear" />  ????this was the original "clear"
-    <input type="button" onclick="location.href='/';" value="Clear All" />
-
-    <input type="submit" value="rambo" id="rambo" name="rambo" />   -->
-
-
-    <input type="button" id = "clearo" onclick="location.href='/';" value="Clear All" />
+    <input type="button" id = "clearo" onclick="$('#loading').show(), location.href='/';" value="Clear All" />
 
     <button type="submit" value="rambo" id="rambo" name="rambo" onclick= "$('#loading').show();">Examples</button>
 
-
-
-    <!-- <%= submit_tag "Clear All", class: "btn btn-small btn-primary", :onclick => "location.href='/';" %>
-
-
-    <%= submit_tag "Examples", class: "btn btn-small btn-primary", id: "rambo", :onclick => "$('#loading').show();" %>
-
-      -->
-
-
-
   </p>
+
+  <br>
 
   <table class="footable">
     <thead>

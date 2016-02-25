@@ -5,9 +5,9 @@
     <ignored path="agnu_app.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/a.rxml" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1455931589426" ignored="false" />
-    <file path="/home.html.erb" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456350487726" ignored="false" />
-    <file path="/query_helper.rb" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456328075777" ignored="false" />
-    <file path="/custom.css.scss" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456350267725" ignored="false" />
+    <file path="/home.html.erb" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456408263405" ignored="false" />
+    <file path="/query_helper.rb" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456406631312" ignored="false" />
+    <file path="/custom.css.scss" changelist="e4e9a9a7-39f7-4b1b-8f6d-d8aae1888a06" time="1456401891732" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +30,7 @@
       <file leaf-file-name="home.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/plabs/home.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="459" column="70" selection-start="27509" selection-end="27509" vertical-scroll-proportion="0.046296295">
+            <state line="103" column="12" selection-start="5261" selection-end="5261" vertical-scroll-proportion="0.40273038">
               <folding />
             </state>
           </provider>
@@ -39,7 +39,7 @@
       <file leaf-file-name="custom.css.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="255" column="31" selection-start="3000" selection-end="3000" vertical-scroll-proportion="0.0">
+            <state line="269" column="73" selection-start="3164" selection-end="3164" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -48,7 +48,7 @@
       <file leaf-file-name="query_helper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1445" column="120" selection-start="51279" selection-end="51279" vertical-scroll-proportion="0.0">
+            <state line="455" column="98" selection-start="17066" selection-end="17066" vertical-scroll-proportion="551.0645">
               <folding />
             </state>
           </provider>
@@ -64,8 +64,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/helpers/query_helper.rb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" />
+        <option value="$PROJECT_DIR$/app/helpers/query_helper.rb" />
         <option value="$PROJECT_DIR$/app/views/plabs/home.html.erb" />
       </list>
     </option>
@@ -78,8 +78,8 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="497" />
-    <option name="y" value="70" />
+    <option name="x" value="475" />
+    <option name="y" value="119" />
     <option name="width" value="1336" />
     <option name="height" value="882" />
   </component>
@@ -382,17 +382,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="497" y="70" width="1336" height="882" extended-state="0" />
-    <editor active="false" />
+    <frame x="475" y="119" width="1336" height="882" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.60058737" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26557633" sideWeight="0.5179283" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48207173" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48207173" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48207173" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48207173" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32802126" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -463,7 +463,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="38" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -545,26 +545,28 @@
     </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p320/gems/actionpack-3.2.14/lib/action_controller/metal/rescue.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="73" selection-start="508" selection-end="508" vertical-scroll-proportion="0.1966759" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1445" column="120" selection-start="51279" selection-end="51279" vertical-scroll-proportion="0.0">
+        <state line="13" column="73" selection-start="508" selection-end="508" vertical-scroll-proportion="0.1966759">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="31" selection-start="3000" selection-end="3000" vertical-scroll-proportion="0.0">
+        <state line="269" column="73" selection-start="3164" selection-end="3164" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/helpers/query_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="455" column="98" selection-start="17066" selection-end="17066" vertical-scroll-proportion="551.0645">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/plabs/home.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="459" column="70" selection-start="27509" selection-end="27509" vertical-scroll-proportion="0.046296295">
+        <state line="103" column="12" selection-start="5261" selection-end="5261" vertical-scroll-proportion="0.40273038">
           <folding />
         </state>
       </provider>
